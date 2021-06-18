@@ -2,9 +2,13 @@
 # Agora UI Kit for Flutter
 
 <p align="center">
-  <img src="https://img.shields.io/pub/v/agora_uikit"/>
+  <img src="https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter" alt="Platform" />
+  <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/v/agora_uikit"/></a>
   <img src="https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey">
-  <img src=“https://badges.bar/sentry/pub%20points” />
+  <img src="https://badges.bar/agora_uikit/pub%20points" alt="Pub Points">
+  <img src="https://img.shields.io/github/license/agoraio-community/flutter-uikit?color=red"
+      alt="License: MIT" />
+  <a href="https://www.agora.io/en/join-slack/"><img src="https://img.shields.io/badge/slack-@RTE%20Dev-blue.svg?logo=slack"></a>
 </p>
 
 Instantly integrate Agora video calling or video streaming into your Flutter application.  
