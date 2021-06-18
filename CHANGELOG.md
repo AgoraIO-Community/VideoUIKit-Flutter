@@ -1,3 +1,7 @@
+## 0.0.2
+
+  - Update README
+
 ## 0.0.1
   
   Agora Flutter UIKit Release.
@@ -13,4 +17,5 @@
   * Display number of users in the channel
   * Automatically fetch token from a given token server
   * Subscribing to high or low-quality video streams
+
   
