@@ -17,7 +17,7 @@ class AgoraClient {
     return version;
   }
 
-  Future<List<int>> get users async {
+  List<int> get users {
     final List<int> version =
         _sessionController.value.users.map((e) => e.uid).toList();
     return version;
