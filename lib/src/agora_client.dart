@@ -12,7 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 class AgoraClient {
   static const MethodChannel _channel = MethodChannel('agora_uikit');
 
-  static Future<String> get platformVersion async {
+  static Future<String> getPlatformVersion() async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
