@@ -50,7 +50,7 @@ class AgoraClient {
     AgoraEventHandlers? agoraEventHandlers,
   }) async {
     try {
-      _sessionController.initializeEngine(
+      await _sessionController.initializeEngine(
         agoraConnectionData: agoraConnectionData,
       );
     } catch (e) {
@@ -62,9 +62,9 @@ class AgoraClient {
     _sessionController.createEvents(agoraEventHandlers);
 
     if (agoraChannelData != null) {
-      _sessionController.setChannelProperties(agoraChannelData);
+      await _sessionController.setChannelProperties(agoraChannelData);
     }
 
-    _sessionController.joinVideoChannel();
+    await _sessionController.joinVideoChannel();
   }
 }

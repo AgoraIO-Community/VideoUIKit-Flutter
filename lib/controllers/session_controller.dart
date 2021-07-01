@@ -33,7 +33,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           ),
         );
 
-  void initializeEngine(
+  Future<void> initializeEngine(
       {required AgoraConnectionData agoraConnectionData}) async {
     value = value.copyWith(
       engine: await RtcEngine.createWithConfig(
@@ -181,7 +181,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   }
 
   /// Function to set all the channel properties.
-  void setChannelProperties(AgoraChannelData agoraChannelData) async {
+  Future<void> setChannelProperties(AgoraChannelData agoraChannelData) async {
     await value.engine?.setChannelProfile(
         agoraChannelData.channelProfile ?? ChannelProfile.Communication);
 
@@ -202,7 +202,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         agoraChannelData.muteAllRemoteAudioStreams ?? false);
 
     if (agoraChannelData.setBeautyEffectOptions != null) {
-      value.engine?.setBeautyEffectOptions(
+      await value.engine?.setBeautyEffectOptions(
           true, agoraChannelData.setBeautyEffectOptions!);
     }
 
@@ -224,17 +224,18 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           agoraChannelData.videoEncoderConfiguration!);
     }
 
-    value.engine?.setCameraAutoFocusFaceModeEnabled(
+    await value.engine?.setCameraAutoFocusFaceModeEnabled(
         agoraChannelData.setCameraAutoFocusFaceModeEnabled ?? false);
 
-    value.engine?.setCameraTorchOn(agoraChannelData.setCameraTorchOn ?? false);
+    await value.engine
+        ?.setCameraTorchOn(agoraChannelData.setCameraTorchOn ?? false);
 
     await value.engine?.setAudioProfile(
         agoraChannelData.audioProfile ?? AudioProfile.Default,
         agoraChannelData.audioScenario ?? AudioScenario.Default);
   }
 
-  void joinVideoChannel() async {
+  Future<void> joinVideoChannel() async {
     await value.engine?.enableVideo();
     await value.engine?.enableAudioVolumeIndication(200, 3, true);
     if (value.connectionData!.tokenUrl != null) {
@@ -244,7 +245,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         uid: value.connectionData!.uid,
       );
     }
-    value.engine?.joinChannel(
+    await value.engine?.joinChannel(
       value.connectionData!.tempToken ?? value.generatedToken,
       value.connectionData!.channelName,
       null,
@@ -272,37 +273,37 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   }
 
   /// Function to mute/unmute the microphone
-  void toggleMute() async {
+  Future<void> toggleMute() async {
     var status = await Permission.microphone.status;
     if (value.isLocalUserMuted && status.isDenied) {
       await Permission.microphone.request();
     }
     value = value.copyWith(isLocalUserMuted: !(value.isLocalUserMuted));
-    value.engine?.muteLocalAudioStream(value.isLocalUserMuted);
+    await value.engine?.muteLocalAudioStream(value.isLocalUserMuted);
   }
 
   /// Function to toggle enable/disable the camera
-  void toggleCamera() async {
+  Future<void> toggleCamera() async {
     var status = await Permission.camera.status;
     if (value.isLocalVideoDisabled && status.isDenied) {
       await Permission.camera.request();
     }
     value = value.copyWith(isLocalVideoDisabled: !(value.isLocalVideoDisabled));
-    value.engine?.muteLocalVideoStream(value.isLocalVideoDisabled);
+    await value.engine?.muteLocalVideoStream(value.isLocalVideoDisabled);
   }
 
   /// Function to switch between front and rear camera
-  void switchCamera() async {
+  Future<void> switchCamera() async {
     var status = await Permission.camera.status;
     if (status.isDenied) {
       await Permission.camera.request();
     }
-    value.engine?.switchCamera();
+    await value.engine?.switchCamera();
   }
 
-  void endCall() {
-    value.engine?.leaveChannel();
-    value.engine?.destroy();
+  Future<void> endCall() async {
+    await value.engine?.leaveChannel();
+    await value.engine?.destroy();
     // dispose();
   }
 
