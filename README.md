@@ -69,6 +69,7 @@ Your application can still run the voice call when it is switched to the backgro
 ## Usage
 
 ```dart
+// First, instantiate the client
 final AgoraClient client = AgoraClient(
   agoraConnectionData: AgoraConnectionData(
     appId: "<--Add Your App Id Here-->",
@@ -80,6 +81,10 @@ final AgoraClient client = AgoraClient(
   ],
 );
 
+// Then initialize it
+await client.initialize();
+
+// Finally, have fun ;)
 @override
 Widget build(BuildContext context) {
   return MaterialApp(
@@ -97,7 +102,8 @@ Widget build(BuildContext context) {
 }
 
 ```
-
+> **NOTE**: You should properly handle errors and await for initialization before using it. 
+> Look the [example](example) for inspiration.
 
 ## UIKits
 
