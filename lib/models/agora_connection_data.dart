@@ -8,7 +8,7 @@ class AgoraConnectionData {
   final String channelName;
 
   /// (Optional) The user ID. A 32-bit unsigned integer with a value ranging from 1 to (232-1). This parameter must be unique. If uid is not assigned (or set as 0), the SDK assigns a uid and reports it in the onJoinChannelSuccess callback.
-  final int? uid;
+  final int uid;
 
   /// (Optional) Link to the deployed token server. The UIKit automatically generates the token after a fixed interval. Have a look at this guide to learn how to set up your [token server](https://github.com/AgoraIO-Community/agora-token-service)
   final String? tokenUrl;
@@ -22,7 +22,7 @@ class AgoraConnectionData {
   AgoraConnectionData({
     required this.appId,
     required this.channelName,
-    this.uid,
+    this.uid = 0,
     this.tokenUrl,
     this.tempToken,
     this.areaCode = AreaCode.GLOB,

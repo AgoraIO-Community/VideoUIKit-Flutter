@@ -17,13 +17,13 @@ class FloatingLayout extends StatefulWidget {
   final double? floatingLayoutContainerWidth;
 
   /// Padding of the main user or the active speaker in the floating layout.
-  final EdgeInsets? floatingLayoutMainViewPadding;
+  final EdgeInsets floatingLayoutMainViewPadding;
 
   /// Padding of the secondary user present in the list.
-  final EdgeInsets? floatingLayoutSubViewPadding;
+  final EdgeInsets floatingLayoutSubViewPadding;
 
   /// Widget that will be displayed when the local or remote user has disabled it's video.
-  final Widget? disabledVideoWidget;
+  final Widget disabledVideoWidget;
 
   /// Display the camera and microphone status of a user. This feature is only available in the [Layout.floating]
   final bool? showAVState;
@@ -36,9 +36,9 @@ class FloatingLayout extends StatefulWidget {
     required this.client,
     this.floatingLayoutContainerHeight,
     this.floatingLayoutContainerWidth,
-    this.floatingLayoutMainViewPadding,
-    this.floatingLayoutSubViewPadding,
-    this.disabledVideoWidget,
+    this.floatingLayoutMainViewPadding = const EdgeInsets.fromLTRB(3, 0, 3, 3),
+    this.floatingLayoutSubViewPadding = const EdgeInsets.fromLTRB(3, 3, 0, 3),
+    this.disabledVideoWidget = const DisabledVideoWidget(),
     this.showAVState = false,
     this.showNumberOfUsers,
   }) : super(key: key);
@@ -82,8 +82,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                 .uid
                         ? Padding(
                             key: Key('$index'),
-                            padding: widget.floatingLayoutSubViewPadding ??
-                                const EdgeInsets.fromLTRB(3, 3, 0, 3),
+                            padding: widget.floatingLayoutSubViewPadding,
                             child: Container(
                               width: widget.floatingLayoutContainerWidth ??
                                   MediaQuery.of(context).size.width / 3,
@@ -117,8 +116,8 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                               _getLocalViews()),
                                                         ],
                                                       )
-                                                    : widget.disabledVideoWidget ??
-                                                        DisabledVideoWidget(),
+                                                    : widget
+                                                        .disabledVideoWidget,
                                                 Positioned.fill(
                                                   child: Align(
                                                     alignment:
@@ -176,8 +175,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                   Container(
                                                     color: Colors.black,
                                                   ),
-                                                  widget.disabledVideoWidget ??
-                                                      DisabledVideoWidget(),
+                                                  widget.disabledVideoWidget,
                                                   Positioned.fill(
                                                     child: Align(
                                                       alignment:
@@ -316,8 +314,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                       widget.client.sessionController.value.localUid
                   ? Expanded(
                       child: Container(
-                        padding: widget.floatingLayoutMainViewPadding ??
-                            const EdgeInsets.fromLTRB(3, 0, 3, 3),
+                        padding: widget.floatingLayoutMainViewPadding,
                         child: Column(
                           children: [
                             _videoView(_getRemoteViews(widget.client
@@ -328,12 +325,10 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                     )
                   : Expanded(
                       child: Container(
-                        padding: widget.floatingLayoutMainViewPadding ??
-                            const EdgeInsets.fromLTRB(3, 0, 3, 3),
+                        padding: widget.floatingLayoutMainViewPadding,
                         child: widget.client.sessionController.value
                                 .isLocalVideoDisabled
-                            ? widget.disabledVideoWidget ??
-                                DisabledVideoWidget()
+                            ? widget.disabledVideoWidget
                             : Stack(
                                 children: [
                                   Container(
@@ -361,9 +356,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
             ? widget.client.sessionController.value.isLocalVideoDisabled
                 ? Column(
                     children: [
-                      Expanded(
-                          child: widget.disabledVideoWidget ??
-                              DisabledVideoWidget())
+                      Expanded(child: widget.disabledVideoWidget),
                     ],
                   )
                 : Container(
