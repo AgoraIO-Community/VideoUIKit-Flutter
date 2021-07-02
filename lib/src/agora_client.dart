@@ -11,6 +11,10 @@ import 'package:permission_handler/permission_handler.dart';
 /// [AgoraClient] is the main class in this UIKit. It is used to initialize our [RtcEngine], add the list of user permissions, define the channel properties and use extend the [RtcEngineEventHandler] class.
 class AgoraClient {
   static const MethodChannel _channel = MethodChannel('agora_uikit');
+  final AgoraConnectionData agoraConnectionData;
+  final List<Permission> enabledPermission;
+  final AgoraChannelData? agoraChannelData;
+  final AgoraEventHandlers? agoraEventHandlers;
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
@@ -29,13 +33,28 @@ class AgoraClient {
     return _sessionController;
   }
 
+  bool _initialized;
+
+  /// Useful to check if [AgoraClient] is ready for further usage
+  ///
+  /// See `initialize()` to initialize it
+  bool get initialized => _initialized;
+
   AgoraClient({
-    required AgoraConnectionData agoraConnectionData,
-    required List<Permission> enabledPermission,
-    AgoraChannelData? agoraChannelData,
-    AgoraEventHandlers? agoraEventHandlers,
-  }) {
-    _initAgoraRtcEngine(
+    required this.agoraConnectionData,
+    required this.enabledPermission,
+    this.agoraChannelData,
+    this.agoraEventHandlers,
+  }) : _initialized = false;
+
+  /// Must be called before further usage.
+  ///
+  /// See `initialized` to check if it has been initialized already
+  Future<void> initialize() async {
+    if (_initialized) {
+      return;
+    }
+    await _initAgoraRtcEngine(
       agoraConnectionData: agoraConnectionData,
       enabledPermission: enabledPermission,
       agoraChannelData: agoraChannelData,
@@ -66,5 +85,6 @@ class AgoraClient {
     }
 
     _sessionController.joinVideoChannel();
+    _initialized = true;
   }
 }
