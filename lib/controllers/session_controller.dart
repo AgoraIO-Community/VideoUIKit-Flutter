@@ -243,6 +243,11 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         channelName: value.connectionData!.channelName,
         uid: value.connectionData!.uid,
       );
+    } else if (value.connectionData!.stringUid != null) {
+      value.engine?.joinChannelWithUserAccount(
+          value.connectionData!.tempToken ?? value.generatedToken,
+          value.connectionData!.channelName,
+          value.connectionData!.stringUid!);
     }
     value.engine?.joinChannel(
       value.connectionData!.tempToken ?? value.generatedToken,
