@@ -44,7 +44,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     );
   }
 
-  void createEvents(AgoraEventHandlers? agoraEventHandlers) async {
+  void createEvents(AgoraEventHandlers? agoraEventHandlers) {
     value.engine?.setEventHandler(
       RtcEngineEventHandler(
         error: (code) {
@@ -310,7 +310,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   Timer? timer;
 
   /// Function to auto hide the button class.
-  void toggleVisible({int? autoHideButtonTime}) async {
+  void toggleVisible({int? autoHideButtonTime}) {
     if (!(value.visible)) {
       value = value.copyWith(visible: !(value.visible));
       timer = Timer(Duration(seconds: autoHideButtonTime ?? 5), () {
@@ -368,7 +368,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   }
 
   /// Function to swap [AgoraUser] in the floating layout.
-  Future<void> swapUser({required int index}) async {
+  void swapUser({required int index}) {
     final AgoraUser newUser = value.users[index];
     final AgoraUser tempAgoraUser = value.mainAgoraUser;
     value = value.copyWith(mainAgoraUser: newUser);
