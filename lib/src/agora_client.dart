@@ -16,12 +16,12 @@ class AgoraClient {
   final AgoraChannelData? agoraChannelData;
   final AgoraEventHandlers? agoraEventHandlers;
 
-  static Future<String> get platformVersion async {
+  static Future<String> getPlatformVersion() async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
 
-  Future<List<int>> get users async {
+  List<int> get users {
     final List<int> version =
         _sessionController.value.users.map((e) => e.uid).toList();
     return version;
@@ -69,7 +69,7 @@ class AgoraClient {
     AgoraEventHandlers? agoraEventHandlers,
   }) async {
     try {
-      _sessionController.initializeEngine(
+      await _sessionController.initializeEngine(
         agoraConnectionData: agoraConnectionData,
       );
     } catch (e) {
@@ -81,10 +81,10 @@ class AgoraClient {
     _sessionController.createEvents(agoraEventHandlers);
 
     if (agoraChannelData != null) {
-      _sessionController.setChannelProperties(agoraChannelData);
+      await _sessionController.setChannelProperties(agoraChannelData);
     }
 
-    _sessionController.joinVideoChannel();
+    await _sessionController.joinVideoChannel();
     _initialized = true;
   }
 }
