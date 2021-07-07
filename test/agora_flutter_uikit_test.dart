@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () {
-    expect(AgoraClient.platformVersion, '42');
+    expect(AgoraClient.platformVersion(), '42');
   });
 }
