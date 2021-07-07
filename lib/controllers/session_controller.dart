@@ -33,12 +33,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           ),
         );
 
-  Future<void> initializeEngine(
-      {required AgoraConnectionData agoraConnectionData}) async {
+  Future<void> initializeEngine({required AgoraConnectionData agoraConnectionData}) async {
     value = value.copyWith(
       engine: await RtcEngine.createWithConfig(
-        RtcEngineConfig(agoraConnectionData.appId,
-            areaCode: agoraConnectionData.areaCode),
+        RtcEngineConfig(agoraConnectionData.appId, areaCode: agoraConnectionData.areaCode),
       ),
       connectionData: agoraConnectionData,
     );
@@ -98,43 +96,34 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           agoraEventHandlers.tokenPrivilegeWillExpire(token);
         },
         remoteVideoStateChanged: (uid, state, reason, elapsed) {
-          final String info =
-              "Remote video state changed for $uid, state: $state and reason: $reason";
+          final String info = "Remote video state changed for $uid, state: $state and reason: $reason";
           print(info);
           if (uid != value.localUid) {
             if (state == VideoRemoteState.Stopped) {
               _updateUserVideo(uid: uid, videoDisabled: true);
-            } else if (state == VideoRemoteState.Decoding &&
-                reason == VideoRemoteStateReason.RemoteUnmuted) {
+            } else if (state == VideoRemoteState.Decoding && reason == VideoRemoteStateReason.RemoteUnmuted) {
               _updateUserVideo(uid: uid, videoDisabled: false);
             }
           }
-          agoraEventHandlers.remoteVideoStateChanged(
-              uid, state, reason, elapsed);
+          agoraEventHandlers.remoteVideoStateChanged(uid, state, reason, elapsed);
         },
         remoteAudioStateChanged: (uid, state, reason, elapsed) {
-          final String info =
-              "Remote audio state changed for $uid, state: $state and reason: $reason";
+          final String info = "Remote audio state changed for $uid, state: $state and reason: $reason";
           print(info);
-          if (state == AudioRemoteState.Stopped &&
-              reason == AudioRemoteStateReason.RemoteMuted) {
+          if (state == AudioRemoteState.Stopped && reason == AudioRemoteStateReason.RemoteMuted) {
             _updateUserAudio(uid: uid, muted: true);
-          } else if (state == AudioRemoteState.Decoding &&
-              reason == AudioRemoteStateReason.RemoteUnmuted) {
+          } else if (state == AudioRemoteState.Decoding && reason == AudioRemoteStateReason.RemoteUnmuted) {
             _updateUserAudio(uid: uid, muted: false);
           }
-          agoraEventHandlers.remoteAudioStateChanged(
-              uid, state, reason, elapsed);
+          agoraEventHandlers.remoteAudioStateChanged(uid, state, reason, elapsed);
         },
         localAudioStateChanged: (state, error) {
-          final String info =
-              "Local audio state changed state: $state and error: $error";
+          final String info = "Local audio state changed state: $state and error: $error";
           print(info);
           agoraEventHandlers.localAudioStateChanged(state, error);
         },
         localVideoStateChanged: (localVideoState, error) {
-          final String info =
-              "Local audio state changed state: $localVideoState and error: $error";
+          final String info = "Local audio state changed state: $localVideoState and error: $error";
           print(info);
           agoraEventHandlers.localVideoStateChanged(localVideoState, error);
         },
@@ -142,8 +131,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           final String info = "Active speaker: $uid";
           print(info);
           if (value.isActiveSpeakerDisabled == false) {
-            final int index =
-                value.users.indexWhere((element) => element.uid == uid);
+            final int index = value.users.indexWhere((element) => element.uid == uid);
             swapUser(index: index);
           } else {
             print("Active speaker is disabled");
@@ -163,44 +151,35 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       print('You can only set channel profile in case of Live Broadcasting');
     }
 
-    value = value.copyWith(
-        isActiveSpeakerDisabled: agoraChannelData.isActiveSpeakerDisabled);
+    value = value.copyWith(isActiveSpeakerDisabled: agoraChannelData.isActiveSpeakerDisabled);
 
-    await value.engine
-        ?.muteAllRemoteVideoStreams(agoraChannelData.muteAllRemoteVideoStreams);
+    await value.engine?.muteAllRemoteVideoStreams(agoraChannelData.muteAllRemoteVideoStreams);
 
-    await value.engine
-        ?.muteAllRemoteAudioStreams(agoraChannelData.muteAllRemoteAudioStreams);
+    await value.engine?.muteAllRemoteAudioStreams(agoraChannelData.muteAllRemoteAudioStreams);
 
     if (agoraChannelData.setBeautyEffectOptions != null) {
-      await value.engine?.setBeautyEffectOptions(
-          true, agoraChannelData.setBeautyEffectOptions!);
+      await value.engine?.setBeautyEffectOptions(true, agoraChannelData.setBeautyEffectOptions!);
     }
 
-    await value.engine
-        ?.enableDualStreamMode(agoraChannelData.enableDualStreamMode);
+    await value.engine?.enableDualStreamMode(agoraChannelData.enableDualStreamMode);
 
     if (agoraChannelData.localPublishFallbackOption != null) {
-      await value.engine?.setLocalPublishFallbackOption(
-          agoraChannelData.localPublishFallbackOption!);
+      await value.engine?.setLocalPublishFallbackOption(agoraChannelData.localPublishFallbackOption!);
     }
 
     if (agoraChannelData.remoteSubscribeFallbackOption != null) {
-      await value.engine?.setRemoteSubscribeFallbackOption(
-          agoraChannelData.remoteSubscribeFallbackOption!);
+      await value.engine?.setRemoteSubscribeFallbackOption(agoraChannelData.remoteSubscribeFallbackOption!);
     }
 
     if (agoraChannelData.videoEncoderConfiguration != null) {
-      await value.engine?.setVideoEncoderConfiguration(
-          agoraChannelData.videoEncoderConfiguration!);
+      await value.engine?.setVideoEncoderConfiguration(agoraChannelData.videoEncoderConfiguration!);
     }
 
-    value.engine?.setCameraAutoFocusFaceModeEnabled(
-        agoraChannelData.setCameraAutoFocusFaceModeEnabled);
+    await value.engine?.setCameraAutoFocusFaceModeEnabled(agoraChannelData.setCameraAutoFocusFaceModeEnabled);
 
-    value.engine?.setCameraTorchOn(agoraChannelData.setCameraTorchOn);
-    await value.engine?.setAudioProfile(
-        agoraChannelData.audioProfile, agoraChannelData.audioScenario);
+    await value.engine?.setCameraTorchOn(agoraChannelData.setCameraTorchOn);
+
+    await value.engine?.setAudioProfile(agoraChannelData.audioProfile, agoraChannelData.audioScenario);
   }
 
   Future<void> joinVideoChannel() async {
@@ -315,8 +294,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       List<AgoraUser> tempList = value.users;
       int indexOfUser = tempList.indexWhere((element) => element.uid == uid);
       if (indexOfUser == -1) return; //this means user is no longer in the call
-      tempList[indexOfUser] =
-          tempList[indexOfUser].copyWith(videoDisabled: videoDisabled);
+      tempList[indexOfUser] = tempList[indexOfUser].copyWith(videoDisabled: videoDisabled);
       value = value.copyWith(users: tempList);
     }
   }
@@ -349,11 +327,9 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     String? channelName,
     int uid = 0,
   }) async {
-    final response = await http
-        .get(Uri.parse('$tokenUrl/rtc/$channelName/publisher/uid/$uid'));
+    final response = await http.get(Uri.parse('$tokenUrl/rtc/$channelName/publisher/uid/$uid'));
     if (response.statusCode == 200) {
-      value =
-          value.copyWith(generatedToken: jsonDecode(response.body)['rtcToken']);
+      value = value.copyWith(generatedToken: jsonDecode(response.body)['rtcToken']);
     } else {
       print(response.reasonPhrase);
       print('Failed to generate the token : ${response.statusCode}');
