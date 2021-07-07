@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
                 return Center(child: CircularProgressIndicator());
               }
               if (snapshot.hasError) {
-                return Center(child: Text('Some error occurred.'));
+                return Center(child: Text("Coulnd't initialize AgoraClient."));
               }
               return Stack(
                 children: [
