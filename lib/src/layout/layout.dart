@@ -1,6 +1,7 @@
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/src/layout/floating_layout.dart';
 import 'package:agora_uikit/src/layout/grid_layout.dart';
+import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +19,13 @@ class AgoraVideoViewer extends StatefulWidget {
   final double? floatingLayoutContainerWidth;
 
   /// Padding of the main user or the active speaker in the floating layout.
-  final EdgeInsets? floatingLayoutMainViewPadding;
+  final EdgeInsets floatingLayoutMainViewPadding;
 
   /// Padding of the secondary user present in the list.
-  final EdgeInsets? floatingLayoutSubViewPadding;
+  final EdgeInsets floatingLayoutSubViewPadding;
 
   /// Widget that will be displayed when the local or remote user has disabled it's video.
-  final Widget? disabledVideoWidget;
+  final Widget disabledVideoWidget;
 
   /// Display the camera and microphone status of a user. This feature is only available in the [Layout.floating]
   final bool showAVState;
@@ -38,9 +39,9 @@ class AgoraVideoViewer extends StatefulWidget {
     this.layoutType = Layout.grid,
     this.floatingLayoutContainerHeight,
     this.floatingLayoutContainerWidth,
-    this.floatingLayoutMainViewPadding,
-    this.floatingLayoutSubViewPadding,
-    this.disabledVideoWidget,
+    this.floatingLayoutMainViewPadding = const EdgeInsets.fromLTRB(3, 0, 3, 3),
+    this.floatingLayoutSubViewPadding = const EdgeInsets.fromLTRB(3, 3, 0, 3),
+    this.disabledVideoWidget = const DisabledVideoWidget(),
     this.showAVState = false,
     this.showNumberOfUsers = false,
   }) : super(key: key);

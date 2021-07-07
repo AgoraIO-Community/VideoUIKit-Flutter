@@ -39,7 +39,7 @@ class AgoraClient {
       agoraConnectionData: agoraConnectionData,
       enabledPermission: enabledPermission,
       agoraChannelData: agoraChannelData,
-      agoraEventHandlers: agoraEventHandlers,
+      agoraEventHandlers: agoraEventHandlers ?? AgoraEventHandlers.empty(),
     );
   }
 
@@ -47,7 +47,7 @@ class AgoraClient {
     required AgoraConnectionData agoraConnectionData,
     required List<Permission> enabledPermission,
     AgoraChannelData? agoraChannelData,
-    AgoraEventHandlers? agoraEventHandlers,
+    required AgoraEventHandlers agoraEventHandlers,
   }) async {
     try {
       await _sessionController.initializeEngine(
