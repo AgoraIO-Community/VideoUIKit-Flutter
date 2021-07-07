@@ -19,10 +19,8 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     client = AgoraClient(
       agoraConnectionData: AgoraConnectionData(
-        appId: "9d98d609dca244b6a885e6c9b12a30ba",
+        appId: "<--Add your App Id here-->",
         channelName: "test",
-        tempToken:
-            '0069d98d609dca244b6a885e6c9b12a30baIADRJkUegWzfxt5AtMvEdHqGgqiT+vWfLpA9KgmDpcEZrAx+f9gAAAAAEACqPfBqFZvfYAEAAQAVm99g',
       ),
       enabledPermission: [
         Permission.camera,
