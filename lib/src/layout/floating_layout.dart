@@ -68,30 +68,22 @@ class _FloatingLayoutState extends State<FloatingLayout> {
         ? Column(
             children: [
               Container(
-                height: widget.floatingLayoutContainerHeight ??
-                    MediaQuery.of(context).size.height * 0.2,
+                height: widget.floatingLayoutContainerHeight ?? MediaQuery.of(context).size.height * 0.2,
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.topLeft,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.client.sessionController.value.users.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return widget.client.sessionController.value.users[index]
-                                .uid !=
-                            widget.client.sessionController.value.mainAgoraUser
-                                .uid
+                    return widget.client.sessionController.value.users[index].uid != widget.client.sessionController.value.mainAgoraUser.uid
                         ? Padding(
                             key: Key('$index'),
                             padding: widget.floatingLayoutSubViewPadding,
                             child: Container(
-                              width: widget.floatingLayoutContainerWidth ??
-                                  MediaQuery.of(context).size.width / 3,
+                              width: widget.floatingLayoutContainerWidth ?? MediaQuery.of(context).size.width / 3,
                               child: Column(
                                 children: [
-                                  widget.client.sessionController.value
-                                              .users[index].uid ==
-                                          widget.client.sessionController.value
-                                              .localUid
+                                  widget.client.sessionController.value.users[index].uid == widget.client.sessionController.value.localUid
                                       ? Expanded(
                                           child: Container(
                                             color: Colors.black,
@@ -105,41 +97,27 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                     ),
                                                   ),
                                                 ),
-                                                !widget
-                                                        .client
-                                                        .sessionController
-                                                        .value
-                                                        .isLocalVideoDisabled
+                                                !widget.client.sessionController.value.isLocalVideoDisabled
                                                     ? Column(
                                                         children: [
-                                                          _videoView(
-                                                              _getLocalViews()),
+                                                          _videoView(_getLocalViews()),
                                                         ],
                                                       )
-                                                    : widget
-                                                        .disabledVideoWidget,
+                                                    : widget.disabledVideoWidget,
                                                 Positioned.fill(
                                                   child: Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
+                                                    alignment: Alignment.topLeft,
                                                     child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8),
+                                                      padding: const EdgeInsets.all(8),
                                                       child: GestureDetector(
-                                                        onTap: () async {
-                                                          await widget.client
-                                                              .sessionController
-                                                              .swapUser(
-                                                                  index: index);
+                                                        onTap: () {
+                                                          widget.client.sessionController.swapUser(index: index);
                                                         },
                                                         child: Container(
                                                           height: 24,
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             color: Colors.blue,
-                                                            shape:
-                                                                BoxShape.circle,
+                                                            shape: BoxShape.circle,
                                                           ),
                                                           child: Image.network(
                                                             'https://i.ibb.co/JrJ7R3w/unpin-icon.png',
@@ -152,23 +130,14 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                 ),
                                                 widget.showAVState!
                                                     ? UserAVStateWidget(
-                                                        videoDisabled: widget
-                                                            .client
-                                                            .sessionController
-                                                            .value
-                                                            .isLocalVideoDisabled,
-                                                        muted: widget
-                                                            .client
-                                                            .sessionController
-                                                            .value
-                                                            .isLocalUserMuted)
+                                                        videoDisabled: widget.client.sessionController.value.isLocalVideoDisabled,
+                                                        muted: widget.client.sessionController.value.isLocalUserMuted)
                                                     : Container(),
                                               ],
                                             ),
                                           ),
                                         )
-                                      : widget.client.sessionController.value
-                                              .users[index].videoDisabled
+                                      : widget.client.sessionController.value.users[index].videoDisabled
                                           ? Expanded(
                                               child: Stack(
                                                 children: [
@@ -178,36 +147,22 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                   widget.disabledVideoWidget,
                                                   Positioned.fill(
                                                     child: Align(
-                                                      alignment:
-                                                          Alignment.topLeft,
+                                                      alignment: Alignment.topLeft,
                                                       child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8),
+                                                        padding: const EdgeInsets.all(8),
                                                         child: GestureDetector(
-                                                          onTap: () async {
-                                                            await widget.client
-                                                                .sessionController
-                                                                .swapUser(
-                                                                    index:
-                                                                        index);
+                                                          onTap: () {
+                                                            widget.client.sessionController.swapUser(index: index);
                                                           },
                                                           child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  Colors.white,
-                                                              shape: BoxShape
-                                                                  .circle,
+                                                            decoration: BoxDecoration(
+                                                              color: Colors.white,
+                                                              shape: BoxShape.circle,
                                                             ),
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(3.0),
+                                                            padding: const EdgeInsets.all(3.0),
                                                             child: Icon(
-                                                              Icons
-                                                                  .push_pin_rounded,
-                                                              color:
-                                                                  Colors.blue,
+                                                              Icons.push_pin_rounded,
+                                                              color: Colors.blue,
                                                             ),
                                                           ),
                                                         ),
@@ -216,18 +171,8 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                   ),
                                                   widget.showAVState!
                                                       ? UserAVStateWidget(
-                                                          videoDisabled: widget
-                                                              .client
-                                                              .sessionController
-                                                              .value
-                                                              .users[index]
-                                                              .videoDisabled,
-                                                          muted: widget
-                                                              .client
-                                                              .sessionController
-                                                              .value
-                                                              .users[index]
-                                                              .muted)
+                                                          videoDisabled: widget.client.sessionController.value.users[index].videoDisabled,
+                                                          muted: widget.client.sessionController.value.users[index].muted)
                                                       : Container(),
                                                 ],
                                               ),
@@ -237,47 +182,27 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                 children: [
                                                   Column(
                                                     children: [
-                                                      _videoView(
-                                                          _getRemoteViews(widget
-                                                              .client
-                                                              .sessionController
-                                                              .value
-                                                              .users[index]
-                                                              .uid)),
+                                                      _videoView(_getRemoteViews(widget.client.sessionController.value.users[index].uid)),
                                                     ],
                                                   ),
                                                   Positioned.fill(
                                                     child: Align(
-                                                      alignment:
-                                                          Alignment.topLeft,
+                                                      alignment: Alignment.topLeft,
                                                       child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8),
+                                                        padding: const EdgeInsets.all(8),
                                                         child: GestureDetector(
-                                                          onTap: () async {
-                                                            await widget.client
-                                                                .sessionController
-                                                                .swapUser(
-                                                                    index:
-                                                                        index);
+                                                          onTap: () {
+                                                            widget.client.sessionController.swapUser(index: index);
                                                           },
                                                           child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  Colors.white,
-                                                              shape: BoxShape
-                                                                  .circle,
+                                                            decoration: BoxDecoration(
+                                                              color: Colors.white,
+                                                              shape: BoxShape.circle,
                                                             ),
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(3.0),
+                                                            padding: const EdgeInsets.all(3.0),
                                                             child: Icon(
-                                                              Icons
-                                                                  .push_pin_rounded,
-                                                              color:
-                                                                  Colors.blue,
+                                                              Icons.push_pin_rounded,
+                                                              color: Colors.blue,
                                                             ),
                                                           ),
                                                         ),
@@ -286,18 +211,8 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                   ),
                                                   widget.showAVState!
                                                       ? UserAVStateWidget(
-                                                          videoDisabled: widget
-                                                              .client
-                                                              .sessionController
-                                                              .value
-                                                              .users[index]
-                                                              .videoDisabled,
-                                                          muted: widget
-                                                              .client
-                                                              .sessionController
-                                                              .value
-                                                              .users[index]
-                                                              .muted)
+                                                          videoDisabled: widget.client.sessionController.value.users[index].videoDisabled,
+                                                          muted: widget.client.sessionController.value.users[index].muted)
                                                       : Container(),
                                                 ],
                                               ),
@@ -310,24 +225,19 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                   },
                 ),
               ),
-              widget.client.sessionController.value.mainAgoraUser.uid !=
-                      widget.client.sessionController.value.localUid
+              widget.client.sessionController.value.mainAgoraUser.uid != widget.client.sessionController.value.localUid
                   ? Expanded(
                       child: Container(
                         padding: widget.floatingLayoutMainViewPadding,
                         child: Column(
-                          children: [
-                            _videoView(_getRemoteViews(widget.client
-                                .sessionController.value.mainAgoraUser.uid))
-                          ],
+                          children: [_videoView(_getRemoteViews(widget.client.sessionController.value.mainAgoraUser.uid))],
                         ),
                       ),
                     )
                   : Expanded(
                       child: Container(
                         padding: widget.floatingLayoutMainViewPadding,
-                        child: widget.client.sessionController.value
-                                .isLocalVideoDisabled
+                        child: widget.client.sessionController.value.isLocalVideoDisabled
                             ? widget.disabledVideoWidget
                             : Stack(
                                 children: [
@@ -351,8 +261,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                     ),
             ],
           )
-        : widget.client.sessionController.value.clientRole ==
-                ClientRole.Broadcaster
+        : widget.client.sessionController.value.clientRole == ClientRole.Broadcaster
             ? widget.client.sessionController.value.isLocalVideoDisabled
                 ? Column(
                     children: [
@@ -390,15 +299,13 @@ class _FloatingLayoutState extends State<FloatingLayout> {
           child: Stack(
             children: [
               _viewFloat(),
-              widget.showNumberOfUsers == null ||
-                      widget.showNumberOfUsers == false
+              widget.showNumberOfUsers == null || widget.showNumberOfUsers == false
                   ? Container()
                   : Positioned.fill(
                       child: Align(
                         alignment: Alignment.topRight,
                         child: NumberOfUsers(
-                          userCount: widget
-                              .client.sessionController.value.users.length,
+                          userCount: widget.client.sessionController.value.users.length,
                         ),
                       ),
                     ),
