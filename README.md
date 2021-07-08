@@ -3,6 +3,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-iOS%20%7C%20Android-blue?logo=flutter" alt="Platform" />
+  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/AgoraIO-Community/Flutter-UIKit/Flutter">
   <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/v/agora_uikit"/></a>
   <img src="https://img.shields.io/github/license/agoraio-community/flutter-uikit?color=red"
       alt="License: MIT" />
