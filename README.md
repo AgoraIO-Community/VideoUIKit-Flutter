@@ -14,6 +14,14 @@ Instantly integrate Agora video calling or video streaming into your Flutter app
 
 ## Getting started
 
+### Roadmap
+- [ ] Add Usernames
+- [ ] More Event Callbacks
+- [ ] Screen Sharing
+- [ ] Layout for Voice Calls
+- [ ] Flutter Web Support
+- [ ] Flutter Desktop Support
+
 ### Requirements
 
 -  [An Agora developer account](https://www.agora.io/en/blog/how-to-get-started-with-agora)
