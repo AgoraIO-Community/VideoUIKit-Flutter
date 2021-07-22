@@ -36,7 +36,13 @@ class _GridLayoutState extends State<GridLayout> {
     for (AgoraUser user in widget.client.sessionController.value.users) {
       user.videoDisabled
           ? list.add(DisabledVideoWidget())
-          : list.add(rtc_remote_view.SurfaceView(uid: user.uid));
+          : list.add(
+              rtc_remote_view.SurfaceView(
+                channelId: widget
+                    .client.sessionController.value.connectionData!.channelName,
+                uid: user.uid,
+              ),
+            );
     }
 
     return list;

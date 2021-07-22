@@ -17,7 +17,7 @@ class AgoraConnectionData {
   final String? tempToken;
 
   /// (Optional) The region for connection. This advanced feature applies to scenarios that have regional restrictions.
-  final AreaCode areaCode;
+  final List<AreaCode> areaCode;
 
   AgoraConnectionData({
     required this.appId,
@@ -25,7 +25,7 @@ class AgoraConnectionData {
     this.uid = 0,
     this.tokenUrl,
     this.tempToken,
-    this.areaCode = AreaCode.GLOB,
+    this.areaCode = const [AreaCode.GLOB],
   });
 
   AgoraConnectionData copyWith({
@@ -34,7 +34,7 @@ class AgoraConnectionData {
     int? uid,
     String? tempToken,
     String? tokenUrl,
-    AreaCode? areaCode,
+    List<AreaCode>? areaCode,
   }) {
     return AgoraConnectionData(
       appId: appId ?? this.appId,

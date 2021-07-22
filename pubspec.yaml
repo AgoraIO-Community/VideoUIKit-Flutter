@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  agora_rtc_engine: ^4.0.1
+  agora_rtc_engine: ^4.0.5
   http: ^0.13.1
   permission_handler: ^8.0.0+1
   lints: ^1.0.1

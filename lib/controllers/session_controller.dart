@@ -36,9 +36,11 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   Future<void> initializeEngine(
       {required AgoraConnectionData agoraConnectionData}) async {
     value = value.copyWith(
-      engine: await RtcEngine.createWithConfig(
-        RtcEngineConfig(agoraConnectionData.appId,
-            areaCode: agoraConnectionData.areaCode),
+      engine: await RtcEngine.createWithContext(
+        RtcEngineContext(
+          agoraConnectionData.appId,
+          areaCode: agoraConnectionData.areaCode,
+        ),
       ),
       connectionData: agoraConnectionData,
     );

@@ -54,6 +54,8 @@ class _FloatingLayoutState extends State<FloatingLayout> {
 
   Widget _getRemoteViews(int uid) {
     return rtc_remote_view.SurfaceView(
+      channelId:
+          widget.client.sessionController.value.connectionData!.channelName,
       uid: uid,
     );
   }
