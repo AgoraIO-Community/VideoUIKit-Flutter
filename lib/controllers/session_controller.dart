@@ -7,6 +7,7 @@ import 'package:agora_uikit/models/agora_user.dart';
 import 'package:agora_uikit/models/agora_connection_data.dart';
 import 'package:agora_uikit/models/agora_event_handlers.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_uikit/src/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
@@ -30,6 +31,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
             clientRole: ClientRole.Broadcaster,
             localUid: 0,
             generatedToken: null,
+            layoutType: Layout.grid,
           ),
         );
 
@@ -119,10 +121,12 @@ class SessionController extends ValueNotifier<AgoraSettings> {
               "Remote audio state changed for $uid, state: $state and reason: $reason";
           print(info);
           if (state == AudioRemoteState.Stopped &&
-              reason == AudioRemoteStateReason.RemoteMuted) {
+              reason == AudioRemoteStateReason.RemoteMuted &&
+              uid != value.localUid) {
             _updateUserAudio(uid: uid, muted: true);
           } else if (state == AudioRemoteState.Decoding &&
-              reason == AudioRemoteStateReason.RemoteUnmuted) {
+              reason == AudioRemoteStateReason.RemoteUnmuted &&
+              uid != value.localUid) {
             _updateUserAudio(uid: uid, muted: false);
           }
           agoraEventHandlers.remoteAudioStateChanged(
@@ -143,7 +147,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         activeSpeaker: (uid) {
           final String info = "Active speaker: $uid";
           print(info);
-          if (value.isActiveSpeakerDisabled == false) {
+          if (value.isActiveSpeakerDisabled == false &&
+              value.layoutType == Layout.floating) {
             final int index =
                 value.users.indexWhere((element) => element.uid == uid);
             swapUser(index: index);
@@ -361,5 +366,9 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       print(response.reasonPhrase);
       print('Failed to generate the token : ${response.statusCode}');
     }
+  }
+
+  void updateLayoutType({required Layout updatedLayout}) {
+    value = value.copyWith(layoutType: updatedLayout);
   }
 }
