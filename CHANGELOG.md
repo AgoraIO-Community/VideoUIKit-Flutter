@@ -1,3 +1,11 @@
+## 0.0.3
+
+  - Upgraded the agora_rtc_engine to v4.0.5
+  - Black Screen Fix
+  - Remove unnecessary null checks
+  - AreaCode bug fix
+  - Added roadmaps to README.md
+
 ## 0.0.2
 
   - Update README
