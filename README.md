@@ -14,6 +14,9 @@ Instantly integrate Agora video calling or video streaming into your Flutter app
 
 ## Getting started
 
+<p align="center">
+  <a href="https://imgbb.com/"><img src="https://i.ibb.co/1XhRmZ1/Group-4.png" alt="Agora Flutter UIKit Layout Sample"></a>
+</p>
 ### Roadmap
 - [ ] Add Usernames
 - [ ] More Event Callbacks
