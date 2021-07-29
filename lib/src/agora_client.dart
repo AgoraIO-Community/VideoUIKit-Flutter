@@ -5,6 +5,7 @@ import 'package:agora_uikit/models/agora_channel_data.dart';
 import 'package:agora_uikit/models/agora_connection_data.dart';
 import 'package:agora_uikit/models/agora_event_handlers.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -57,7 +58,10 @@ class AgoraClient {
       print("Error occured while initializing Agora RtcEngine: $e");
     }
 
-    await enabledPermission.request();
+    if (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS) {
+      await enabledPermission.request();
+    }
 
     _sessionController.createEvents(agoraEventHandlers);
 

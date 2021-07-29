@@ -8,6 +8,7 @@ import 'package:agora_uikit/models/agora_connection_data.dart';
 import 'package:agora_uikit/models/agora_event_handlers.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_uikit/src/enums.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
@@ -250,20 +251,28 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   /// Function to mute/unmute the microphone
   Future<void> toggleMute() async {
-    var status = await Permission.microphone.status;
-    if (value.isLocalUserMuted && status.isDenied) {
-      await Permission.microphone.request();
+    if (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS) {
+      var status = await Permission.microphone.status;
+      if (value.isLocalUserMuted && status.isDenied) {
+        await Permission.microphone.request();
+      }
     }
+
     value = value.copyWith(isLocalUserMuted: !(value.isLocalUserMuted));
     await value.engine?.muteLocalAudioStream(value.isLocalUserMuted);
   }
 
   /// Function to toggle enable/disable the camera
   Future<void> toggleCamera() async {
-    var status = await Permission.camera.status;
-    if (value.isLocalVideoDisabled && status.isDenied) {
-      await Permission.camera.request();
+    if (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS) {
+      var status = await Permission.camera.status;
+      if (value.isLocalVideoDisabled && status.isDenied) {
+        await Permission.camera.request();
+      }
     }
+
     value = value.copyWith(isLocalVideoDisabled: !(value.isLocalVideoDisabled));
     await value.engine?.muteLocalVideoStream(value.isLocalVideoDisabled);
   }
@@ -271,9 +280,13 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   /// Function to switch between front and rear camera
   Future<void> switchCamera() async {
     var status = await Permission.camera.status;
-    if (status.isDenied) {
-      await Permission.camera.request();
+    if (value.isLocalVideoDisabled && status.isDenied) {
+      var status = await Permission.camera.status;
+      if (status.isDenied) {
+        await Permission.camera.request();
+      }
     }
+
     await value.engine?.switchCamera();
   }
 
