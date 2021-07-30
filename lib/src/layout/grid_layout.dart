@@ -1,6 +1,7 @@
 import 'package:agora_uikit/models/agora_user.dart';
 import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
 import 'package:agora_uikit/src/layout/widgets/number_of_users.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as rtc_local_view;
@@ -29,19 +30,27 @@ class GridLayout extends StatefulWidget {
 class _GridLayoutState extends State<GridLayout> {
   List<Widget> _getRenderViews() {
     final List<StatefulWidget> list = [];
-    list.add(rtc_local_view.SurfaceView(
-      zOrderMediaOverlay: true,
-    ));
+    if (widget.client.sessionController.value.isVideoEnabled) {
+      kIsWeb
+          ? list.add(rtc_local_view.SurfaceView())
+          : list.add(rtc_local_view.TextureView());
+    }
 
     for (AgoraUser user in widget.client.sessionController.value.users) {
       user.videoDisabled
           ? list.add(DisabledVideoWidget())
           : list.add(
-              rtc_remote_view.SurfaceView(
-                channelId: widget
-                    .client.sessionController.value.connectionData!.channelName,
-                uid: user.uid,
-              ),
+              kIsWeb
+                  ? rtc_remote_view.SurfaceView(
+                      channelId: widget.client.sessionController.value
+                          .connectionData!.channelName,
+                      uid: user.uid,
+                    )
+                  : rtc_remote_view.TextureView(
+                      channelId: widget.client.sessionController.value
+                          .connectionData!.channelName,
+                      uid: user.uid,
+                    ),
             );
     }
 

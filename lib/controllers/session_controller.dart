@@ -17,23 +17,23 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   SessionController()
       : super(
           AgoraSettings(
-            engine: null,
-            users: [],
-            mainAgoraUser: AgoraUser(
-              uid: 0,
-              remote: true,
-              muted: false,
-              videoDisabled: false,
+              engine: null,
+              users: [],
+              mainAgoraUser: AgoraUser(
+                uid: 0,
+                remote: true,
+                muted: false,
+                videoDisabled: false,
+                clientRole: ClientRole.Broadcaster,
+              ),
+              isLocalUserMuted: false,
+              isLocalVideoDisabled: false,
+              visible: true,
               clientRole: ClientRole.Broadcaster,
-            ),
-            isLocalUserMuted: false,
-            isLocalVideoDisabled: false,
-            visible: true,
-            clientRole: ClientRole.Broadcaster,
-            localUid: 0,
-            generatedToken: null,
-            layoutType: Layout.grid,
-          ),
+              localUid: 0,
+              generatedToken: null,
+              layoutType: Layout.grid,
+              isVideoEnabled: false),
         );
 
   Future<void> initializeEngine(
@@ -214,6 +214,9 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   Future<void> joinVideoChannel() async {
     await value.engine?.enableVideo();
+    await value.engine
+        ?.startPreview()
+        .then((_) => value = value.copyWith(isVideoEnabled: true));
     await value.engine?.enableAudioVolumeIndication(200, 3, true);
     if (value.connectionData!.tokenUrl != null) {
       await _getToken(
@@ -279,11 +282,14 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   /// Function to switch between front and rear camera
   Future<void> switchCamera() async {
-    var status = await Permission.camera.status;
-    if (value.isLocalVideoDisabled && status.isDenied) {
+    if (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS) {
       var status = await Permission.camera.status;
-      if (status.isDenied) {
-        await Permission.camera.request();
+      if (value.isLocalVideoDisabled && status.isDenied) {
+        var status = await Permission.camera.status;
+        if (status.isDenied) {
+          await Permission.camera.request();
+        }
       }
     }
 

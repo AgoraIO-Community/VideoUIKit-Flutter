@@ -3,6 +3,7 @@ import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
 import 'package:agora_uikit/src/layout/widgets/number_of_users.dart';
 import 'package:agora_uikit/src/layout/widgets/user_av_state_widget.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as rtc_local_view;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as rtc_remote_view;
@@ -49,15 +50,26 @@ class FloatingLayout extends StatefulWidget {
 
 class _FloatingLayoutState extends State<FloatingLayout> {
   Widget _getLocalViews() {
-    return rtc_local_view.SurfaceView();
+    if (widget.client.sessionController.value.isVideoEnabled) {
+      return kIsWeb
+          ? rtc_local_view.SurfaceView()
+          : rtc_local_view.TextureView();
+    }
+    return widget.disabledVideoWidget;
   }
 
   Widget _getRemoteViews(int uid) {
-    return rtc_remote_view.SurfaceView(
-      channelId:
-          widget.client.sessionController.value.connectionData!.channelName,
-      uid: uid,
-    );
+    return kIsWeb
+        ? rtc_remote_view.SurfaceView(
+            channelId: widget
+                .client.sessionController.value.connectionData!.channelName,
+            uid: uid,
+          )
+        : rtc_remote_view.TextureView(
+            channelId: widget
+                .client.sessionController.value.connectionData!.channelName,
+            uid: uid,
+          );
   }
 
   /// Video view wrapper

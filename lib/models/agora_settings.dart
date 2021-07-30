@@ -18,6 +18,7 @@ class AgoraSettings {
   String? generatedToken;
   final bool isActiveSpeakerDisabled;
   final Layout layoutType;
+  final bool isVideoEnabled;
 
   AgoraSettings({
     this.engine,
@@ -32,6 +33,7 @@ class AgoraSettings {
     this.generatedToken,
     this.isActiveSpeakerDisabled = false,
     this.layoutType = Layout.grid,
+    this.isVideoEnabled = false,
   });
 
   AgoraSettings copyWith({
@@ -47,6 +49,7 @@ class AgoraSettings {
     String? generatedToken,
     bool? isActiveSpeakerDisabled,
     Layout? layoutType,
+    bool? isVideoEnabled,
   }) {
     return AgoraSettings(
       engine: engine ?? this.engine,
@@ -62,6 +65,7 @@ class AgoraSettings {
       isActiveSpeakerDisabled:
           isActiveSpeakerDisabled ?? this.isActiveSpeakerDisabled,
       layoutType: layoutType ?? this.layoutType,
+      isVideoEnabled: isVideoEnabled ?? this.isVideoEnabled,
     );
   }
 }
