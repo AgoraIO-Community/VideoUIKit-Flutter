@@ -12,12 +12,12 @@ import 'package:permission_handler/permission_handler.dart';
 class AgoraClient {
   static const MethodChannel _channel = MethodChannel('agora_uikit');
 
-  static Future<String> get platformVersion async {
+  static Future<String> platformVersion() async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
 
-  Future<List<int>> get users async {
+  List<int> get users {
     final List<int> version =
         _sessionController.value.users.map((e) => e.uid).toList();
     return version;
@@ -39,7 +39,7 @@ class AgoraClient {
       agoraConnectionData: agoraConnectionData,
       enabledPermission: enabledPermission,
       agoraChannelData: agoraChannelData,
-      agoraEventHandlers: agoraEventHandlers,
+      agoraEventHandlers: agoraEventHandlers ?? AgoraEventHandlers.empty(),
     );
   }
 
@@ -47,10 +47,10 @@ class AgoraClient {
     required AgoraConnectionData agoraConnectionData,
     required List<Permission> enabledPermission,
     AgoraChannelData? agoraChannelData,
-    AgoraEventHandlers? agoraEventHandlers,
+    required AgoraEventHandlers agoraEventHandlers,
   }) async {
     try {
-      _sessionController.initializeEngine(
+      await _sessionController.initializeEngine(
         agoraConnectionData: agoraConnectionData,
       );
     } catch (e) {
@@ -65,6 +65,6 @@ class AgoraClient {
       _sessionController.setChannelProperties(agoraChannelData);
     }
 
-    _sessionController.joinVideoChannel();
+    await _sessionController.joinVideoChannel();
   }
 }

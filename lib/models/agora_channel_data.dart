@@ -5,7 +5,7 @@ class AgoraChannelData {
   /// The Agora [RtcEngine] differentiates channel profiles and applies different optimization algorithms accordingly.
   ///
   /// You can choose between 3 default channel profiles [ChannelProfile.Communication], [ChannelProfile.LiveBroadcasting] and [ChannelProfile.Game]
-  final ChannelProfile? channelProfile;
+  final ChannelProfile channelProfile;
 
   /// Sets the role of a user in a live interactive streaming.
   /// This method applies only when [channelProfile] is set to [ChannelProfile.LiveBroadcasting]
@@ -13,7 +13,7 @@ class AgoraChannelData {
   /// Use this to set the user behaviour inside a channel. A user can choose between a [ClientRole.Audience] or [ClientRole.Broadcaster].
   /// - An audience member can only receive the stream.
   /// - A broadcaster can send and receive the stream.
-  ClientRole? clientRole;
+  ClientRole clientRole;
 
   /// Each video encoder configuration corresponds to a set of video parameters, including the resolution, frame rate, bitrate, and video orientation.
   ///
@@ -25,7 +25,7 @@ class AgoraChannelData {
   /// *Parameter* Sets whether to enable/disable the camera auto-face focus function:
   /// - `true`: Enable the camera auto-face focus function.
   /// - `false`: (Default) Disable the camera auto-face focus function.
-  bool? setCameraAutoFocusFaceModeEnabled;
+  bool setCameraAutoFocusFaceModeEnabled;
 
   /// Enables/Disables the dual video stream mode.
   ///
@@ -34,7 +34,7 @@ class AgoraChannelData {
   /// *Parameter* Sets the stream mode:
   /// - `true`: Dual-stream mode.
   /// - `false`: (Default) Single-stream mode.
-  bool? enableDualStreamMode;
+  bool enableDualStreamMode;
 
   /// Sets the fallback option for the locally published video stream based on the network conditions.
   ///
@@ -60,13 +60,13 @@ class AgoraChannelData {
   /// Sets the sample rate, bitrate, encoding mode, and the number of channels.
   ///
   /// To know more about AudioProfile have a look over here [AudioProfile]
-  AudioProfile? audioProfile;
+  AudioProfile audioProfile;
 
   /// Sets the audio parameters and application scenarios.
   ///
   /// Sets the audio application scenarios. Under different audio scenarios, the device uses different volume tracks, i.e. either the in-call volume or the media volume. S
   /// To know more about AudioScenario have a look over here [AudioScenario]
-  AudioScenario? audioScenario;
+  AudioScenario audioScenario;
 
   /// Enhancess the image being streamed on the channel.
   ///
@@ -80,21 +80,21 @@ class AgoraChannelData {
   /// *Parameter* Enables the camera flash:
   /// - `true`: Enable the camera flash function.
   /// - `false`: (Default) Disable the camera flash function.
-  bool? setCameraTorchOn;
+  bool setCameraTorchOn;
 
   /// Stops/Resumes receiving all remote audio streams.
   ///
   /// *Parameter* Determines whether to receive/stop receiving all remote audio streams:
   /// - `true`: Stop receiving all remote audio streams.
   /// - `false`: (Default) Receive all remote audio streams.
-  bool? muteAllRemoteVideoStreams;
+  bool muteAllRemoteVideoStreams;
 
   /// Stops/Resumes receiving all remote video streams.
   ///
   /// *Parameter* Determines whether to receive/stop receiving all remote audio streams:
   /// - `true`: Stop receiving all remote video streams.
   /// - `false`: (Default) Receive all remote video streams.
-  bool? muteAllRemoteAudioStreams;
+  bool muteAllRemoteAudioStreams;
 
   /// Active Speaker method automatically pins the active speaker to the main view. By default active speaker is enabled.
   ///
@@ -104,19 +104,19 @@ class AgoraChannelData {
   final bool isActiveSpeakerDisabled;
 
   AgoraChannelData({
-    this.channelProfile,
-    this.clientRole,
+    this.channelProfile = ChannelProfile.Communication,
+    this.clientRole = ClientRole.Broadcaster,
     this.videoEncoderConfiguration,
-    this.setCameraAutoFocusFaceModeEnabled,
-    this.enableDualStreamMode,
+    this.setCameraAutoFocusFaceModeEnabled = false,
+    this.enableDualStreamMode = false,
     this.localPublishFallbackOption,
     this.remoteSubscribeFallbackOption,
-    this.audioProfile,
-    this.audioScenario,
+    this.audioProfile = AudioProfile.Default,
+    this.audioScenario = AudioScenario.Default,
     this.setBeautyEffectOptions,
-    this.setCameraTorchOn,
-    this.muteAllRemoteAudioStreams,
-    this.muteAllRemoteVideoStreams,
+    this.setCameraTorchOn = false,
+    this.muteAllRemoteAudioStreams = false,
+    this.muteAllRemoteVideoStreams = false,
     this.isActiveSpeakerDisabled = false,
   });
 

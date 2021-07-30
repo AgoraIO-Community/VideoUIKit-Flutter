@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await AgoraClient.platformVersion, '42');
+    expect(await AgoraClient.platformVersion(), '42');
   });
 }

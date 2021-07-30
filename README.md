@@ -3,6 +3,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-iOS%20%7C%20Android-blue?logo=flutter" alt="Platform" />
+  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/AgoraIO-Community/Flutter-UIKit/Flutter">
   <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/v/agora_uikit"/></a>
   <img src="https://img.shields.io/github/license/agoraio-community/flutter-uikit?color=red"
       alt="License: MIT" />
@@ -12,6 +13,23 @@
 Instantly integrate Agora video calling or video streaming into your Flutter application.  
 
 ## Getting started
+
+<p align="center">
+  <a href="https://imgbb.com/"><img src="https://i.ibb.co/1XhRmZ1/Group-4.png" alt="Agora Flutter UIKit Layout Sample"></a>
+</p>
+
+### Roadmap
+
+- [ ] Add Usernames
+- [ ] More Event Callbacks
+- [ ] Screen Sharing
+- [ ] Layout for Voice Calls
+- [ ] Re-orderable list view (Floating Layout)
+- [ ] Cloud recording
+- [ ] Promoting an audience member to a broadcaster role.
+- [ ] Muting/Unmuting a remote member
+- [ ] Flutter Web Support as a pre-release
+- [ ] Flutter Desktop Support as a pre-release
 
 ### Requirements
 

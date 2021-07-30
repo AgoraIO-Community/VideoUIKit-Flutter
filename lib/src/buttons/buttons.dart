@@ -15,13 +15,13 @@ class AgoraVideoButtons extends StatefulWidget {
   final bool? autoHideButtons;
 
   /// The default auto hide time = 5 seconds
-  final int? autoHideButtonTime;
+  final int autoHideButtonTime;
 
   /// Adds a vertical padding to the set of button
   final double? verticalButtonPadding;
 
   /// Alignment for the button class
-  final Alignment? buttonAlignment;
+  final Alignment buttonAlignment;
 
   /// Use this to style the disconnect button as per your liking while still keeping the default functionality.
   final Widget? disconnectButtonChild;
@@ -41,9 +41,9 @@ class AgoraVideoButtons extends StatefulWidget {
     this.enabledButtons,
     this.extraButtons,
     this.autoHideButtons,
-    this.autoHideButtonTime,
+    this.autoHideButtonTime = 5,
     this.verticalButtonPadding,
-    this.buttonAlignment,
+    this.buttonAlignment = Alignment.bottomCenter,
     this.disconnectButtonChild,
     this.muteButtonChild,
     this.switchCameraButtonChild,
@@ -61,7 +61,7 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
   void initState() {
     super.initState();
     Future.delayed(
-      Duration(seconds: widget.autoHideButtonTime ?? 5),
+      Duration(seconds: widget.autoHideButtonTime),
       () {
         if (mounted) {
           setState(() {
@@ -91,7 +91,7 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
 
   Widget toolbar(List<Widget>? buttonList) {
     return Container(
-      alignment: widget.buttonAlignment ?? Alignment.bottomCenter,
+      alignment: widget.buttonAlignment,
       padding: widget.verticalButtonPadding == null
           ? const EdgeInsets.only(bottom: 48)
           : EdgeInsets.symmetric(
@@ -230,8 +230,8 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
 
   /// Default functionality of disconnect button is such that it pops the view and navigates the user to the previous screen.
   void _onCallEnd(BuildContext context) {
-    widget.client.sessionController.dispose();
     widget.client.sessionController.endCall();
+    widget.client.sessionController.dispose();
     Navigator.pop(context);
   }
 
