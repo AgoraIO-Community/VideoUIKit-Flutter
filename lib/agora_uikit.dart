@@ -28,4 +28,5 @@ export 'package:agora_rtc_engine/rtc_engine.dart'
         AudioLocalError,
         LocalVideoStreamState,
         LocalVideoStreamError,
-        AreaCode;
+        AreaCode,
+        VideoRenderMode;
