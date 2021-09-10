@@ -2,70 +2,56 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 
 class AgoraEventHandlers {
   /// Occurs when a remote user [ChannelProfile.Communication]/host [ChannelProfile.LiveBroadcasting] joins the channel
-  final Function(int uid, int elapsed) userJoined;
+  final Function(int uid, int elapsed)? userJoined;
 
   /// Occurs when the local user joins a specified channel.
-  final Function(String channel, int uid, int elapsed) joinChannelSuccess;
+  final Function(String channel, int uid, int elapsed)? joinChannelSuccess;
 
   /// Reports an error during SDK runtime
-  final Function(ErrorCode errorCode) onError;
+  final Function(ErrorCode errorCode)? onError;
 
   /// Occurs when a user leaves the channel.
-  final Function(RtcStats stats) leaveChannel;
+  final Function(RtcStats stats)? leaveChannel;
 
   /// Occurs when a remote user [ChannelProfile.Communication]/host [ChannelProfile.LiveBroadcasting] leaves the channel.
-  final Function(int uid, UserOfflineReason reason) userOffline;
+  final Function(int uid, UserOfflineReason reason)? userOffline;
 
   /// Occurs when the token expires in 30 seconds.
-  final Function(String token) tokenPrivilegeWillExpire;
+  final Function(String token)? tokenPrivilegeWillExpire;
 
   /// Occurs when the remote video state changes.
   final Function(int uid, VideoRemoteState state, VideoRemoteStateReason reason,
-      int elapsed) remoteVideoStateChanged;
+      int elapsed)? remoteVideoStateChanged;
 
   /// Occurs when the remote audio state changes.
   final Function(int uid, AudioRemoteState state, AudioRemoteStateReason reason,
-      int elapsed) remoteAudioStateChanged;
+      int elapsed)? remoteAudioStateChanged;
 
   /// Occurs when the local audio state changes.
-  final Function(AudioLocalState state, AudioLocalError error)
+  final Function(AudioLocalState state, AudioLocalError error)?
       localAudioStateChanged;
 
   /// Occurs when the local video state changes.
   final Function(
-          LocalVideoStreamState localVideoState, LocalVideoStreamError error)
+          LocalVideoStreamState localVideoState, LocalVideoStreamError error)?
       localVideoStateChanged;
 
   /// Reports which user is the loudest speaker.
-  final Function(int uid) activeSpeaker;
+  final Function(int uid)? activeSpeaker;
 
   const AgoraEventHandlers({
-    required this.userJoined,
-    required this.joinChannelSuccess,
-    required this.onError,
-    required this.activeSpeaker,
-    required this.leaveChannel,
-    required this.localAudioStateChanged,
-    required this.localVideoStateChanged,
-    required this.remoteAudioStateChanged,
-    required this.remoteVideoStateChanged,
-    required this.tokenPrivilegeWillExpire,
-    required this.userOffline,
+    this.userJoined,
+    this.joinChannelSuccess,
+    this.onError,
+    this.activeSpeaker,
+    this.leaveChannel,
+    this.localAudioStateChanged,
+    this.localVideoStateChanged,
+    this.remoteAudioStateChanged,
+    this.remoteVideoStateChanged,
+    this.tokenPrivilegeWillExpire,
+    this.userOffline,
   });
-
-  factory AgoraEventHandlers.empty() => AgoraEventHandlers(
-        userJoined: (_, __) {},
-        joinChannelSuccess: (_, __, ___) {},
-        onError: (_) {},
-        activeSpeaker: (_) {},
-        leaveChannel: (_) {},
-        localAudioStateChanged: (_, __) {},
-        localVideoStateChanged: (_, __) {},
-        remoteAudioStateChanged: (_, __, ___, ____) {},
-        remoteVideoStateChanged: (_, __, ___, ____) {},
-        tokenPrivilegeWillExpire: (_) {},
-        userOffline: (_, __) {},
-      );
 
   AgoraEventHandlers copyWith({
     Function(int uid, int elapsed)? userJoined,

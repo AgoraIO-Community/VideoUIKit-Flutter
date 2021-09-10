@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/models/agora_channel_data.dart';
 import 'package:agora_uikit/models/agora_connection_data.dart';
 import 'package:agora_uikit/models/agora_event_handlers.dart';
-import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -39,7 +39,7 @@ class AgoraClient {
       agoraConnectionData: agoraConnectionData,
       enabledPermission: enabledPermission,
       agoraChannelData: agoraChannelData,
-      agoraEventHandlers: agoraEventHandlers ?? AgoraEventHandlers.empty(),
+      agoraEventHandlers: agoraEventHandlers,
     );
   }
 
@@ -47,7 +47,7 @@ class AgoraClient {
     required AgoraConnectionData agoraConnectionData,
     required List<Permission> enabledPermission,
     AgoraChannelData? agoraChannelData,
-    required AgoraEventHandlers agoraEventHandlers,
+    AgoraEventHandlers? agoraEventHandlers,
   }) async {
     try {
       await _sessionController.initializeEngine(
@@ -59,7 +59,8 @@ class AgoraClient {
 
     await enabledPermission.request();
 
-    _sessionController.createEvents(agoraEventHandlers);
+    if (agoraEventHandlers != null)
+      _sessionController.createEvents(agoraEventHandlers);
 
     if (agoraChannelData != null) {
       _sessionController.setChannelProperties(agoraChannelData);
