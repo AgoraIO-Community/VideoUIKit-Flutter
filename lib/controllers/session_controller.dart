@@ -51,6 +51,274 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   void createEvents(AgoraEventHandlers agoraEventHandlers) async {
     value.engine?.setEventHandler(
       RtcEngineEventHandler(
+        warning: (warning) {
+          if (agoraEventHandlers.warning != null) {
+            agoraEventHandlers.warning!(warning);
+          }
+        },
+        apiCallExecuted: (error, api, result) {
+          if (agoraEventHandlers.apiCallExecuted != null) {
+            agoraEventHandlers.apiCallExecuted!(error, api, result);
+          }
+        },
+        rejoinChannelSuccess: (channel, uid, elapsed) {
+          if (agoraEventHandlers.rejoinChannelSuccess != null) {
+            agoraEventHandlers.rejoinChannelSuccess!(channel, uid, elapsed);
+          }
+        },
+        localUserRegistered: (uid, userAccount) {
+          if (agoraEventHandlers.localUserRegistered != null) {
+            agoraEventHandlers.localUserRegistered!(uid, userAccount);
+          }
+        },
+        userInfoUpdated: (uid, userInfo) {
+          if (agoraEventHandlers.userInfoUpdated != null) {
+            agoraEventHandlers.userInfoUpdated!(uid, userInfo);
+          }
+        },
+        clientRoleChanged: (oldRole, newRole) {
+          if (agoraEventHandlers.clientRoleChanged != null) {
+            agoraEventHandlers.clientRoleChanged!(oldRole, newRole);
+          }
+        },
+        connectionStateChanged: (state, reason) {
+          if (agoraEventHandlers.connectionStateChanged != null) {
+            agoraEventHandlers.connectionStateChanged!(state, reason);
+          }
+        },
+        networkTypeChanged: (type) {
+          if (agoraEventHandlers.networkTypeChanged != null) {
+            agoraEventHandlers.networkTypeChanged!(type);
+          }
+        },
+        connectionLost: () {
+          if (agoraEventHandlers.connectionLost != null) {
+            agoraEventHandlers.connectionLost!();
+          }
+        },
+        requestToken: () {
+          if (agoraEventHandlers.requestToken != null) {
+            agoraEventHandlers.requestToken!();
+          }
+        },
+        audioVolumeIndication: (speakers, totalVolume) {
+          if (agoraEventHandlers.audioVolumeIndication != null) {
+            agoraEventHandlers.audioVolumeIndication!(speakers, totalVolume);
+          }
+        },
+        firstLocalAudioFrame: (elapsed) {
+          if (agoraEventHandlers.firstLocalAudioFrame != null) {
+            agoraEventHandlers.firstLocalAudioFrame!(elapsed);
+          }
+        },
+        firstLocalVideoFrame: (width, height, elapsed) {
+          if (agoraEventHandlers.firstLocalVideoFrame != null) {
+            agoraEventHandlers.firstLocalVideoFrame!(width, height, elapsed);
+          }
+        },
+        userMuteVideo: (uid, muted) {
+          if (agoraEventHandlers.userMuteVideo != null) {
+            agoraEventHandlers.userMuteVideo!(uid, muted);
+          }
+        },
+        videoSizeChanged: (uid, width, height, rotation) {
+          if (agoraEventHandlers.videoSizeChanged != null) {
+            agoraEventHandlers.videoSizeChanged!(uid, width, height, rotation);
+          }
+        },
+        localPublishFallbackToAudioOnly: (isFallbackOrRecover) {
+          if (agoraEventHandlers.localPublishFallbackToAudioOnly != null) {
+            agoraEventHandlers
+                .localPublishFallbackToAudioOnly!(isFallbackOrRecover);
+          }
+        },
+        remoteSubscribeFallbackToAudioOnly: (uid, isFallbackOrRecover) {
+          if (agoraEventHandlers.remoteSubscribeFallbackToAudioOnly != null) {
+            agoraEventHandlers.remoteSubscribeFallbackToAudioOnly!(
+                uid, isFallbackOrRecover);
+          }
+        },
+        audioRouteChanged: (routing) {
+          if (agoraEventHandlers.audioRouteChanged != null) {
+            agoraEventHandlers.audioRouteChanged!(routing);
+          }
+        },
+        cameraFocusAreaChanged: (rect) {
+          if (agoraEventHandlers.cameraFocusAreaChanged != null) {
+            agoraEventHandlers.cameraFocusAreaChanged!(rect);
+          }
+        },
+        cameraExposureAreaChanged: (rect) {
+          if (agoraEventHandlers.cameraExposureAreaChanged != null) {
+            agoraEventHandlers.cameraExposureAreaChanged!(rect);
+          }
+        },
+        facePositionChanged: (imageWidth, imageHeight, faces) {
+          if (agoraEventHandlers.facePositionChanged != null) {
+            agoraEventHandlers.facePositionChanged!(
+                imageWidth, imageHeight, faces);
+          }
+        },
+        rtcStats: (stats) {
+          if (agoraEventHandlers.rtcStats != null) {
+            agoraEventHandlers.rtcStats!(stats);
+          }
+        },
+        lastmileQuality: (quality) {
+          if (agoraEventHandlers.lastmileQuality != null) {
+            agoraEventHandlers.lastmileQuality!(quality);
+          }
+        },
+        networkQuality: (uid, txQuality, rxQuality) {
+          if (agoraEventHandlers.networkQuality != null) {
+            agoraEventHandlers.networkQuality!(uid, txQuality, rxQuality);
+          }
+        },
+        lastmileProbeResult: (result) {
+          if (agoraEventHandlers.lastmileProbeResult != null) {
+            agoraEventHandlers.lastmileProbeResult!(result);
+          }
+        },
+        localVideoStats: (stats) {
+          if (agoraEventHandlers.localVideoStats != null) {
+            agoraEventHandlers.localVideoStats!(stats);
+          }
+        },
+        localAudioStats: (stats) {
+          if (agoraEventHandlers.localAudioStats != null) {
+            agoraEventHandlers.localAudioStats!(stats);
+          }
+        },
+        remoteVideoStats: (stats) {
+          if (agoraEventHandlers.remoteVideoStats != null) {
+            agoraEventHandlers.remoteVideoStats!(stats);
+          }
+        },
+        remoteAudioStats: (stats) {
+          if (agoraEventHandlers.remoteAudioStats != null) {
+            agoraEventHandlers.remoteAudioStats!(stats);
+          }
+        },
+        audioMixingFinished: () {
+          if (agoraEventHandlers.audioMixingFinished != null) {
+            agoraEventHandlers.audioMixingFinished!();
+          }
+        },
+        audioMixingStateChanged: (state, reason) {
+          if (agoraEventHandlers.audioMixingStateChanged != null) {
+            agoraEventHandlers.audioMixingStateChanged!(state, reason);
+          }
+        },
+        audioEffectFinished: (soundId) {
+          if (agoraEventHandlers.audioEffectFinished != null) {
+            agoraEventHandlers.audioEffectFinished!(soundId);
+          }
+        },
+        rtmpStreamingStateChanged: (url, state, errCode) {
+          if (agoraEventHandlers.rtmpStreamingStateChanged != null) {
+            agoraEventHandlers.rtmpStreamingStateChanged!(url, state, errCode);
+          }
+        },
+        transcodingUpdated: () {
+          if (agoraEventHandlers.transcodingUpdated != null) {
+            agoraEventHandlers.transcodingUpdated!();
+          }
+        },
+        streamInjectedStatus: (url, uid, status) {
+          if (agoraEventHandlers.streamInjectedStatus != null) {
+            agoraEventHandlers.streamInjectedStatus!(url, uid, status);
+          }
+        },
+        streamMessage: (uid, streamId, data) {
+          if (agoraEventHandlers.streamMessage != null) {
+            agoraEventHandlers.streamMessage!(uid, streamId, data);
+          }
+        },
+        streamMessageError: (uid, streamId, error, missed, cached) {
+          if (agoraEventHandlers.streamMessageError != null) {
+            agoraEventHandlers.streamMessageError!(
+                uid, streamId, error, missed, cached);
+          }
+        },
+        mediaEngineLoadSuccess: () {
+          if (agoraEventHandlers.mediaEngineLoadSuccess != null) {
+            agoraEventHandlers.mediaEngineLoadSuccess!();
+          }
+        },
+        mediaEngineStartCallSuccess: () {
+          if (agoraEventHandlers.mediaEngineStartCallSuccess != null) {
+            agoraEventHandlers.mediaEngineStartCallSuccess!();
+          }
+        },
+        channelMediaRelayStateChanged: (state, code) {
+          if (agoraEventHandlers.channelMediaRelayStateChanged != null) {
+            agoraEventHandlers.channelMediaRelayStateChanged!(state, code);
+          }
+        },
+        channelMediaRelayEvent: (code) {
+          if (agoraEventHandlers.channelMediaRelayEvent != null) {
+            agoraEventHandlers.channelMediaRelayEvent!(code);
+          }
+        },
+        metadataReceived: (buffer, uid, timeStampMs) {
+          if (agoraEventHandlers.metadataReceived != null) {
+            agoraEventHandlers.metadataReceived!(buffer, uid, timeStampMs);
+          }
+        },
+        firstLocalVideoFramePublished: (elapsed) {
+          if (agoraEventHandlers.firstLocalVideoFramePublished != null) {
+            agoraEventHandlers.firstLocalVideoFramePublished!(elapsed);
+          }
+        },
+        firstLocalAudioFramePublished: (elapsed) {
+          if (agoraEventHandlers.firstLocalAudioFramePublished != null) {
+            agoraEventHandlers.firstLocalAudioFramePublished!(elapsed);
+          }
+        },
+        audioPublishStateChanged:
+            (channel, oldState, newState, elapseSinceLastState) {
+          if (agoraEventHandlers.audioPublishStateChanged != null) {
+            agoraEventHandlers.audioPublishStateChanged!(
+                channel, oldState, newState, elapseSinceLastState);
+          }
+        },
+        videoPublishStateChanged:
+            (channel, oldState, newState, elapseSinceLastState) {
+          if (agoraEventHandlers.videoPublishStateChanged != null) {
+            agoraEventHandlers.videoPublishStateChanged!(
+                channel, oldState, newState, elapseSinceLastState);
+          }
+        },
+        audioSubscribeStateChanged:
+            (channel, uid, oldState, newState, elapseSinceLastState) {
+          if (agoraEventHandlers.audioSubscribeStateChanged != null) {
+            agoraEventHandlers.audioSubscribeStateChanged!(
+                channel, uid, oldState, newState, elapseSinceLastState);
+          }
+        },
+        videoSubscribeStateChanged:
+            (channel, uid, oldState, newState, elapseSinceLastState) {
+          if (agoraEventHandlers.videoSubscribeStateChanged != null) {
+            agoraEventHandlers.videoSubscribeStateChanged!(
+                channel, uid, oldState, newState, elapseSinceLastState);
+          }
+        },
+        rtmpStreamingEvent: (url, eventCode) {
+          if (agoraEventHandlers.rtmpStreamingEvent != null) {
+            agoraEventHandlers.rtmpStreamingEvent!(url, eventCode);
+          }
+        },
+        userSuperResolutionEnabled: (uid, enabled, reason) {
+          if (agoraEventHandlers.userSuperResolutionEnabled != null) {
+            agoraEventHandlers.userSuperResolutionEnabled!(
+                uid, enabled, reason);
+          }
+        },
+        uploadLogResult: (requestId, success, reason) {
+          if (agoraEventHandlers.uploadLogResult != null) {
+            agoraEventHandlers.uploadLogResult!(requestId, success, reason);
+          }
+        },
         error: (code) {
           final info = 'onError: $code';
           print(info);
