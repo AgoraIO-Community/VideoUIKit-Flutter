@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/models/agora_channel_data.dart';
 import 'package:agora_uikit/models/agora_connection_data.dart';
 import 'package:agora_uikit/models/agora_event_handlers.dart';
-import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -29,26 +29,19 @@ class AgoraClient {
     return _sessionController;
   }
 
-  AgoraClient({
-    required AgoraConnectionData agoraConnectionData,
-    required List<Permission> enabledPermission,
-    AgoraChannelData? agoraChannelData,
-    AgoraEventHandlers? agoraEventHandlers,
-  }) {
-    _initAgoraRtcEngine(
-      agoraConnectionData: agoraConnectionData,
-      enabledPermission: enabledPermission,
-      agoraChannelData: agoraChannelData,
-      agoraEventHandlers: agoraEventHandlers ?? AgoraEventHandlers.empty(),
-    );
-  }
+  late final AgoraConnectionData agoraConnectionData;
+  late final List<Permission> enabledPermission;
+  final AgoraChannelData? agoraChannelData;
+  final AgoraEventHandlers? agoraEventHandlers;
 
-  Future<void> _initAgoraRtcEngine({
-    required AgoraConnectionData agoraConnectionData,
-    required List<Permission> enabledPermission,
-    AgoraChannelData? agoraChannelData,
-    required AgoraEventHandlers agoraEventHandlers,
-  }) async {
+  AgoraClient({
+    required this.agoraConnectionData,
+    required this.enabledPermission,
+    this.agoraChannelData,
+    this.agoraEventHandlers,
+  });
+
+  Future<void> initAgoraRtcEngine() async {
     try {
       await _sessionController.initializeEngine(
         agoraConnectionData: agoraConnectionData,
@@ -59,10 +52,11 @@ class AgoraClient {
 
     await enabledPermission.request();
 
-    _sessionController.createEvents(agoraEventHandlers);
+    _sessionController
+        .createEvents(agoraEventHandlers ?? AgoraEventHandlers.empty());
 
     if (agoraChannelData != null) {
-      _sessionController.setChannelProperties(agoraChannelData);
+      _sessionController.setChannelProperties(agoraChannelData!);
     }
 
     await _sessionController.joinVideoChannel();
