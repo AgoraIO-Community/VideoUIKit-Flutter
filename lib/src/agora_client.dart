@@ -15,12 +15,19 @@ class AgoraClient {
   final AgoraChannelData? agoraChannelData;
   final AgoraEventHandlers? agoraEventHandlers;
 
+  bool _initialized = false;
+
   AgoraClient({
     required this.agoraConnectionData,
     required this.enabledPermission,
     this.agoraChannelData,
     this.agoraEventHandlers,
-  });
+  }) : _initialized = false;
+
+  /// Useful to check if [AgoraClient] is ready for further usage
+  ///
+  /// See `initAgoraRtcEngine()` to initialize it
+  bool get isInitialized => _initialized;
 
   static const MethodChannel _channel = MethodChannel('agora_uikit');
 
@@ -42,6 +49,9 @@ class AgoraClient {
   }
 
   Future<void> initAgoraRtcEngine() async {
+    if (_initialized) {
+      return;
+    }
     try {
       await _sessionController.initializeEngine(
         agoraConnectionData: agoraConnectionData,
@@ -60,5 +70,6 @@ class AgoraClient {
     }
 
     await _sessionController.joinVideoChannel();
+    _initialized = true;
   }
 }
