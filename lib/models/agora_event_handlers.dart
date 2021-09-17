@@ -71,7 +71,7 @@ class AgoraEventHandlers {
   final Function()? requestToken;
 
   /// Reports which users are speaking and the speakers' volume, and whether the local user is speaking.
-  final Function(List, int)? audioVolumeIndication;
+  final Function(List<AudioVolumeInfo>, int)? audioVolumeIndication;
 
   /// Occurs when the first local audio frame is sent.
   final Function(int)? firstLocalAudioFrame;

@@ -17,6 +17,8 @@ export 'package:agora_rtc_engine/rtc_engine.dart'
         AudioRemoteStateReason,
         AudioLocalState,
         AudioLocalError,
+        AudioVolumeInfo,
+        FacePositionInfo,
         LocalVideoStreamState,
         LocalVideoStreamError,
         AreaCode,
