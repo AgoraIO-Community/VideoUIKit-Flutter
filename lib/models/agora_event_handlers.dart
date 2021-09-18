@@ -101,7 +101,7 @@ class AgoraEventHandlers {
   final Function(Rect)? cameraExposureAreaChanged;
 
   /// Reports the face detection result of the local user.
-  final Function(int, int, List)? facePositionChanged;
+  final Function(int, int, List<FacePositionInfo>)? facePositionChanged;
 
   /// Reports the statistics of the [RtcEngine] once every two seconds.
   final Function(RtcStats)? rtcStats;
