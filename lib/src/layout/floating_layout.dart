@@ -31,6 +31,9 @@ class FloatingLayout extends StatefulWidget {
   /// Display the total number of users in a channel.
   final bool? showNumberOfUsers;
 
+  /// Render mode for local and remote video
+  final VideoRenderMode? videoRenderMode;
+
   const FloatingLayout({
     Key? key,
     required this.client,
@@ -41,6 +44,7 @@ class FloatingLayout extends StatefulWidget {
     this.disabledVideoWidget = const DisabledVideoWidget(),
     this.showAVState = false,
     this.showNumberOfUsers,
+    this.videoRenderMode,
   }) : super(key: key);
 
   @override
@@ -49,7 +53,9 @@ class FloatingLayout extends StatefulWidget {
 
 class _FloatingLayoutState extends State<FloatingLayout> {
   Widget _getLocalViews() {
-    return rtc_local_view.SurfaceView();
+    return rtc_local_view.SurfaceView(
+      renderMode: widget.videoRenderMode,
+    );
   }
 
   Widget _getRemoteViews(int uid) {
@@ -57,6 +63,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
       channelId:
           widget.client.sessionController.value.connectionData!.channelName,
       uid: uid,
+      renderMode: widget.videoRenderMode,
     );
   }
 
