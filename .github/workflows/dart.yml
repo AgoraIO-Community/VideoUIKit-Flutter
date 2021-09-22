@@ -20,18 +20,24 @@ jobs:
 
       - uses: subosito/flutter-action@v1
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: flutter pub get
 
-      - name: Check format
+      - name: Check Format
         run: flutter format --set-exit-if-changed .
 
       # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
         run: flutter analyze
 
+      - name: Build Android
+        run: flutter build appbundle
+
+      - name: Build iOS
+        run: flutter build ios --release --no-codesign
+
       # Your project will need to have tests in test/ and a dependency on
       # package:test for this step to succeed. Note that Flutter projects will
       # want to change this to 'flutter test'.
-      - name: Run tests
+      - name: Run Tests
         run: flutter test
