@@ -140,7 +140,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         },
         localVideoStateChanged: (localVideoState, error) {
           final String info =
-              "Local audio state changed state: $localVideoState and error: $error";
+              "Local video state changed state: $localVideoState and error: $error";
           print(info);
           agoraEventHandlers.localVideoStateChanged(localVideoState, error);
         },
