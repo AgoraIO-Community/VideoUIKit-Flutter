@@ -31,9 +31,11 @@ jobs:
         run: flutter analyze
 
       - name: Build Android
+        working-directory: ./example
         run: flutter build appbundle
 
       - name: Build iOS
+        working-directory: ./example
         run: flutter build ios --release --no-codesign
 
       # Your project will need to have tests in test/ and a dependency on
