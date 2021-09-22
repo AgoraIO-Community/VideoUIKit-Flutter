@@ -58,4 +58,3 @@ export 'src/agora_client.dart' show AgoraClient;
 export 'src/buttons/buttons.dart' show AgoraVideoButtons;
 export 'src/enums.dart';
 export 'src/layout/layout.dart' show AgoraVideoViewer;
-
