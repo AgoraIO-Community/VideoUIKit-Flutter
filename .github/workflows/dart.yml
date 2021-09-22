@@ -16,30 +16,37 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Export Release Timestamp
+        run: echo "APP_VERSION=v$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
 
-      - uses: subosito/flutter-action@v1
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Install Dependencies
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: "15"
+          distribution: "adopt"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Install pub Dependencies
         run: flutter pub get
 
       - name: Check Format
         run: flutter format --set-exit-if-changed .
 
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
         run: flutter analyze
 
-      - name: Build Android
-        working-directory: ./example
-        run: flutter build appbundle
-
-      - name: Build iOS
-        working-directory: ./example
-        run: flutter build ios --no-codesign
-
-      # Your project will need to have tests in test/ and a dependency on
-      # package:test for this step to succeed. Note that Flutter projects will
-      # want to change this to 'flutter test'.
       - name: Run Tests
         run: flutter test
+
+      - name: Build Android App
+        run: flutter build apk --split-per-abi
+
+      - name: Build iOS App
+        run: flutter build ios --no-codesign
