@@ -46,7 +46,9 @@ jobs:
         run: flutter test
 
       - name: Build Android App
+        working-directory: ./example
         run: flutter build apk --split-per-abi
 
       - name: Build iOS App
+        working-directory: ./example
         run: flutter build ios --no-codesign
