@@ -1,5 +1,5 @@
 PODS:
-  - agora_rtc_engine (4.0.1):
+  - agora_rtc_engine (4.1.0-alpha.2):
     - AgoraRtcEngine_iOS (= 3.4.2)
     - Flutter
   - agora_uikit (0.0.1):
@@ -30,10 +30,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  agora_rtc_engine: c8614d106bde012b8f482c088d88812ec983fc70
+  agora_rtc_engine: 83b50049c61ee3339c5c387edff670d745747d53
   agora_uikit: ca47b21e2af19474ddd8ec153670c2dc8cf3a9e8
   AgoraRtcEngine_iOS: 3a4d64f2866ffc122e090a693153bb673021f6fe
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c

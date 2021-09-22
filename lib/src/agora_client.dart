@@ -25,8 +25,6 @@ class AgoraClient {
   }) : _initialized = false;
 
   /// Useful to check if [AgoraClient] is ready for further usage
-  ///
-  /// See `initAgoraRtcEngine()` to initialize it
   bool get isInitialized => _initialized;
 
   static const MethodChannel _channel = MethodChannel('agora_uikit');
@@ -48,7 +46,7 @@ class AgoraClient {
     return _sessionController;
   }
 
-  Future<void> initAgoraRtcEngine() async {
+  Future<void> initialize() async {
     if (_initialized) {
       return;
     }

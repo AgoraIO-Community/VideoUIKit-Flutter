@@ -21,12 +21,15 @@ class _MyAppState extends State<MyApp> {
       Permission.microphone,
     ],
   );
-  Future<void> futureInitialize;
 
   @override
   void initState() {
-    futureInitialize = client.initAgoraRtcEngine();
+    initAgora();
     super.initState();
+  }
+
+  void initAgora() async {
+    await client.initialize();
   }
 
   @override
@@ -39,27 +42,16 @@ class _MyAppState extends State<MyApp> {
           centerTitle: true,
         ),
         body: SafeArea(
-          child: FutureBuilder(
-              future: futureInitialize,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasError) {
-                  return Center(
-                      child: Text("Coulnd't initialize AgoraClient."));
-                }
-                return Stack(
-                  children: [
-                    AgoraVideoViewer(
-                      client: client,
-                    ),
-                    AgoraVideoButtons(
-                      client: client,
-                    ),
-                  ],
-                );
-              }),
+          child: Stack(
+            children: [
+              AgoraVideoViewer(
+                client: client,
+              ),
+              AgoraVideoButtons(
+                client: client,
+              ),
+            ],
+          ),
         ),
       ),
     );
