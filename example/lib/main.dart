@@ -24,8 +24,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    initAgora();
     super.initState();
+    initAgora();
   }
 
   void initAgora() async {

@@ -10,8 +10,8 @@ import 'package:permission_handler/permission_handler.dart';
 
 /// [AgoraClient] is the main class in this UIKit. It is used to initialize our [RtcEngine], add the list of user permissions, define the channel properties and use extend the [RtcEngineEventHandler] class.
 class AgoraClient {
-  late final AgoraConnectionData agoraConnectionData;
-  late final List<Permission> enabledPermission;
+  final AgoraConnectionData agoraConnectionData;
+  final List<Permission> enabledPermission;
   final AgoraChannelData? agoraChannelData;
   final AgoraEventHandlers? agoraEventHandlers;
 

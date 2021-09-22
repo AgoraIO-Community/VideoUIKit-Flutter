@@ -102,12 +102,12 @@ final AgoraClient client = AgoraClient(
 // Initialize the Agora Engine
 @override
 void initState() {
-  initAgora();
   super.initState();
+  initAgora();
 }
 
 void initAgora() async {
-  await client.initAgoraRtcEngine();
+  await client.initialize();
 }
 
 // Build your layout
