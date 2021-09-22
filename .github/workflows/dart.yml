@@ -36,7 +36,7 @@ jobs:
 
       - name: Build iOS
         working-directory: ./example
-        run: flutter build ios --release --no-codesign
+        run: flutter build ios
 
       # Your project will need to have tests in test/ and a dependency on
       # package:test for this step to succeed. Note that Flutter projects will
