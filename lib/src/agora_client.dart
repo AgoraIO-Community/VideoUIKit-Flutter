@@ -61,7 +61,7 @@ class AgoraClient {
     await enabledPermission.request();
 
     _sessionController
-        .createEvents(agoraEventHandlers ?? AgoraEventHandlers.empty());
+        .createEvents(agoraEventHandlers ?? AgoraEventHandlers());
 
     if (agoraChannelData != null) {
       _sessionController.setChannelProperties(agoraChannelData!);
