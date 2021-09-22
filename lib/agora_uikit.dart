@@ -47,7 +47,8 @@ export 'package:agora_rtc_engine/rtc_engine.dart'
         StreamSubscribeState,
         RtmpStreamingEvent,
         SuperResolutionStateReason,
-        UploadErrorReason;
+        UploadErrorReason,
+        VideoRenderMode;
 export 'package:permission_handler/permission_handler.dart';
 
 export 'models/agora_channel_data.dart' show AgoraChannelData;
@@ -57,3 +58,4 @@ export 'src/agora_client.dart' show AgoraClient;
 export 'src/buttons/buttons.dart' show AgoraVideoButtons;
 export 'src/enums.dart';
 export 'src/layout/layout.dart' show AgoraVideoViewer;
+
