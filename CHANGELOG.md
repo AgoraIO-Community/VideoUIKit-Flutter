@@ -1,3 +1,10 @@
+## 0.0.4
+  - Upgraded the agora_rtc_engine to v4.0.6
+  - New method of initialization
+  - Added all the event handlers
+  - Fixed disabled video widget for grid view
+  - Added video render mode
+
 ## 0.0.3
 
   - Upgraded the agora_rtc_engine to v4.0.5
