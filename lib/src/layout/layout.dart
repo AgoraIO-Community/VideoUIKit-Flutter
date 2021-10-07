@@ -1,3 +1,4 @@
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/src/layout/floating_layout.dart';
 import 'package:agora_uikit/src/layout/grid_layout.dart';
@@ -33,6 +34,9 @@ class AgoraVideoViewer extends StatefulWidget {
   /// Display the total number of users in a channel.
   final bool showNumberOfUsers;
 
+  /// Render mode for local and remote video
+  final VideoRenderMode videoRenderMode;
+
   const AgoraVideoViewer({
     Key? key,
     required this.client,
@@ -44,6 +48,7 @@ class AgoraVideoViewer extends StatefulWidget {
     this.disabledVideoWidget = const DisabledVideoWidget(),
     this.showAVState = false,
     this.showNumberOfUsers = false,
+    this.videoRenderMode = VideoRenderMode.Fit,
   }) : super(key: key);
 
   @override
@@ -80,10 +85,13 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
               floatingLayoutSubViewPadding: widget.floatingLayoutSubViewPadding,
               showAVState: widget.showAVState,
               showNumberOfUsers: widget.showNumberOfUsers,
+              videoRenderMode: widget.videoRenderMode,
             )
           : GridLayout(
               client: widget.client,
               showNumberOfUsers: widget.showNumberOfUsers,
+              disabledVideoWidget: widget.disabledVideoWidget,
+              videoRenderMode: widget.videoRenderMode,
             ),
       onTap: () {
         widget.client.sessionController.toggleVisible();

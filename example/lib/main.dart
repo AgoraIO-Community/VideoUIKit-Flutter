@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:agora_uikit/agora_uikit.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,6 +21,16 @@ class _MyAppState extends State<MyApp> {
       Permission.microphone,
     ],
   );
+
+  @override
+  void initState() {
+    super.initState();
+    initAgora();
+  }
+
+  void initAgora() async {
+    await client.initialize();
+  }
 
   @override
   Widget build(BuildContext context) {

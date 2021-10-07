@@ -1,15 +1,32 @@
 import 'dart:async';
 
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/models/agora_channel_data.dart';
 import 'package:agora_uikit/models/agora_connection_data.dart';
 import 'package:agora_uikit/models/agora_event_handlers.dart';
-import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// [AgoraClient] is the main class in this UIKit. It is used to initialize our [RtcEngine], add the list of user permissions, define the channel properties and use extend the [RtcEngineEventHandler] class.
 class AgoraClient {
+  final AgoraConnectionData agoraConnectionData;
+  final List<Permission> enabledPermission;
+  final AgoraChannelData? agoraChannelData;
+  final AgoraEventHandlers? agoraEventHandlers;
+
+  bool _initialized = false;
+
+  AgoraClient({
+    required this.agoraConnectionData,
+    required this.enabledPermission,
+    this.agoraChannelData,
+    this.agoraEventHandlers,
+  }) : _initialized = false;
+
+  /// Useful to check if [AgoraClient] is ready for further usage
+  bool get isInitialized => _initialized;
+
   static const MethodChannel _channel = MethodChannel('agora_uikit');
 
   static Future<String> platformVersion() async {
@@ -29,26 +46,10 @@ class AgoraClient {
     return _sessionController;
   }
 
-  AgoraClient({
-    required AgoraConnectionData agoraConnectionData,
-    required List<Permission> enabledPermission,
-    AgoraChannelData? agoraChannelData,
-    AgoraEventHandlers? agoraEventHandlers,
-  }) {
-    _initAgoraRtcEngine(
-      agoraConnectionData: agoraConnectionData,
-      enabledPermission: enabledPermission,
-      agoraChannelData: agoraChannelData,
-      agoraEventHandlers: agoraEventHandlers ?? AgoraEventHandlers.empty(),
-    );
-  }
-
-  Future<void> _initAgoraRtcEngine({
-    required AgoraConnectionData agoraConnectionData,
-    required List<Permission> enabledPermission,
-    AgoraChannelData? agoraChannelData,
-    required AgoraEventHandlers agoraEventHandlers,
-  }) async {
+  Future<void> initialize() async {
+    if (_initialized) {
+      return;
+    }
     try {
       await _sessionController.initializeEngine(
         agoraConnectionData: agoraConnectionData,
@@ -59,12 +60,13 @@ class AgoraClient {
 
     await enabledPermission.request();
 
-    _sessionController.createEvents(agoraEventHandlers);
+    _sessionController.createEvents(agoraEventHandlers ?? AgoraEventHandlers());
 
     if (agoraChannelData != null) {
-      _sessionController.setChannelProperties(agoraChannelData);
+      _sessionController.setChannelProperties(agoraChannelData!);
     }
 
     await _sessionController.joinVideoChannel();
+    _initialized = true;
   }
 }
