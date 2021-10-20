@@ -8,8 +8,9 @@ import 'package:agora_uikit/models/agora_event_handlers.dart';
 import 'package:agora_uikit/models/agora_settings.dart';
 import 'package:agora_uikit/models/agora_user.dart';
 import 'package:agora_uikit/src/enums.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 
 class SessionController extends ValueNotifier<AgoraSettings> {
@@ -537,13 +538,13 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     String? channelName,
     int uid = 0,
   }) async {
-    final response = await http
-        .get(Uri.parse('$tokenUrl/rtc/$channelName/publisher/uid/$uid'));
+    final response =
+        await Dio().get('$tokenUrl/rtc/$channelName/publisher/uid/$uid');
     if (response.statusCode == 200) {
       value =
-          value.copyWith(generatedToken: jsonDecode(response.body)['rtcToken']);
+          value.copyWith(generatedToken: jsonDecode(response.data)['rtcToken']);
     } else {
-      print(response.reasonPhrase);
+      // print(response.reasonPhrase);
       print('Failed to generate the token : ${response.statusCode}');
     }
   }
