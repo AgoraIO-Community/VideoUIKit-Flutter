@@ -13,6 +13,7 @@ class _RecordIconState extends State<RecordIcon> {
   @override
   void initState() {
     super.initState();
+    changeOpacity();
   }
 
   changeOpacity() {
