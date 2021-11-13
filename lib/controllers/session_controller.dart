@@ -578,7 +578,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       print('Recording Started ${response.body}');
       final body = jsonDecode(response.body);
       value = value.copyWith(
-          recUid: uid, rid: body['resourceId'], sid: body['sid']);
+          isRecording: true,
+          recUid: uid,
+          rid: body['resourceId'],
+          sid: body['sid']);
     } else {
       print('Couldn\'t start the recording : ${response.statusCode}');
     }
@@ -605,6 +608,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     if (response.statusCode == 200) {
       print('Recording Ended');
       value = value.copyWith(
+        isRecording: false,
         recUid: uid,
         rid: '',
         sid: '',

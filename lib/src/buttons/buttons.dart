@@ -35,6 +35,8 @@ class AgoraVideoButtons extends StatefulWidget {
   /// Use this to style the disabled video button as per your liking while still keeping the default functionality.
   final Widget? disableVideoButtonChild;
 
+  final Widget? recordVideoButtonChild;
+
   const AgoraVideoButtons({
     Key? key,
     required this.client,
@@ -48,6 +50,7 @@ class AgoraVideoButtons extends StatefulWidget {
     this.muteButtonChild,
     this.switchCameraButtonChild,
     this.disableVideoButtonChild,
+    this.recordVideoButtonChild,
   }) : super(key: key);
 
   @override
@@ -113,6 +116,7 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                           _disconnectCallButton(),
                           _switchCameraButton(),
                           _disableVideoButton(),
+                          _recordVideoButton(),
                           if (widget.extraButtons != null)
                             for (var i = 0;
                                 i < widget.extraButtons!.length;
@@ -161,6 +165,30 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
             fillColor: widget.client.sessionController.value.isLocalUserMuted
                 ? Colors.blueAccent
                 : Colors.white,
+            padding: const EdgeInsets.all(12.0),
+          );
+  }
+
+  Widget _recordVideoButton() {
+    return widget.recordVideoButtonChild != null
+        ? RawMaterialButton(
+            onPressed: () => widget.client.sessionController.value.isRecording
+                ? widget.client.sessionController.stopRecording()
+                : widget.client.sessionController.startRecording(),
+            child: widget.recordVideoButtonChild,
+          )
+        : RawMaterialButton(
+            onPressed: () => widget.client.sessionController.value.isRecording
+                ? widget.client.sessionController.stopRecording()
+                : widget.client.sessionController.startRecording(),
+            child: Icon(
+              Icons.fiber_manual_record_sharp,
+              color: Colors.red,
+              size: 20.0,
+            ),
+            shape: CircleBorder(),
+            elevation: 2.0,
+            fillColor: Colors.white,
             padding: const EdgeInsets.all(12.0),
           );
   }
