@@ -18,6 +18,12 @@ class AgoraSettings {
   String? generatedToken;
   final bool isActiveSpeakerDisabled;
   final Layout layoutType;
+  String? rid;
+  String? sid;
+  int? recUid;
+  String? mode;
+  ChannelProfile? channelProfile;
+  final bool isRecording;
 
   AgoraSettings({
     this.engine,
@@ -29,9 +35,14 @@ class AgoraSettings {
     required this.visible,
     required this.clientRole,
     required this.localUid,
+    this.recUid,
+    this.rid,
+    this.sid,
+    this.mode = 'mix',
     this.generatedToken,
     this.isActiveSpeakerDisabled = false,
     this.layoutType = Layout.grid,
+    this.isRecording = false,
   });
 
   AgoraSettings copyWith({
@@ -47,6 +58,11 @@ class AgoraSettings {
     String? generatedToken,
     bool? isActiveSpeakerDisabled,
     Layout? layoutType,
+    String? rid,
+    String? sid,
+    int? recUid,
+    String? mode,
+    bool? isRecording,
   }) {
     return AgoraSettings(
       engine: engine ?? this.engine,
@@ -62,6 +78,11 @@ class AgoraSettings {
       isActiveSpeakerDisabled:
           isActiveSpeakerDisabled ?? this.isActiveSpeakerDisabled,
       layoutType: layoutType ?? this.layoutType,
+      rid: rid ?? this.rid,
+      sid: sid ?? this.sid,
+      mode: mode ?? this.mode,
+      recUid: recUid ?? this.recUid,
+      isRecording: isRecording ?? this.isRecording,
     );
   }
 }

@@ -13,6 +13,15 @@ class AgoraConnectionData {
   /// (Optional) Link to the deployed token server. The UIKit automatically generates the token after a fixed interval. Have a look at this guide to learn how to set up your [token server](https://github.com/AgoraIO-Community/agora-token-service)
   final String? tokenUrl;
 
+  /// (Optional) Link to start cloud recording
+  final String? recordUrl;
+
+  /// (Optional) Link to stop cloud recording
+  final String? stopRecordUrl;
+
+  /// (Optional) Link to get cloud recording resource id
+  final String? getResourceIdUrl;
+
   /// (Optional) Token value generated from the Agora dashboard.
   final String? tempToken;
 
@@ -25,6 +34,9 @@ class AgoraConnectionData {
     this.uid = 0,
     this.tokenUrl,
     this.tempToken,
+    this.recordUrl,
+    this.stopRecordUrl,
+    this.getResourceIdUrl,
     this.areaCode = const [AreaCode.GLOB],
   });
 
@@ -35,6 +47,9 @@ class AgoraConnectionData {
     String? tempToken,
     String? tokenUrl,
     List<AreaCode>? areaCode,
+    String? recordUrl,
+    String? stopRecordUrl,
+    String? getResourceIdUrl,
   }) {
     return AgoraConnectionData(
       appId: appId ?? this.appId,
@@ -43,6 +58,9 @@ class AgoraConnectionData {
       tempToken: tempToken ?? this.tempToken,
       tokenUrl: tokenUrl ?? this.tokenUrl,
       areaCode: areaCode ?? this.areaCode,
+      recordUrl: recordUrl ?? this.recordUrl,
+      stopRecordUrl: stopRecordUrl ?? this.stopRecordUrl,
+      getResourceIdUrl: getResourceIdUrl ?? this.getResourceIdUrl,
     );
   }
 }
