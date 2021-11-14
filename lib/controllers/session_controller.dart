@@ -570,8 +570,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         'resource': resourceID,
         'mode': mode,
         'token': token,
-        'channelType': channelType,
-        'uid': uid,
+        'channelType': channelType.toString(),
+        'uid': uid.toString(),
       },
     );
     if (response.statusCode == 200) {
@@ -601,7 +601,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         'channel': channelName,
         'resource': resourceID,
         'mode': mode,
-        'uid': uid,
+        'uid': uid.toString(),
       },
     );
 
@@ -619,8 +619,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   }
 
   Future<void> _getResourceId(String url, String channel, int uid) async {
-    final response =
-        await http.post(Uri.parse(url), body: {'channel': channel, 'uid': uid});
+    final response = await http.post(Uri.parse(url),
+        body: {'channel': channel, 'uid': uid.toString()});
 
     if (response.statusCode == 200) {
       print('Resource response: ${response.body}');
