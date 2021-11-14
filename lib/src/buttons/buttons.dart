@@ -172,9 +172,11 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
   Widget _recordVideoButton() {
     return widget.recordVideoButtonChild != null
         ? RawMaterialButton(
-            onPressed: () => widget.client.sessionController.value.isRecording
-                ? widget.client.sessionController.stopRecording()
-                : widget.client.sessionController.startRecording(),
+            onPressed: () {
+              widget.client.sessionController.value.isRecording
+                  ? widget.client.sessionController.stopRecording()
+                  : widget.client.sessionController.startRecording();
+            },
             child: widget.recordVideoButtonChild,
           )
         : RawMaterialButton(
