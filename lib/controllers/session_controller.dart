@@ -577,6 +577,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     if (response.statusCode == 200) {
       print('Recording Started ${response.body}');
       final body = jsonDecode(response.body);
+      print(body);
       value = value.copyWith(
           isRecording: true,
           recUid: uid,
@@ -602,6 +603,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         'resource': resourceID,
         'mode': mode,
         'uid': uid.toString(),
+        'sid': sid,
       },
     );
 
