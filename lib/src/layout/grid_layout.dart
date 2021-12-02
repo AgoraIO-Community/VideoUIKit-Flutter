@@ -158,7 +158,10 @@ class _GridLayoutState extends State<GridLayout> {
                       ? Positioned.fill(
                           child: Align(
                             alignment: Alignment.topRight,
-                            child: RecordIcon(),
+                            child: widget
+                                    .client.sessionController.value.isRecording
+                                ? RecordIcon()
+                                : Container(),
                           ),
                         )
                       : widget.showNumberOfUsers == true &&
@@ -179,10 +182,16 @@ class _GridLayoutState extends State<GridLayout> {
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    RecordIcon(),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
+                                    widget.client.sessionController.value
+                                            .isRecording
+                                        ? RecordIcon()
+                                        : Container(),
+                                    widget.client.sessionController.value
+                                            .isRecording
+                                        ? SizedBox(
+                                            width: 5,
+                                          )
+                                        : SizedBox.shrink(),
                                     NumberOfUsers(
                                       userCount: widget.client.sessionController
                                           .value.users.length,
