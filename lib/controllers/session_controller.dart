@@ -477,8 +477,6 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   }
 
   Future<void> stopRecording() async {
-    await _getResourceId(value.connectionData!.getResourceIdUrl!,
-        value.connectionData!.channelName, value.connectionData!.uid);
     await _stopRecording(
         value.connectionData!.stopRecordUrl!,
         value.connectionData!.channelName,
