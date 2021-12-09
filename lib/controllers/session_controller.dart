@@ -480,14 +480,15 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         value.connectionData!.recUid);
   }
 
-  Future<void> stopRecording() async {
-    await _stopRecording(
+  Future<dynamic> stopRecording() async {
+    final data = await _stopRecording(
         value.connectionData!.stopRecordUrl!,
         value.connectionData!.channelName,
         value.rid!,
         value.mode!,
         value.sid!,
         value.connectionData!.recUid);
+    return data;
   }
 
   Timer? timer;
@@ -590,7 +591,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     }
   }
 
-  Future<void> _stopRecording(
+  Future<dynamic> _stopRecording(
     String recordUrl,
     String channelName,
     String resourceID,
@@ -617,8 +618,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         rid: '',
         sid: '',
       );
+      return jsonDecode(response.body);
     } else {
       print('Couldn\'t end the recording : ${response.statusCode}');
+      return 'Error';
     }
   }
 
