@@ -32,6 +32,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
             localUid: 0,
             generatedToken: null,
             layoutType: Layout.grid,
+            recUid: 1,
           ),
         );
 
@@ -465,7 +466,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   Future<void> startRecording() async {
     await _getResourceId(value.connectionData!.getResourceIdUrl!,
-        value.connectionData!.channelName, value.connectionData!.uid);
+        value.connectionData!.channelName, value.recUid);
     await _startRecording(
         value.connectionData!.channelName,
         value.connectionData!.recordUrl!,
@@ -473,7 +474,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         value.mode!,
         value.generatedToken!,
         value.channelProfile == ChannelProfile.Communication ? 0 : 1,
-        value.connectionData!.uid);
+        value.recUid);
   }
 
   Future<void> stopRecording() async {
@@ -483,7 +484,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         value.rid!,
         value.mode!,
         value.sid!,
-        value.connectionData!.uid);
+        value.recUid);
   }
 
   Timer? timer;
@@ -579,10 +580,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       final body = jsonDecode(response.body);
       print(body);
       value = value.copyWith(
-          isRecording: true,
-          recUid: uid,
-          rid: body['resourceId'],
-          sid: body['sid']);
+          isRecording: true, rid: body['resourceId'], sid: body['sid']);
     } else {
       print('Couldn\'t start the recording : ${response.statusCode}');
     }
@@ -611,7 +609,6 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       print('Recording Ended');
       value = value.copyWith(
         isRecording: false,
-        recUid: uid,
         rid: '',
         sid: '',
       );
