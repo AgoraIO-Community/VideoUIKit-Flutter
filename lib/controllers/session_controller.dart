@@ -609,7 +609,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         'sid': sid,
       },
     );
-
+    print(response.statusCode);
     if (response.statusCode == 200) {
       print('Recording Ended: ${response.body}');
       value = value.copyWith(
