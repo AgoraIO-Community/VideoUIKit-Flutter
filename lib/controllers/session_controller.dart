@@ -32,7 +32,6 @@ class SessionController extends ValueNotifier<AgoraSettings> {
             localUid: 0,
             generatedToken: null,
             layoutType: Layout.grid,
-            recUid: 1,
           ),
         );
 
@@ -466,7 +465,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   Future<void> startRecording() async {
     await _getResourceId(value.connectionData!.getResourceIdUrl!,
-        value.connectionData!.channelName, value.recUid);
+        value.connectionData!.channelName, value.connectionData!.recUid);
     await _startRecording(
         value.connectionData!.channelName,
         value.connectionData!.recordUrl!,
@@ -474,7 +473,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         value.mode!,
         value.generatedToken!,
         value.channelProfile == ChannelProfile.Communication ? 0 : 1,
-        value.recUid);
+        value.connectionData!.recUid);
   }
 
   Future<void> stopRecording() async {
@@ -484,7 +483,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         value.rid!,
         value.mode!,
         value.sid!,
-        value.recUid);
+        value.connectionData!.recUid);
   }
 
   Timer? timer;

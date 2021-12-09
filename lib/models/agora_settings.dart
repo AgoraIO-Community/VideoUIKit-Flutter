@@ -20,7 +20,6 @@ class AgoraSettings {
   final Layout layoutType;
   String? rid;
   String? sid;
-  final int recUid;
   String? mode;
   ChannelProfile? channelProfile;
   final bool isRecording;
@@ -35,7 +34,6 @@ class AgoraSettings {
     required this.visible,
     required this.clientRole,
     required this.localUid,
-    required this.recUid,
     this.rid,
     this.sid,
     this.mode = 'mix',
@@ -60,7 +58,6 @@ class AgoraSettings {
     Layout? layoutType,
     String? rid,
     String? sid,
-    int? recUid,
     String? mode,
     bool? isRecording,
   }) {
@@ -81,7 +78,6 @@ class AgoraSettings {
       rid: rid ?? this.rid,
       sid: sid ?? this.sid,
       mode: mode ?? this.mode,
-      recUid: recUid ?? this.recUid,
       isRecording: isRecording ?? this.isRecording,
     );
   }

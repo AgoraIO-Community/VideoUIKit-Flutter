@@ -28,10 +28,14 @@ class AgoraConnectionData {
   /// (Optional) The region for connection. This advanced feature applies to scenarios that have regional restrictions.
   final List<AreaCode> areaCode;
 
+  /// Cloud Recorder UID Should not be the same as anyone joining the channel
+  final int recUid;
+
   AgoraConnectionData({
     required this.appId,
     required this.channelName,
     this.uid = 0,
+    this.recUid = 1,
     this.tokenUrl,
     this.tempToken,
     this.recordUrl,
@@ -44,6 +48,7 @@ class AgoraConnectionData {
     String? appId,
     String? channelName,
     int? uid,
+    int? recUid,
     String? tempToken,
     String? tokenUrl,
     List<AreaCode>? areaCode,
@@ -61,6 +66,7 @@ class AgoraConnectionData {
       recordUrl: recordUrl ?? this.recordUrl,
       stopRecordUrl: stopRecordUrl ?? this.stopRecordUrl,
       getResourceIdUrl: getResourceIdUrl ?? this.getResourceIdUrl,
+      recUid: recUid ?? this.recUid,
     );
   }
 }
