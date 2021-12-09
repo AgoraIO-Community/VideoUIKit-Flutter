@@ -480,7 +480,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         value.connectionData!.recUid);
   }
 
-  Future<String> stopRecording() async {
+  Future<dynamic> stopRecording() async {
     final data = await _stopRecording(
         value.connectionData!.stopRecordUrl!,
         value.connectionData!.channelName,
@@ -590,7 +590,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     }
   }
 
-  Future<String> _stopRecording(
+  Future<dynamic> _stopRecording(
     String recordUrl,
     String channelName,
     String resourceID,
@@ -612,12 +612,13 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     print(response.statusCode);
     if (response.statusCode == 200) {
       print('Recording Ended: ${response.body}');
+      final body = jsonDecode(response.body);
       value = value.copyWith(
         isRecording: false,
         rid: '',
         sid: '',
       );
-      return response.body;
+      return body;
     } else {
       print('Couldn\'t end the recording : ${response.statusCode}');
       return 'Error';
