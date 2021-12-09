@@ -16,6 +16,7 @@ class AgoraSettings {
   final ClientRole clientRole;
   final int localUid;
   String? generatedToken;
+  String? cloudRecordToken;
   final bool isActiveSpeakerDisabled;
   final Layout layoutType;
   String? rid;
@@ -41,6 +42,7 @@ class AgoraSettings {
     this.isActiveSpeakerDisabled = false,
     this.layoutType = Layout.grid,
     this.isRecording = false,
+    this.cloudRecordToken,
   });
 
   AgoraSettings copyWith({
@@ -54,6 +56,7 @@ class AgoraSettings {
     ClientRole? clientRole,
     int? localUid,
     String? generatedToken,
+    String? cloudRecordToken,
     bool? isActiveSpeakerDisabled,
     Layout? layoutType,
     String? rid,
@@ -78,6 +81,7 @@ class AgoraSettings {
       rid: rid ?? this.rid,
       sid: sid ?? this.sid,
       mode: mode ?? this.mode,
+      cloudRecordToken: cloudRecordToken ?? this.cloudRecordToken,
       isRecording: isRecording ?? this.isRecording,
     );
   }

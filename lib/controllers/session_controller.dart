@@ -464,6 +464,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   }
 
   Future<void> startRecording() async {
+    await _getCloudToken(
+        tokenUrl: value.connectionData!.tokenUrl,
+        channelName: value.connectionData!.channelName,
+        uid: value.connectionData!.recUid);
     await _getResourceId(value.connectionData!.getResourceIdUrl!,
         value.connectionData!.channelName, value.connectionData!.recUid);
     await _startRecording(
@@ -471,7 +475,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         value.connectionData!.recordUrl!,
         value.rid!,
         value.mode!,
-        value.generatedToken!,
+        value.cloudRecordToken!,
         value.channelProfile == ChannelProfile.Communication ? 0 : 1,
         value.connectionData!.recUid);
   }
@@ -631,6 +635,22 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       );
     } else {
       print('Couldn\'t get a resource ID');
+    }
+  }
+
+  Future<void> _getCloudToken({
+    String? tokenUrl,
+    String? channelName,
+    int? uid,
+  }) async {
+    final response = await http
+        .get(Uri.parse('$tokenUrl/rtc/$channelName/publisher/uid/$uid'));
+    if (response.statusCode == 200) {
+      value = value.copyWith(
+          cloudRecordToken: jsonDecode(response.body)['rtcToken']);
+    } else {
+      print(response.reasonPhrase);
+      print('Failed to generate the token : ${response.statusCode}');
     }
   }
 
