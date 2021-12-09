@@ -615,8 +615,6 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       final body = jsonDecode(response.body);
       value = value.copyWith(
         isRecording: false,
-        rid: '',
-        sid: '',
       );
       return body;
     } else {
