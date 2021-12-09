@@ -563,6 +563,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       String token,
       int channelType,
       int uid) async {
+    print('UID: $uid');
     final response = await http.post(
       Uri.parse(recordUrl),
       body: {
@@ -593,6 +594,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     String sid,
     int uid,
   ) async {
+    print('UID: $uid');
     final response = await http.post(
       Uri.parse(recordUrl),
       body: {
@@ -617,6 +619,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   }
 
   Future<void> _getResourceId(String url, String channel, int uid) async {
+    print('UID: $uid');
     final response = await http.post(Uri.parse(url),
         body: {'channel': channel, 'uid': uid.toString()});
 
