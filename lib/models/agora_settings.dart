@@ -24,8 +24,10 @@ class AgoraSettings {
   final bool isActiveSpeakerDisabled;
   final Layout layoutType;
   final bool displaySnackbar;
-  final bool muteRequest;
-  final bool cameraRequest;
+  final MicState muteRequest;
+  final CameraState cameraRequest;
+  final bool showMicMessage;
+  final bool showCameraMessage;
   final Map<String, dynamic>? userdata;
   final Map<String, Map<String, dynamic>>? userRtmMap;
   final Map<int, String>? uidToUserIdMap;
@@ -49,8 +51,10 @@ class AgoraSettings {
     this.isActiveSpeakerDisabled = false,
     this.layoutType = Layout.grid,
     this.displaySnackbar = false,
-    this.muteRequest = false,
-    this.cameraRequest = false,
+    this.muteRequest = MicState.unmuted,
+    this.cameraRequest = CameraState.enabled,
+    this.showMicMessage = false,
+    this.showCameraMessage = false,
     this.userdata,
     this.userRtmMap,
     this.uidToUserIdMap,
@@ -75,8 +79,10 @@ class AgoraSettings {
     bool? isActiveSpeakerDisabled,
     Layout? layoutType,
     bool? displaySnackbar,
-    bool? muteRequest,
-    bool? cameraRequest,
+    MicState? muteRequest,
+    CameraState? cameraRequest,
+    bool? showMicMessage,
+    bool? showCameraMessage,
     Map<String, dynamic>? userdata,
     Map<String, Map<String, dynamic>>? userRtmMap,
     Map<int, String>? uidToUserIdMap,
@@ -103,6 +109,8 @@ class AgoraSettings {
       displaySnackbar: displaySnackbar ?? this.displaySnackbar,
       muteRequest: muteRequest ?? this.muteRequest,
       cameraRequest: cameraRequest ?? this.cameraRequest,
+      showMicMessage: showMicMessage ?? this.showMicMessage,
+      showCameraMessage: showCameraMessage ?? this.showCameraMessage,
       userdata: userdata ?? this.userdata,
       userRtmMap: userRtmMap ?? this.userRtmMap,
       uidToUserIdMap: uidToUserIdMap ?? this.uidToUserIdMap,

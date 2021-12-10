@@ -45,11 +45,11 @@ class _HostControlsState extends State<HostControls> {
                   SizedBox(width: 5),
                   widget.muted
                       ? Text(
-                          'Ask User to unmute the mic',
+                          'Ask user to unmute the mic',
                           style: TextStyle(fontSize: 15),
                         )
                       : Text(
-                          'Ask User to mute the mic',
+                          'Ask user to mute the mic',
                           style: TextStyle(fontSize: 15),
                         )
                 ],
@@ -74,11 +74,11 @@ class _HostControlsState extends State<HostControls> {
                   SizedBox(width: 5),
                   widget.videoDisabled
                       ? Text(
-                          'Ask User to enable the video',
+                          'Ask user to turn on the camera',
                           style: TextStyle(fontSize: 15),
                         )
                       : Text(
-                          'Ask User to disable the video',
+                          'Ask user to turn off the camera',
                           style: TextStyle(fontSize: 15),
                         )
                 ],

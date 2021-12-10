@@ -39,8 +39,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
             generatedRtmId: null,
             layoutType: Layout.grid,
             displaySnackbar: false,
-            muteRequest: false,
-            cameraRequest: false,
+            muteRequest: MicState.unmuted,
+            cameraRequest: CameraState.enabled,
+            showMicMessage: false,
+            showCameraMessage: false,
           ),
         );
 
@@ -854,24 +856,38 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         });
         value = value.copyWith(
           displaySnackbar: true,
-          muteRequest: true,
+          muteRequest: muted! ? MicState.unmuted : MicState.muted,
+          showCameraMessage: false,
+          showMicMessage: true,
         );
         Future.delayed(Duration(seconds: 10), () {
           value = value.copyWith(
             displaySnackbar: false,
-            muteRequest: false,
+            showMicMessage: false,
           );
         });
         break;
       case "CameraRequest":
+        int? rtcId;
+        bool? disabled;
+        message.forEach((key, val) {
+          if (key == "text") {
+            var json = jsonDecode(val);
+            rtcId = json['content']['rtcId'];
+            disabled = json['content']['mute'];
+            print("RTC ID: $rtcId");
+          }
+        });
         value = value.copyWith(
           displaySnackbar: true,
-          muteRequest: false,
+          cameraRequest: disabled! ? CameraState.enabled : CameraState.disabled,
+          showMicMessage: false,
+          showCameraMessage: true,
         );
         Future.delayed(Duration(seconds: 10), () {
           value = value.copyWith(
             displaySnackbar: false,
-            muteRequest: false,
+            showCameraMessage: false,
           );
         });
         break;

@@ -175,7 +175,8 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                             .client
                                                             .sessionController
                                                             .value
-                                                            .isLocalUserMuted)
+                                                            .isLocalUserMuted,
+                                                      )
                                                     : Container(),
                                               ],
                                             ),
@@ -249,12 +250,16 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                                           .client
                                                                           .sessionController
                                                                           .value
-                                                                          .isLocalVideoDisabled,
+                                                                          .users[
+                                                                              index]
+                                                                          .videoDisabled,
                                                                       muted: widget
                                                                           .client
                                                                           .sessionController
                                                                           .value
-                                                                          .isLocalUserMuted,
+                                                                          .users[
+                                                                              index]
+                                                                          .muted,
                                                                       index:
                                                                           index,
                                                                     ),
@@ -286,12 +291,15 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                   Column(
                                                     children: [
                                                       _videoView(
-                                                          _getRemoteViews(widget
+                                                        _getRemoteViews(
+                                                          widget
                                                               .client
                                                               .sessionController
                                                               .value
                                                               .users[index]
-                                                              .uid)),
+                                                              .uid,
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
                                                   Positioned.fill(
@@ -353,12 +361,16 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                                           .client
                                                                           .sessionController
                                                                           .value
-                                                                          .isLocalVideoDisabled,
+                                                                          .users[
+                                                                              index]
+                                                                          .videoDisabled,
                                                                       muted: widget
                                                                           .client
                                                                           .sessionController
                                                                           .value
-                                                                          .isLocalUserMuted,
+                                                                          .users[
+                                                                              index]
+                                                                          .muted,
                                                                       index:
                                                                           index,
                                                                     ),
@@ -496,34 +508,62 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            widget.client.sessionController.value.muteRequest
-                                ? Text("Please switch your mic state")
-                                : Text("Please switch your camera state"),
+                            if (widget
+                                .client.sessionController.value.showMicMessage)
+                              widget.client.sessionController.value
+                                          .muteRequest ==
+                                      MicState.muted
+                                  ? Text("Please unmute your mic")
+                                  : Text("Please mute your mic"),
+                            if (widget.client.sessionController.value
+                                .showCameraMessage)
+                              widget.client.sessionController.value
+                                          .cameraRequest ==
+                                      CameraState.disabled
+                                  ? Text("Please turn on your camera")
+                                  : Text("Please turn off your camera"),
                             TextButton(
                               onPressed: () {
-                                widget.client.sessionController.value = widget
-                                    .client.sessionController.value
-                                    .copyWith(
-                                  displaySnackbar: false,
-                                  muteRequest: false,
-                                );
                                 widget.client.sessionController.value
-                                        .muteRequest
+                                            .showMicMessage &&
+                                        !widget.client.sessionController.value
+                                            .showCameraMessage
                                     ? widget.client.sessionController
                                         .toggleMute()
                                     : widget.client.sessionController
                                         .toggleCamera();
+                                widget.client.sessionController.value = widget
+                                    .client.sessionController.value
+                                    .copyWith(
+                                  displaySnackbar: false,
+                                  showMicMessage: false,
+                                  showCameraMessage: false,
+                                );
                               },
                               child: widget.client.sessionController.value
-                                      .muteRequest
-                                  ? Text(
-                                      "Mute",
-                                      style: TextStyle(color: Colors.blue),
-                                    )
-                                  : Text(
-                                      "Disable",
-                                      style: TextStyle(color: Colors.blue),
-                                    ),
+                                      .showMicMessage
+                                  ? widget.client.sessionController.value
+                                              .muteRequest ==
+                                          MicState.muted
+                                      ? Text(
+                                          "Unmute",
+                                          style: TextStyle(color: Colors.blue),
+                                        )
+                                      : Text(
+                                          "Mute",
+                                          style: TextStyle(color: Colors.blue),
+                                        )
+                                  : widget.client.sessionController.value
+                                              .cameraRequest ==
+                                          CameraState.disabled
+                                      ? Text(
+                                          "Enable",
+                                          style: TextStyle(color: Colors.blue),
+                                        )
+                                      : Text(
+                                          "Disable",
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
                             )
                           ],
                         )),
