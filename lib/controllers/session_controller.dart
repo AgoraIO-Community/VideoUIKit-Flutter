@@ -36,7 +36,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         );
 
   Future<void> initializeEngine(
-      {required AgoraConnectionData agoraConnectionData}) async {
+      {required AgoraConnectionData agoraConnectionData,
+      required AgoraChannelData agoraChannelData}) async {
     value = value.copyWith(
       engine: await RtcEngine.createWithContext(
         RtcEngineContext(
@@ -44,6 +45,14 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           areaCode: agoraConnectionData.areaCode,
         ),
       ),
+      mainAgoraUser: AgoraUser(
+        uid: 0,
+        remote: true,
+        muted: false,
+        videoDisabled: false,
+        clientRole: agoraChannelData.clientRole,
+      ),
+      clientRole: agoraChannelData.clientRole,
       connectionData: agoraConnectionData,
     );
   }
@@ -463,6 +472,34 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     // dispose();
   }
 
+  Future<void> startRecording() async {
+    await _getCloudToken(
+        tokenUrl: value.connectionData!.tokenUrl,
+        channelName: value.connectionData!.channelName,
+        uid: value.connectionData!.recUid);
+    await _getResourceId(value.connectionData!.getResourceIdUrl!,
+        value.connectionData!.channelName, value.connectionData!.recUid);
+    await _startRecording(
+        value.connectionData!.channelName,
+        value.connectionData!.recordUrl!,
+        value.rid!,
+        value.mode!,
+        value.cloudRecordToken!,
+        value.channelProfile == ChannelProfile.Communication ? 0 : 1,
+        value.connectionData!.recUid);
+  }
+
+  Future<dynamic> stopRecording() async {
+    final data = await _stopRecording(
+        value.connectionData!.stopRecordUrl!,
+        value.connectionData!.channelName,
+        value.rid!,
+        value.mode!,
+        value.sid!,
+        value.connectionData!.recUid);
+    return data;
+  }
+
   Timer? timer;
 
   /// Function to auto hide the button class.
@@ -530,6 +567,101 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     value = value.copyWith(mainAgoraUser: newUser);
     _addUser(callUser: tempAgoraUser);
     _removeUser(uid: newUser.uid);
+  }
+
+  Future<void> _startRecording(
+      String channelName,
+      String recordUrl,
+      String resourceID,
+      String mode,
+      String token,
+      int channelType,
+      int uid) async {
+    print('UID: $uid');
+    final response = await http.post(
+      Uri.parse(recordUrl),
+      body: {
+        'channel': channelName,
+        'resource': resourceID,
+        'mode': mode,
+        'token': token,
+        'channelType': channelType.toString(),
+        'uid': uid.toString(),
+      },
+    );
+    if (response.statusCode == 200) {
+      print('Recording Started ${response.body}');
+      final body = jsonDecode(response.body);
+      value = value.copyWith(
+          isRecording: true, rid: body['resourceId'], sid: body['sid']);
+    } else {
+      print('Couldn\'t start the recording : ${response.statusCode}');
+    }
+  }
+
+  Future<dynamic> _stopRecording(
+    String recordUrl,
+    String channelName,
+    String resourceID,
+    String mode,
+    String sid,
+    int uid,
+  ) async {
+    print('UID: $uid');
+    final response = await http.post(
+      Uri.parse(recordUrl),
+      body: {
+        'channel': channelName,
+        'resource': resourceID,
+        'mode': mode,
+        'uid': uid.toString(),
+        'sid': sid,
+      },
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print('Recording Ended: ${response.body}');
+      final body = jsonDecode(response.body);
+      value = value.copyWith(
+        isRecording: false,
+      );
+      return body;
+    } else {
+      print('Couldn\'t end the recording : ${response.statusCode}');
+      return 'Error';
+    }
+  }
+
+  Future<void> _getResourceId(String url, String channel, int uid) async {
+    print('UID: $uid');
+    final response = await http.post(Uri.parse(url),
+        body: {'channel': channel, 'uid': uid.toString()});
+
+    if (response.statusCode == 200) {
+      print('Resource response: ${response.body}');
+      final body = jsonDecode(response.body);
+      value = value.copyWith(
+        rid: body['resourceId'],
+      );
+    } else {
+      print('Couldn\'t get a resource ID');
+    }
+  }
+
+  Future<void> _getCloudToken({
+    String? tokenUrl,
+    String? channelName,
+    int? uid,
+  }) async {
+    final response = await http
+        .get(Uri.parse('$tokenUrl/rtc/$channelName/publisher/uid/$uid'));
+    if (response.statusCode == 200) {
+      value = value.copyWith(
+          cloudRecordToken: jsonDecode(response.body)['rtcToken']);
+    } else {
+      print(response.reasonPhrase);
+      print('Failed to generate the token : ${response.statusCode}');
+    }
   }
 
   Future<void> _getToken({

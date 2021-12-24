@@ -16,8 +16,14 @@ class AgoraSettings {
   final ClientRole clientRole;
   final int localUid;
   String? generatedToken;
+  String? cloudRecordToken;
   final bool isActiveSpeakerDisabled;
   final Layout layoutType;
+  String? rid;
+  String? sid;
+  String? mode;
+  ChannelProfile? channelProfile;
+  final bool isRecording;
 
   AgoraSettings({
     this.engine,
@@ -29,9 +35,14 @@ class AgoraSettings {
     required this.visible,
     required this.clientRole,
     required this.localUid,
+    this.rid,
+    this.sid,
+    this.mode = 'mix',
     this.generatedToken,
     this.isActiveSpeakerDisabled = false,
     this.layoutType = Layout.grid,
+    this.isRecording = false,
+    this.cloudRecordToken,
   });
 
   AgoraSettings copyWith({
@@ -45,8 +56,13 @@ class AgoraSettings {
     ClientRole? clientRole,
     int? localUid,
     String? generatedToken,
+    String? cloudRecordToken,
     bool? isActiveSpeakerDisabled,
     Layout? layoutType,
+    String? rid,
+    String? sid,
+    String? mode,
+    bool? isRecording,
   }) {
     return AgoraSettings(
       engine: engine ?? this.engine,
@@ -62,6 +78,11 @@ class AgoraSettings {
       isActiveSpeakerDisabled:
           isActiveSpeakerDisabled ?? this.isActiveSpeakerDisabled,
       layoutType: layoutType ?? this.layoutType,
+      rid: rid ?? this.rid,
+      sid: sid ?? this.sid,
+      mode: mode ?? this.mode,
+      cloudRecordToken: cloudRecordToken ?? this.cloudRecordToken,
+      isRecording: isRecording ?? this.isRecording,
     );
   }
 }

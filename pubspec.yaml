@@ -7,13 +7,13 @@ repository: https://github.com/AgoraIO-Community/Flutter-UIKit
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=2.2.0"
+  flutter: ">=2.5.3"
 
 dependencies:
   agora_rtc_engine: ^4.0.6
   flutter:
     sdk: flutter
-  http: ^0.13.1
+  http: ^0.13.4
   lints: ^1.0.1
   permission_handler: ^8.0.0+1
 

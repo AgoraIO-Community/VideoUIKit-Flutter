@@ -31,6 +31,8 @@ class AgoraVideoViewer extends StatefulWidget {
   /// Display the camera and microphone status of a user. This feature is only available in the [Layout.floating]
   final bool showAVState;
 
+  final bool showRecordIcon;
+
   /// Display the total number of users in a channel.
   final bool showNumberOfUsers;
 
@@ -49,6 +51,7 @@ class AgoraVideoViewer extends StatefulWidget {
     this.showAVState = false,
     this.showNumberOfUsers = false,
     this.videoRenderMode = VideoRenderMode.Fit,
+    this.showRecordIcon = false,
   }) : super(key: key);
 
   @override
@@ -86,12 +89,14 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
               showAVState: widget.showAVState,
               showNumberOfUsers: widget.showNumberOfUsers,
               videoRenderMode: widget.videoRenderMode,
+              showRecordIcon: widget.showRecordIcon,
             )
           : GridLayout(
               client: widget.client,
               showNumberOfUsers: widget.showNumberOfUsers,
               disabledVideoWidget: widget.disabledVideoWidget,
               videoRenderMode: widget.videoRenderMode,
+              showRecordIcon: widget.showRecordIcon,
             ),
       onTap: () {
         widget.client.sessionController.toggleVisible();

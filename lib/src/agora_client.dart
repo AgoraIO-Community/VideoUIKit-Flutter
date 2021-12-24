@@ -12,7 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 class AgoraClient {
   final AgoraConnectionData agoraConnectionData;
   final List<Permission> enabledPermission;
-  final AgoraChannelData? agoraChannelData;
+  final AgoraChannelData agoraChannelData;
   final AgoraEventHandlers? agoraEventHandlers;
 
   bool _initialized = false;
@@ -20,7 +20,7 @@ class AgoraClient {
   AgoraClient({
     required this.agoraConnectionData,
     required this.enabledPermission,
-    this.agoraChannelData,
+    required this.agoraChannelData,
     this.agoraEventHandlers,
   }) : _initialized = false;
 
@@ -53,6 +53,7 @@ class AgoraClient {
     try {
       await _sessionController.initializeEngine(
         agoraConnectionData: agoraConnectionData,
+        agoraChannelData: agoraChannelData,
       );
     } catch (e) {
       print("Error occured while initializing Agora RtcEngine: $e");
@@ -62,9 +63,7 @@ class AgoraClient {
 
     _sessionController.createEvents(agoraEventHandlers ?? AgoraEventHandlers());
 
-    if (agoraChannelData != null) {
-      _sessionController.setChannelProperties(agoraChannelData!);
-    }
+    _sessionController.setChannelProperties(agoraChannelData);
 
     await _sessionController.joinVideoChannel();
     _initialized = true;

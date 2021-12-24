@@ -2,6 +2,7 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_uikit/models/agora_user.dart';
 import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
 import 'package:agora_uikit/src/layout/widgets/number_of_users.dart';
+import 'package:agora_uikit/src/layout/widgets/record_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as rtc_local_view;
@@ -12,6 +13,8 @@ class GridLayout extends StatefulWidget {
 
   /// Display the total number of users in a channel.
   final bool? showNumberOfUsers;
+
+  final bool? showRecordIcon;
 
   /// Widget that will be displayed when the local or remote user has disabled it's video.
   final Widget? disabledVideoWidget;
@@ -25,6 +28,7 @@ class GridLayout extends StatefulWidget {
     this.showNumberOfUsers,
     this.disabledVideoWidget = const DisabledVideoWidget(),
     this.videoRenderMode,
+    this.showRecordIcon,
   }) : super(key: key);
 
   @override
@@ -34,18 +38,21 @@ class GridLayout extends StatefulWidget {
 class _GridLayoutState extends State<GridLayout> {
   List<Widget> _getRenderViews() {
     final List<StatefulWidget> list = [];
-    widget.client.sessionController.value.isLocalVideoDisabled
-        ? list.add(
-            DisabledVideoStfWidget(
-              disabledVideoWidget: widget.disabledVideoWidget,
-            ),
-          )
-        : list.add(
-            rtc_local_view.SurfaceView(
-              zOrderMediaOverlay: true,
-              renderMode: widget.videoRenderMode,
-            ),
-          );
+    if (widget.client.sessionController.value.clientRole !=
+        ClientRole.Audience) {
+      widget.client.sessionController.value.isLocalVideoDisabled
+          ? list.add(
+              DisabledVideoStfWidget(
+                disabledVideoWidget: widget.disabledVideoWidget,
+              ),
+            )
+          : list.add(
+              rtc_local_view.SurfaceView(
+                zOrderMediaOverlay: true,
+                renderMode: widget.videoRenderMode,
+              ),
+            );
+    }
 
     for (AgoraUser user in widget.client.sessionController.value.users) {
       user.videoDisabled
@@ -144,18 +151,58 @@ class _GridLayoutState extends State<GridLayout> {
           child: Stack(
             children: [
               _viewGrid(),
-              widget.showNumberOfUsers == null ||
-                      widget.showNumberOfUsers == false
+              widget.showNumberOfUsers == null &&
+                          widget.showRecordIcon == null ||
+                      widget.showNumberOfUsers == false &&
+                          widget.showRecordIcon == false
                   ? Container()
-                  : Positioned.fill(
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: NumberOfUsers(
-                          userCount: widget
-                              .client.sessionController.value.users.length,
-                        ),
-                      ),
-                    ),
+                  : widget.showNumberOfUsers == false &&
+                          widget.showRecordIcon == true
+                      ? Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: widget
+                                    .client.sessionController.value.isRecording
+                                ? RecordIcon()
+                                : Container(),
+                          ),
+                        )
+                      : widget.showNumberOfUsers == true &&
+                              widget.showRecordIcon == false
+                          ? Positioned.fill(
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: NumberOfUsers(
+                                  userCount: widget.client.sessionController
+                                      .value.users.length,
+                                ),
+                              ),
+                            )
+                          : Positioned.fill(
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    widget.client.sessionController.value
+                                            .isRecording
+                                        ? RecordIcon()
+                                        : Container(),
+                                    widget.client.sessionController.value
+                                            .isRecording
+                                        ? SizedBox(
+                                            width: 5,
+                                          )
+                                        : SizedBox.shrink(),
+                                    NumberOfUsers(
+                                      userCount: widget.client.sessionController
+                                          .value.users.length,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
             ],
           ),
         );
