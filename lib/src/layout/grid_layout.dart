@@ -38,18 +38,21 @@ class GridLayout extends StatefulWidget {
 class _GridLayoutState extends State<GridLayout> {
   List<Widget> _getRenderViews() {
     final List<StatefulWidget> list = [];
-    widget.client.sessionController.value.isLocalVideoDisabled
-        ? list.add(
-            DisabledVideoStfWidget(
-              disabledVideoWidget: widget.disabledVideoWidget,
-            ),
-          )
-        : list.add(
-            rtc_local_view.SurfaceView(
-              zOrderMediaOverlay: true,
-              renderMode: widget.videoRenderMode,
-            ),
-          );
+    if (widget.client.sessionController.value.clientRole !=
+        ClientRole.Audience) {
+      widget.client.sessionController.value.isLocalVideoDisabled
+          ? list.add(
+              DisabledVideoStfWidget(
+                disabledVideoWidget: widget.disabledVideoWidget,
+              ),
+            )
+          : list.add(
+              rtc_local_view.SurfaceView(
+                zOrderMediaOverlay: true,
+                renderMode: widget.videoRenderMode,
+              ),
+            );
+    }
 
     for (AgoraUser user in widget.client.sessionController.value.users) {
       user.videoDisabled
