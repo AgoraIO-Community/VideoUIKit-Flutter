@@ -36,7 +36,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         );
 
   Future<void> initializeEngine(
-      {required AgoraConnectionData agoraConnectionData}) async {
+      {required AgoraConnectionData agoraConnectionData,
+      required AgoraChannelData agoraChannelData}) async {
     value = value.copyWith(
       engine: await RtcEngine.createWithContext(
         RtcEngineContext(
@@ -44,6 +45,14 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           areaCode: agoraConnectionData.areaCode,
         ),
       ),
+      mainAgoraUser: AgoraUser(
+        uid: 0,
+        remote: true,
+        muted: false,
+        videoDisabled: false,
+        clientRole: agoraChannelData.clientRole,
+      ),
+      clientRole: agoraChannelData.clientRole,
       connectionData: agoraConnectionData,
     );
   }
