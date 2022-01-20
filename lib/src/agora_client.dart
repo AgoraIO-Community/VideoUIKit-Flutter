@@ -82,7 +82,6 @@ class AgoraClient {
     }
 
     await _sessionController.joinVideoChannel();
-
     _initialized = true;
   }
 }
