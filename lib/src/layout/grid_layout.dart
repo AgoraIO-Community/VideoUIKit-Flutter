@@ -1,4 +1,3 @@
-import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_uikit/models/agora_user.dart';
 import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
 import 'package:agora_uikit/src/layout/widgets/number_of_users.dart';

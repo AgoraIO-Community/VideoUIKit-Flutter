@@ -14,6 +14,7 @@ class AgoraClient {
   final List<Permission> enabledPermission;
   final AgoraChannelData? agoraChannelData;
   final AgoraEventHandlers? agoraEventHandlers;
+  final String? deepLinkBaseUrl;
 
   bool _initialized = false;
 
@@ -22,6 +23,7 @@ class AgoraClient {
     required this.enabledPermission,
     this.agoraChannelData,
     this.agoraEventHandlers,
+    this.deepLinkBaseUrl,
   }) : _initialized = false;
 
   /// Useful to check if [AgoraClient] is ready for further usage

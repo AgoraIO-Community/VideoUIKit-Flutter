@@ -1,10 +1,15 @@
-import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/src/layout/floating_layout.dart';
 import 'package:agora_uikit/src/layout/grid_layout.dart';
 import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:uni_links/uni_links.dart';
+import 'package:http/http.dart' as http;
+import 'package:share_plus/share_plus.dart';
 
 /// A UI class to style how the video layout looks like. Use this class to choose between the two default layouts [FloatingLayout] and [GridLayout], enable active speaker, display number of users, display mic and video state of the user.
 class AgoraVideoViewer extends StatefulWidget {
@@ -48,7 +53,7 @@ class AgoraVideoViewer extends StatefulWidget {
     this.disabledVideoWidget = const DisabledVideoWidget(),
     this.showAVState = false,
     this.showNumberOfUsers = false,
-    this.videoRenderMode = VideoRenderMode.Fit,
+    this.videoRenderMode = VideoRenderMode.Hidden,
   }) : super(key: key);
 
   @override
@@ -60,6 +65,8 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
   void initState() {
     widget.client.sessionController
         .updateLayoutType(updatedLayout: widget.layoutType);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
@@ -69,33 +76,183 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
     widget.client.sessionController.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget userLayout(String? layoutType, String? baseUrl) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      child: widget.layoutType == Layout.floating
-          ? FloatingLayout(
-              client: widget.client,
-              disabledVideoWidget: widget.disabledVideoWidget,
-              floatingLayoutContainerHeight:
-                  widget.floatingLayoutContainerHeight,
-              floatingLayoutContainerWidth: widget.floatingLayoutContainerWidth,
-              floatingLayoutMainViewPadding:
-                  widget.floatingLayoutMainViewPadding,
-              floatingLayoutSubViewPadding: widget.floatingLayoutSubViewPadding,
-              showAVState: widget.showAVState,
-              showNumberOfUsers: widget.showNumberOfUsers,
-              videoRenderMode: widget.videoRenderMode,
+      child: layoutType == "floating"
+          ? Stack(
+              children: [
+                FloatingLayout(
+                  client: widget.client,
+                  disabledVideoWidget: widget.disabledVideoWidget,
+                  floatingLayoutContainerHeight:
+                      widget.floatingLayoutContainerHeight,
+                  floatingLayoutContainerWidth:
+                      widget.floatingLayoutContainerWidth,
+                  floatingLayoutMainViewPadding:
+                      widget.floatingLayoutMainViewPadding,
+                  floatingLayoutSubViewPadding:
+                      widget.floatingLayoutSubViewPadding,
+                  showAVState: widget.showAVState,
+                  showNumberOfUsers: widget.showNumberOfUsers,
+                  videoRenderMode: widget.videoRenderMode,
+                ),
+                channelBar(baseUrl),
+              ],
             )
-          : GridLayout(
-              client: widget.client,
-              showNumberOfUsers: widget.showNumberOfUsers,
-              disabledVideoWidget: widget.disabledVideoWidget,
-              videoRenderMode: widget.videoRenderMode,
+          : Stack(
+              children: [
+                GridLayout(
+                  client: widget.client,
+                  showNumberOfUsers: widget.showNumberOfUsers,
+                  disabledVideoWidget: widget.disabledVideoWidget,
+                  videoRenderMode: widget.videoRenderMode,
+                ),
+                channelBar(baseUrl),
+              ],
             ),
       onTap: () {
         widget.client.sessionController.toggleVisible();
       },
     );
+  }
+
+  Widget channelBar(String? baseUrl) {
+    return Positioned.fill(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.08,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.grey.withOpacity(0.5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                widget
+                    .client.sessionController.value.connectionData!.channelName
+                    .toString(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  String tempTokenString = widget.client.sessionController.value
+                              .connectionData!.tempToken ==
+                          null
+                      ? ''
+                      : '&tempToken=${widget.client.sessionController.value.connectionData!.tempToken}';
+                  String tokenUrlString = widget.client.sessionController.value
+                              .connectionData!.tokenUrl ==
+                          null
+                      ? ''
+                      : '&tokenUrl=${widget.client.sessionController.value.connectionData!.tokenUrl}';
+                  String layoutTypeString =
+                      widget.client.sessionController.value.layoutType ==
+                              Layout.floating
+                          ? '&layoutType=floating'
+                          : '&layoutType=grid';
+                  Share.share(
+                      'Please join my channel: "${widget.client.sessionController.value.connectionData!.channelName}" using this link: ${widget.client.deepLinkBaseUrl}/channelName=${widget.client.sessionController.value.connectionData!.channelName}' +
+                          tempTokenString +
+                          tokenUrlString +
+                          layoutTypeString);
+                },
+                child: Icon(
+                  Icons.copy,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    late String appId;
+    late String channelName;
+    String? tempToken;
+    String? tokenUrl;
+    // TODO: List<AreaCode>? areaCodes;
+    String? baseUrl;
+    String? layoutType = "grid";
+    Future<void> updateAgoraConnectionDataConfig(Object? link) async {
+      if (link != '') {
+        StreamSubscription<Uri?> subscription =
+            uriLinkStream.listen((Uri? uri) async {
+          print('uri: $uri');
+          baseUrl = uri?.origin;
+
+          uri?.queryParametersAll.forEach((key, value) {
+            print('params');
+            print('$key: ${value[0]}');
+            if (key == 'channelName') {
+              channelName = value[0];
+              print('Channe Name: $channelName');
+            } else if (key == 'tempToken') {
+              tempToken = value[0];
+              print('Temp Token: $tempToken');
+            } else if (key == 'tokenUrl') {
+              tokenUrl = value[0];
+              print('Token Url: $tokenUrl');
+            } else if (key == "layoutTpype") {
+              layoutType = value[0];
+              print("layoutType: $layoutType");
+            }
+          });
+        });
+
+        await subscription.asFuture();
+        final response = await http.get(
+          Uri.parse(
+            '$baseUrl/.well-known/assetlinks.json',
+          ),
+        );
+        if (response.statusCode == 200) {
+          final responseJson = jsonDecode(response.body);
+          appId = responseJson[0]['appId'];
+        } else {
+          print('response.statusCode: ${response.statusCode}');
+        }
+        await widget.client.sessionController.updateAgoraConnectionData(
+          appId: appId,
+          channelName: channelName,
+          tokenUrl: tokenUrl,
+          tempToken: tempToken,
+        );
+        await subscription.cancel();
+      }
+    }
+
+    return StreamBuilder(
+        stream: linkStream,
+        builder: (context, streamSnapshot) {
+          final link = streamSnapshot.data ?? '';
+          updateAgoraConnectionDataConfig(link);
+          if (link != '') {
+            return userLayout(layoutType, baseUrl!);
+          }
+          return FutureBuilder(
+              future: getInitialLink(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                final link = snapshot.data ?? '';
+                updateAgoraConnectionDataConfig(link);
+                return userLayout(layoutType, baseUrl);
+              });
+        });
   }
 }

@@ -2,7 +2,6 @@ import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
 import 'package:agora_uikit/src/layout/widgets/number_of_users.dart';
 import 'package:agora_uikit/src/layout/widgets/user_av_state_widget.dart';
-import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as rtc_local_view;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as rtc_remote_view;

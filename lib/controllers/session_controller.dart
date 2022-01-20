@@ -409,6 +409,25 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     );
   }
 
+  Future<void> updateAgoraConnectionData(
+      {required String appId,
+      required String channelName,
+      String? tempToken,
+      String? tokenUrl,
+      List<AreaCode>? areaCode,
+      int? uid}) async {
+    value.copyWith(
+      connectionData: AgoraConnectionData(
+        appId: appId,
+        channelName: channelName,
+        tempToken: tempToken,
+        tokenUrl: tokenUrl,
+        areaCode: areaCode ?? [AreaCode.GLOB],
+        uid: uid ?? 0,
+      ),
+    );
+  }
+
   void _addUser({required AgoraUser callUser}) {
     value = value.copyWith(users: [...value.users, callUser]);
   }
