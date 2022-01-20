@@ -47,5 +47,18 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CFBundleURLTypes</key>
+  		<array>
+    		<dict>
+      		<key>CFBundleTypeRole</key>
+      		<string>Editor</string>
+      		<key>CFBundleURLName</key>
+      		<string>YOUR HOST</string>
+      		<key>CFBundleURLSchemes</key>
+      		<array>
+        		<string>https</string>
+      		</array>
+    		</dict>
+  		</array>
 </dict>
 </plist>

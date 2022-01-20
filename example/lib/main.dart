@@ -20,6 +20,7 @@ class _MyAppState extends State<MyApp> {
       Permission.camera,
       Permission.microphone,
     ],
+    deepLinkBaseUrl: "",
   );
 
   @override
