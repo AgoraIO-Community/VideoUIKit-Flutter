@@ -50,15 +50,30 @@ class AgoraClient {
     if (_initialized) {
       return;
     }
-    try {
-      await _sessionController.initializeEngine(
-        agoraConnectionData: agoraConnectionData,
-      );
-    } catch (e) {
-      print("Error occured while initializing Agora RtcEngine: $e");
+
+    if (agoraConnectionData.username == null) {
+      try {
+        await _sessionController.initializeEngine(
+            agoraConnectionData: agoraConnectionData);
+      } catch (e) {
+        print("Error while initializing Agora SDK");
+      }
+    } else {
+      try {
+        await _sessionController.initializeEngine(
+          agoraConnectionData: agoraConnectionData,
+        );
+        await _sessionController.initializeRtm();
+      } catch (e) {
+        print("Error while initializing Agora SDK. ${e.toString()}");
+      }
     }
 
     await enabledPermission.request();
+
+    // await _sessionController.rtmStuff();
+
+    await _sessionController.loginToRtm();
 
     _sessionController.createEvents(agoraEventHandlers ?? AgoraEventHandlers());
 

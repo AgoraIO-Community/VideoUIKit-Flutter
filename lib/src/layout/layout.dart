@@ -1,9 +1,7 @@
-import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/src/layout/floating_layout.dart';
 import 'package:agora_uikit/src/layout/grid_layout.dart';
 import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// A UI class to style how the video layout looks like. Use this class to choose between the two default layouts [FloatingLayout] and [GridLayout], enable active speaker, display number of users, display mic and video state of the user.
@@ -31,6 +29,8 @@ class AgoraVideoViewer extends StatefulWidget {
   /// Display the camera and microphone status of a user. This feature is only available in the [Layout.floating]
   final bool showAVState;
 
+  final bool enableHostControls;
+
   /// Display the total number of users in a channel.
   final bool showNumberOfUsers;
 
@@ -47,6 +47,7 @@ class AgoraVideoViewer extends StatefulWidget {
     this.floatingLayoutSubViewPadding = const EdgeInsets.fromLTRB(3, 3, 0, 3),
     this.disabledVideoWidget = const DisabledVideoWidget(),
     this.showAVState = false,
+    this.enableHostControls = false,
     this.showNumberOfUsers = false,
     this.videoRenderMode = VideoRenderMode.Fit,
   }) : super(key: key);
@@ -58,8 +59,10 @@ class AgoraVideoViewer extends StatefulWidget {
 class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
   @override
   void initState() {
-    widget.client.sessionController
-        .updateLayoutType(updatedLayout: widget.layoutType);
+    if (widget.client.isInitialized) {
+      widget.client.sessionController
+          .updateLayoutType(updatedLayout: widget.layoutType);
+    }
     super.initState();
   }
 
@@ -84,6 +87,7 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
                   widget.floatingLayoutMainViewPadding,
               floatingLayoutSubViewPadding: widget.floatingLayoutSubViewPadding,
               showAVState: widget.showAVState,
+              enableHostControl: widget.enableHostControls,
               showNumberOfUsers: widget.showNumberOfUsers,
               videoRenderMode: widget.videoRenderMode,
             )
