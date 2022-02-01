@@ -18,6 +18,7 @@ class AgoraSettings {
   final ClientRole clientRole;
   final int localUid;
   String? generatedToken;
+  String? generatedRtmToken;
   String? generatedRtmId;
   final bool isLoggedIn;
   final bool isInChannel;
@@ -45,6 +46,7 @@ class AgoraSettings {
     required this.clientRole,
     required this.localUid,
     this.generatedToken,
+    this.generatedRtmToken,
     this.generatedRtmId,
     this.isLoggedIn = false,
     this.isInChannel = false,
@@ -73,6 +75,7 @@ class AgoraSettings {
     ClientRole? clientRole,
     int? localUid,
     String? generatedToken,
+    String? generatedRtmToken,
     String? generatedRtmId,
     bool? isLoggedIn,
     bool? isInChannel,
@@ -100,6 +103,7 @@ class AgoraSettings {
       clientRole: clientRole ?? this.clientRole,
       localUid: localUid ?? this.localUid,
       generatedToken: generatedToken ?? this.generatedToken,
+      generatedRtmToken: generatedRtmToken ?? this.generatedRtmToken,
       generatedRtmId: generatedRtmId ?? this.generatedRtmId,
       isLoggedIn: isLoggedIn ?? this.isLoggedIn,
       isInChannel: isInChannel ?? this.isInChannel,

@@ -15,7 +15,7 @@ class _MyAppState extends State<MyApp> {
     agoraConnectionData: AgoraConnectionData(
       appId: "<--Add your App Id here-->",
       channelName: "test",
-      username: "meher",
+      username: "user",
     ),
     enabledPermission: [
       Permission.camera,

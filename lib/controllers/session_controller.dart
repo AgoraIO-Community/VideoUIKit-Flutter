@@ -47,6 +47,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           ),
         );
 
+  /// Function to initialize the Agora RTM client.
   Future<void> initializeRtm() async {
     value = value.copyWith(
       agoraRtmClient: await AgoraRtmClient.createInstance(
@@ -66,9 +67,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           messageType = json['messageType'];
         }
       });
-
-      print("MESSAGE TYPE: $messageType");
-      onMessageReceived(messageType: messageType!, message: msg.toJson());
+      _onMessageReceived(messageType: messageType!, message: msg.toJson());
     };
 
     value.agoraRtmClient?.onConnectionStateChanged = (int state, int reason) {
@@ -96,14 +95,16 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     };
   }
 
+  /// Function to join the RTM channel and send the user data to everyone inside that channel.
   Future<void> rtmMethods() async {
-    await joinRtmChannel();
-    await sendUserData(
+    await _joinRtmChannel();
+    await _sendUserData(
       toChannel: true,
       username: value.connectionData!.username!,
     );
   }
 
+  /// Function to initialize the Agora RTC engine.
   Future<void> initializeEngine(
       {required AgoraConnectionData agoraConnectionData}) async {
     value = value.copyWith(
@@ -117,6 +118,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     );
   }
 
+  /// Function to trigger all the AgoraEventHandlers.
   void createEvents(AgoraEventHandlers agoraEventHandlers) async {
     value.engine?.setEventHandler(
       RtcEngineEventHandler(
@@ -307,7 +309,9 @@ class SessionController extends ValueNotifier<AgoraSettings> {
               clientRole: value.clientRole,
             ),
           );
-          rtmMethods();
+          if (value.connectionData!.username != null) {
+            rtmMethods();
+          }
           agoraEventHandlers.joinChannelSuccess?.call(channel, uid, elapsed);
         },
         leaveChannel: (stats) {
@@ -460,7 +464,13 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         agoraChannelData.audioProfile, agoraChannelData.audioScenario);
   }
 
+  /// Function to join the video call.
   Future<void> joinVideoChannel() async {
+    // [generatedRtmId] is the unique ID for a user generated using the timestamp in milliseconds.
+    value = value.copyWith(
+      generatedRtmId: value.connectionData!.rtmUid ??
+          DateTime.now().millisecondsSinceEpoch.toString(),
+    );
     await value.engine?.enableVideo();
     await value.engine?.enableAudioVolumeIndication(200, 3, true);
     if (value.connectionData?.tokenUrl != null) {
@@ -476,6 +486,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       null,
       value.connectionData!.uid,
     );
+    await _loginToRtm();
   }
 
   void _addUser({required AgoraUser callUser}) {
@@ -526,8 +537,13 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     await value.engine?.switchCamera();
   }
 
+  /// Function to dispose the RTC and RTM engine.
   Future<void> endCall() async {
     await value.engine?.leaveChannel();
+    if (value.connectionData!.username != null) {
+      await value.agoraRtmChannel?.leave();
+      await value.agoraRtmClient?.logout();
+    }
     await value.engine?.destroy();
     // dispose();
   }
@@ -606,6 +622,9 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     String? channelName,
     int uid = 0,
   }) async {
+    if (value.connectionData!.username != null) {
+      await _getRtmToken(tokenUrl: tokenUrl);
+    }
     final response = await http
         .get(Uri.parse('$tokenUrl/rtc/$channelName/publisher/uid/$uid'));
     if (response.statusCode == 200) {
@@ -617,19 +636,31 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     }
   }
 
+  Future<void> _getRtmToken({String? tokenUrl}) async {
+    final String url = "$tokenUrl/rtm/${value.generatedRtmId}";
+    final rtmResponse = await http.get(Uri.parse(url));
+    print(url);
+    if (rtmResponse.statusCode == 200) {
+      value = value.copyWith(
+        generatedRtmToken: jsonDecode(rtmResponse.body)['rtmToken'],
+      );
+    } else {
+      print(rtmResponse.reasonPhrase);
+      print('Failed to generate the rtm token : ${rtmResponse.statusCode}');
+    }
+  }
+
   void updateLayoutType({required Layout updatedLayout}) {
     value = value.copyWith(layoutType: updatedLayout);
   }
 
-  Future<void> loginToRtm({String? token}) async {
-    value = value.copyWith(
-      generatedRtmId: value.connectionData!.rtmUid ??
-          DateTime.now().millisecondsSinceEpoch.toString(),
-    );
-
+  Future<void> _loginToRtm() async {
     if (!value.isLoggedIn) {
       try {
-        await value.agoraRtmClient?.login(token, value.generatedRtmId!);
+        await value.agoraRtmClient?.login(
+          value.connectionData!.tempRtmToken ?? value.generatedRtmToken,
+          value.generatedRtmId!,
+        );
         value = value.copyWith(isLoggedIn: true);
         print(
             'Username : ${value.connectionData!.username} and rtmId : ${value.generatedRtmId} logged in');
@@ -639,7 +670,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     }
   }
 
-  Future<AgoraRtmChannel?> createChannel(
+  Future<AgoraRtmChannel?> _createChannel(
       {required String rtmChannelName}) async {
     AgoraRtmChannel? channel =
         await value.agoraRtmClient?.createChannel(rtmChannelName);
@@ -649,12 +680,12 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           (AgoraRtmMessage message, AgoraRtmMember member) {
         print('Channel msg : ${message.text}, from : ${member.userId}');
         Message msg = Message(text: message.text);
-        onMessageReceived(messageType: "UserData", message: msg.toJson());
+        _onMessageReceived(messageType: "UserData", message: msg.toJson());
       };
 
       channel.onMemberJoined = (AgoraRtmMember member) {
         print('Member joined : ${member.userId}');
-        sendUserData(
+        _sendUserData(
           toChannel: false,
           username: value.connectionData!.username!,
           peerRtmId: member.userId,
@@ -683,11 +714,11 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     return channel;
   }
 
-  Future<void> joinRtmChannel() async {
+  Future<void> _joinRtmChannel() async {
     if (!value.isInChannel) {
       try {
         value = value.copyWith(
-          agoraRtmChannel: await createChannel(
+          agoraRtmChannel: await _createChannel(
               rtmChannelName: value.connectionData?.rtmChannelName ??
                   value.connectionData!.channelName),
         );
@@ -699,7 +730,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     }
   }
 
-  Future<void> sendUserData({
+  Future<void> _sendUserData({
     required bool toChannel,
     required String username,
     String? peerRtmId,
@@ -827,7 +858,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     value = value.copyWith(userRtmMap: tempMap);
   }
 
-  void onMessageReceived(
+  void _onMessageReceived(
       {required String messageType, required Map<String, dynamic> message}) {
     switch (messageType) {
       case "UserData":
