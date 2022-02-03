@@ -97,6 +97,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   /// Function to join the RTM channel and send the user data to everyone inside that channel.
   Future<void> rtmMethods() async {
+    await _loginToRtm();
     await _joinRtmChannel();
     await _sendUserData(
       toChannel: true,
@@ -316,7 +317,6 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         },
         leaveChannel: (stats) {
           _clearUsers();
-
           agoraEventHandlers.leaveChannel?.call(stats);
         },
         userJoined: (uid, elapsed) {
@@ -486,7 +486,6 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       null,
       value.connectionData!.uid,
     );
-    await _loginToRtm();
   }
 
   void _addUser({required AgoraUser callUser}) {
