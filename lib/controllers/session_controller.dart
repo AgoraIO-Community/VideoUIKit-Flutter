@@ -739,16 +739,19 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
     String json = '''{
       "messageType": "UserData",
-      "content": {
-        "rtmId": "${value.generatedRtmId}",
-        "rtcId": ${value.localUid},
-        "username": "$username"
-    },
-    "uikit": {
+      "rtmId": "${value.generatedRtmId}",
+      "rtcId": ${value.localUid},
+      "username": "$username",
+      "role": "${value.clientRole}",
+      "agora": {
+        "rtm": "1.0.1",
+        "rtc": "4.0.6"
+      },
+      "uikit": {
         "platform": "$platform",
         "framework": "flutter",
-        "version": "0.0.4"
-    }
+        "version": "1.0.0"
+      }
     }''';
 
     Message message = Message(text: json, ts: ts, offline: false);
@@ -771,11 +774,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     String? peerId;
     String json = '''{
       "messageType": "MuteRequest",
-      "content": {
-        "rtcId": ${value.users[index].uid},
-        "mute": $isMicEnabled,
-        "isForceFul": "false"
-    }
+      "rtcId": ${value.users[index].uid},
+      "mute": $isMicEnabled,
+      "device": "0", 
+      "isForceFul": "false"
     }''';
 
     Message message = Message(text: json);
@@ -799,11 +801,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     String? peerId;
     String json = '''{
       "messageType": "CameraRequest",
-      "content": {
-        "rtcId": ${value.users[index].uid},
-        "mute": $isCameraEnabled,
-        "isForceFul": "false"
-    }
+      "rtcId": ${value.users[index].uid},
+      "mute": $isCameraEnabled,
+      "device": "1",
+      "isForceFul": "false"
     }''';
 
     Message message = Message(text: json);
@@ -865,8 +866,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         message.forEach((key, val) {
           if (key == "text") {
             var json = jsonDecode(val);
-            String rtmId = json['content']['rtmId'];
-            int rtcId = json['content']['rtcId'];
+            String rtmId = json['rtmId'];
+            int rtcId = json['rtcId'];
             print("RTM ID: $rtmId");
             print("RTC ID : $rtcId");
             _addToUidUserMap(rtcId: rtcId, rtmId: rtmId);
@@ -880,8 +881,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         message.forEach((key, val) {
           if (key == "text") {
             var json = jsonDecode(val);
-            rtcId = json['content']['rtcId'];
-            muted = json['content']['mute'];
+            rtcId = json['rtcId'];
+            muted = json['mute'];
             print("RTC ID: $rtcId");
           }
         });
@@ -904,8 +905,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         message.forEach((key, val) {
           if (key == "text") {
             var json = jsonDecode(val);
-            rtcId = json['content']['rtcId'];
-            disabled = json['content']['mute'];
+            rtcId = json['rtcId'];
+            disabled = json['mute'];
             print("RTC ID: $rtcId");
           }
         });
