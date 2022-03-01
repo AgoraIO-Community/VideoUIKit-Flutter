@@ -93,10 +93,6 @@ final AgoraClient client = AgoraClient(
     appId: "<--Add Your App Id Here-->",
     channelName: "test",
   ),
-  enabledPermission: [
-    Permission.camera,
-    Permission.microphone,
-  ],
 );
 
 // Initialize the Agora Engine

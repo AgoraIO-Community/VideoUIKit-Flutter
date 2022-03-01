@@ -10,16 +10,23 @@ import 'package:permission_handler/permission_handler.dart';
 
 /// [AgoraClient] is the main class in this UIKit. It is used to initialize our [RtcEngine], add the list of user permissions, define the channel properties and use extend the [RtcEngineEventHandler] class.
 class AgoraClient {
+  /// [AgoraConnectionData] is a class used to store all the connection details to authenticate your account with the Agora SDK.
   final AgoraConnectionData agoraConnectionData;
-  final List<Permission> enabledPermission;
+
+  /// [enabledPermission] is a list of permissions that the user has to grant to the app. By default the UIKit asks for the camera and microphone permissions for every broadcaster that joins the channel.
+  final List<Permission>? enabledPermission;
+
+  /// [AgoraChannelData] is a class that contains all the Agora channel properties.
   final AgoraChannelData? agoraChannelData;
+
+  /// [AgoraEventHandlers] is a class that contains all the Agora event handlers. Use it to add your own functions or methods.
   final AgoraEventHandlers? agoraEventHandlers;
 
   bool _initialized = false;
 
   AgoraClient({
     required this.agoraConnectionData,
-    required this.enabledPermission,
+    this.enabledPermission,
     this.agoraChannelData,
     this.agoraEventHandlers,
   }) : _initialized = false;
@@ -69,7 +76,13 @@ class AgoraClient {
       }
     }
 
-    await enabledPermission.request();
+    if (agoraChannelData?.clientRole == ClientRole.Broadcaster ||
+        agoraChannelData?.clientRole == null) {
+      await _sessionController.askForUserCameraAndMicPermission();
+    }
+    if (enabledPermission != null) {
+      await enabledPermission!.request();
+    }
 
     _sessionController.createEvents(agoraEventHandlers ?? AgoraEventHandlers());
 

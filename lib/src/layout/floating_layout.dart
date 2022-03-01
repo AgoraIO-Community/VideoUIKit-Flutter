@@ -411,14 +411,42 @@ class _FloatingLayoutState extends State<FloatingLayout> {
               widget.client.sessionController.value.mainAgoraUser.uid !=
                       widget.client.sessionController.value.localUid
                   ? Expanded(
-                      child: Container(
-                        padding: widget.floatingLayoutMainViewPadding,
-                        child: Column(
-                          children: [
-                            _videoView(_getRemoteViews(widget.client
-                                .sessionController.value.mainAgoraUser.uid))
-                          ],
-                        ),
+                      child: Stack(
+                        children: [
+                          Container(
+                            padding: widget.floatingLayoutMainViewPadding,
+                            child: Column(
+                              children: [
+                                _videoView(_getRemoteViews(widget.client
+                                    .sessionController.value.mainAgoraUser.uid))
+                              ],
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: widget.enableHostControl == null || false
+                                ? Container()
+                                : HostControls(
+                                    client: widget.client,
+                                    videoDisabled: widget
+                                        .client
+                                        .sessionController
+                                        .value
+                                        .mainAgoraUser
+                                        .videoDisabled,
+                                    muted: widget.client.sessionController.value
+                                        .mainAgoraUser.muted,
+                                    index: widget
+                                        .client.sessionController.value.users
+                                        .indexWhere(
+                                      (element) =>
+                                          element.uid ==
+                                          widget.client.sessionController.value
+                                              .mainAgoraUser.uid,
+                                    ),
+                                  ),
+                          ),
+                        ],
                       ),
                     )
                   : Expanded(

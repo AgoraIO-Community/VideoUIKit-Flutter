@@ -119,6 +119,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     );
   }
 
+  Future<void> askForUserCameraAndMicPermission() async {
+    await [Permission.camera, Permission.microphone].request();
+  }
+
   /// Function to trigger all the AgoraEventHandlers.
   void createEvents(AgoraEventHandlers agoraEventHandlers) async {
     value.engine?.setEventHandler(
