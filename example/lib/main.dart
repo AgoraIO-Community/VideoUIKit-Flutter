@@ -17,10 +17,6 @@ class _MyAppState extends State<MyApp> {
       channelName: "test",
       username: "user",
     ),
-    enabledPermission: [
-      Permission.camera,
-      Permission.microphone,
-    ],
   );
 
   @override
