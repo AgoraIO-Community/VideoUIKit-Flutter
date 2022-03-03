@@ -1,4 +1,4 @@
-## 1.0.0
+## 1.0.0-beta.1
   - Added Agora RTM SDK 
   - User Controls (Mute remote users audio and video)
   - Auto-permission for camera and mic (for all the broadcasters)
