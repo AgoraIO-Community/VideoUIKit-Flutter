@@ -15,11 +15,8 @@ class _MyAppState extends State<MyApp> {
     agoraConnectionData: AgoraConnectionData(
       appId: "<--Add your App Id here-->",
       channelName: "test",
+      username: "user",
     ),
-    enabledPermission: [
-      Permission.camera,
-      Permission.microphone,
-    ],
   );
 
   @override
@@ -35,7 +32,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Agora UIKit'),
@@ -46,6 +42,8 @@ class _MyAppState extends State<MyApp> {
             children: [
               AgoraVideoViewer(
                 client: client,
+                layoutType: Layout.floating,
+                enableHostControls: true, // Add this to enable host controls
               ),
               AgoraVideoButtons(
                 client: client,

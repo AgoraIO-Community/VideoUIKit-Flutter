@@ -1,4 +1,10 @@
+## 1.0.0
+  - Added Agora RTM SDK 
+  - User Controls (Mute remote users audio and video)
+  - Auto-permission for camera and mic (for all the broadcasters)
+
 ## 0.0.4
+
   - Upgraded the agora_rtc_engine to v4.0.6
   - New method of initialization
   - Added all the event handlers
