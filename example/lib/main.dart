@@ -38,10 +38,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Agora UIKit'),
-          centerTitle: true,
-        ),
         body: SafeArea(
           child: Stack(
             children: [

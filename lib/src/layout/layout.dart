@@ -154,16 +154,10 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
                           null
                       ? ''
                       : '&tokenUrl=${widget.client.sessionController.value.connectionData!.tokenUrl}';
-                  String layoutTypeString =
-                      widget.client.sessionController.value.layoutType ==
-                              Layout.floating
-                          ? '&layoutType=floating'
-                          : '&layoutType=grid';
                   Share.share(
                       'Please join my channel: "${widget.client.sessionController.value.connectionData!.channelName}" using this link: ${widget.client.deepLinkBaseUrl}/channelName=${widget.client.sessionController.value.connectionData!.channelName}' +
                           tempTokenString +
-                          tokenUrlString +
-                          layoutTypeString);
+                          tokenUrlString);
                 },
                 child: Icon(
                   Icons.copy,
@@ -241,7 +235,7 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
           final link = streamSnapshot.data ?? '';
           updateAgoraConnectionDataConfig(link);
           if (link != '') {
-            return userLayout(layoutType, baseUrl!);
+            return userLayout(layoutType, baseUrl);
           }
           return FutureBuilder(
               future: getInitialLink(),
