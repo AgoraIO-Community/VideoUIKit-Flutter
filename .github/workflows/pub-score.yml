@@ -20,9 +20,9 @@ jobs:
           TOTAL: ${{ steps.analysis.outputs.total }}
           TOTAL_MAX: ${{ steps.analysis.outputs.total_max }}
         run: |
-          PERCENTAGE=$(( $TOTAL * 100 / $TOTAL_MAX ))
-          if (( $PERCENTAGE < 50 ))
+          echo Score is: $TOTAL
+          if (( $TOTAL < 100 ))
           then
-            echo Score too low!
+            echo Pub Score too low.
             exit 1
           fi
