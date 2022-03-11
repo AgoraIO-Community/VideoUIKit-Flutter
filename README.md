@@ -2,6 +2,9 @@
 # Agora UI Kit for Flutter
 
 <p align="center">
+    <a href="https://pub.dev/packages/agora_uikit"><img src="https://badges.bar/agora_uikit/likes"/></a>
+    <a href="https://pub.dev/packages/agora_uikit"><img src="https://badges.bar/agora_uikit/popularity"/></a>
+    <a href="https://pub.dev/packages/agora_uikit"><img src="https://badges.bar/agora_uikit/pub%20points"/></a><br/>
   <img src="https://img.shields.io/badge/Platform-iOS%20%7C%20Android-blue?logo=flutter" alt="Platform" />
   <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/AgoraIO-Community/Flutter-UIKit/Flutter">
   <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/v/agora_uikit"/></a>
@@ -9,6 +12,7 @@
       alt="License: MIT" />
   <a href="https://www.agora.io/en/join-slack/"><img src="https://img.shields.io/badge/slack-@RTE%20Dev-blue.svg?logo=slack"></a>
 </p>
+
 
 Instantly integrate Agora video calling or video streaming into your Flutter application.  
 
@@ -60,7 +64,7 @@ Agora Video SDK requires `camera` and `microphone` permission to start video cal
 #### Android
 
 Open the `AndroidManifest.xml` file and add the required device permissions to the file.
-  
+
 ```xml
 <manifest>
 ...
@@ -82,7 +86,7 @@ Open `info.plist` and add:
 
 -  `Privacy - Microphone Usage Description`, and add a note in the Value column.
 -  `Privacy - Camera Usage Description`, and add a note in the Value column.
-  
+
 Your application can still run the voice call when it is switched to the background if the background mode is enabled. Select the app target in Xcode, click the Capabilities tab, enable Background Modes, and check Audio, AirPlay, and Picture in Picture.
 
 ## Usage
@@ -130,5 +134,4 @@ Widget build(BuildContext context) {
 ## UIKits
 
 The plan is to grow this library and have similar offerings across all supported platforms. There are already similar libraries for [Android](https://github.com/AgoraIO-Community/Android-UIKit/), [React Native](https://github.com/AgoraIO-Community/ReactNative-UIKit), and [iOS](https://github.com/AgoraIO-Community/iOS-UIKit/), so be sure to check them out.
-
 
