@@ -189,8 +189,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         channelMediaRelayEvent: (code) {
           agoraEventHandlers.channelMediaRelayEvent?.call(code);
         },
-        metadataReceived: (buffer, uid, timeStampMs) {
-          agoraEventHandlers.metadataReceived?.call(buffer, uid, timeStampMs);
+        metadataReceived: (metaData) {
+          agoraEventHandlers.metadataReceived?.call(metaData);
         },
         firstLocalVideoFramePublished: (elapsed) {
           agoraEventHandlers.firstLocalVideoFramePublished?.call(elapsed);

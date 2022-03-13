@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:agora_rtc_engine/rtc_engine.dart';
 
 class AgoraEventHandlers {
@@ -148,7 +150,7 @@ class AgoraEventHandlers {
   final Function(String, int, InjectStreamStatus)? streamInjectedStatus;
 
   /// Occurs when the local user receives a remote data stream.
-  final Function(int, int, String)? streamMessage;
+  final Function(int, int, Uint8List)? streamMessage;
 
   /// Occurs when the local user fails to receive a remote data stream.
   final Function(int, int, ErrorCode, int, int)? streamMessageError;
@@ -167,7 +169,7 @@ class AgoraEventHandlers {
   final Function(ChannelMediaRelayEvent)? channelMediaRelayEvent;
 
   /// Occurs when the local user receives the metadata.
-  final Function(String, int, int)? metadataReceived;
+  final Function(Metadata)? metadataReceived;
 
   /// Occurs when the first video frame is published.
   final Function(int)? firstLocalVideoFramePublished;
