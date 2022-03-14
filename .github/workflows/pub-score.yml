@@ -22,7 +22,7 @@ jobs:
           TOTAL_MAX: ${{ steps.analysis.outputs.total_max }}
         run: |
           echo Score is: $TOTAL
-          if (( $TOTAL < 100 ))
+          if (( $TOTAL < 120 ))
           then
             echo Pub Score too low.
             exit 1
