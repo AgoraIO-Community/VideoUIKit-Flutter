@@ -1,7 +1,8 @@
 ## 1.0.0-beta.1
-  - Added Agora RTM SDK 
-  - User Controls (Mute remote users audio and video)
+  - Added Agora RTM SDK v1.1.0
+  - Host Controls (Mute remote users audio and video)
   - Auto-permission for camera and mic (for all the broadcasters)
+  - Fixes RTM IPV6 issue. 
 
 ## 0.0.4
 
