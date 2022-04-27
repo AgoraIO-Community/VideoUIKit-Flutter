@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/models/agora_channel_data.dart';
 import 'package:agora_uikit/models/agora_connection_data.dart';
-import 'package:agora_uikit/models/agora_event_handlers.dart';
+import 'package:agora_uikit/models/agora_rtc_event_handlers.dart';
+import 'package:agora_uikit/models/agora_rtm_channel_event_handler.dart';
+import 'package:agora_uikit/models/agora_rtm_client_event_handler.dart';
+import 'package:agora_uikit/src/enums.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -19,8 +23,14 @@ class AgoraClient {
   /// [AgoraChannelData] is a class that contains all the Agora channel properties.
   final AgoraChannelData? agoraChannelData;
 
-  /// [AgoraEventHandlers] is a class that contains all the Agora event handlers. Use it to add your own functions or methods.
-  final AgoraEventHandlers? agoraEventHandlers;
+  /// [AgoraRtcEventHandlers] is a class that contains all the Agora RTC event handlers. Use it to add your own functions or methods.
+  final AgoraRtcEventHandlers? agoraEventHandlers;
+
+  /// [AgoraRtmClientEventHandlers] is a class that contains all the Agora RTM Client event handlers. Use it to add your own functions or methods.
+  final AgoraRtmClientEventHandler? agoraRtmClientEventHandler;
+
+  /// [AgoraRtmChannelEventHandlers] is a class that contains all the Agora RTM channel event handlers. Use it to add your own functions or methods.
+  final AgoraRtmChannelEventHandler? agoraRtmChannelEventHandler;
 
   bool _initialized = false;
 
@@ -29,6 +39,8 @@ class AgoraClient {
     this.enabledPermission,
     this.agoraChannelData,
     this.agoraEventHandlers,
+    this.agoraRtmClientEventHandler,
+    this.agoraRtmChannelEventHandler,
   }) : _initialized = false;
 
   /// Useful to check if [AgoraClient] is ready for further usage
@@ -53,6 +65,10 @@ class AgoraClient {
     return _sessionController;
   }
 
+  RtcEngine get engine {
+    return _sessionController.value.engine!;
+  }
+
   Future<void> initialize() async {
     if (_initialized) {
       return;
@@ -63,16 +79,18 @@ class AgoraClient {
         await _sessionController.initializeEngine(
             agoraConnectionData: agoraConnectionData);
       } catch (e) {
-        print("Error while initializing Agora SDK");
+        log("Error while initializing Agora SDK", level: Level.error.value);
       }
     } else {
       try {
         await _sessionController.initializeEngine(
           agoraConnectionData: agoraConnectionData,
         );
-        await _sessionController.initializeRtm();
+        await _sessionController.initializeRtm(
+            agoraRtmClientEventHandler ?? AgoraRtmClientEventHandler());
       } catch (e) {
-        print("Error while initializing Agora SDK. ${e.toString()}");
+        log("Error while initializing Agora SDK. ${e.toString()}",
+            level: Level.error.value);
       }
     }
 
@@ -84,7 +102,10 @@ class AgoraClient {
       await enabledPermission!.request();
     }
 
-    _sessionController.createEvents(agoraEventHandlers ?? AgoraEventHandlers());
+    _sessionController.createEvents(
+      agoraRtmChannelEventHandler ?? AgoraRtmChannelEventHandler(),
+      agoraEventHandlers ?? AgoraRtcEventHandlers(),
+    );
 
     if (agoraChannelData != null) {
       _sessionController.setChannelProperties(agoraChannelData!);

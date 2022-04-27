@@ -1,4 +1,5 @@
 import 'package:agora_uikit/agora_uikit.dart';
+import 'package:agora_uikit/controllers/rtc_buttons.dart';
 import 'package:flutter/material.dart';
 
 /// A UI class to style how the buttons look. Use this class to add, remove or customize the buttons in your live video calling application.
@@ -65,7 +66,9 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
       () {
         if (mounted) {
           setState(() {
-            widget.client.sessionController.toggleVisible();
+            toggleVisible(
+              sessionController: widget.client.sessionController,
+            );
           });
         }
       },
@@ -142,11 +145,15 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
   Widget _muteMicButton() {
     return widget.muteButtonChild != null
         ? RawMaterialButton(
-            onPressed: () => widget.client.sessionController.toggleMute(),
+            onPressed: () => toggleMute(
+              sessionController: widget.client.sessionController,
+            ),
             child: widget.muteButtonChild,
           )
         : RawMaterialButton(
-            onPressed: () => widget.client.sessionController.toggleMute(),
+            onPressed: () => toggleMute(
+              sessionController: widget.client.sessionController,
+            ),
             child: Icon(
               widget.client.sessionController.value.isLocalUserMuted
                   ? Icons.mic_off
@@ -184,11 +191,15 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
   Widget _switchCameraButton() {
     return widget.switchCameraButtonChild != null
         ? RawMaterialButton(
-            onPressed: () => widget.client.sessionController.switchCamera(),
+            onPressed: () => switchCamera(
+              sessionController: widget.client.sessionController,
+            ),
             child: widget.switchCameraButtonChild,
           )
         : RawMaterialButton(
-            onPressed: () => widget.client.sessionController.switchCamera(),
+            onPressed: () => switchCamera(
+              sessionController: widget.client.sessionController,
+            ),
             child: Icon(
               Icons.switch_camera,
               color: Colors.blueAccent,
@@ -204,11 +215,15 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
   Widget _disableVideoButton() {
     return widget.disableVideoButtonChild != null
         ? RawMaterialButton(
-            onPressed: () => widget.client.sessionController.toggleCamera(),
+            onPressed: () => toggleCamera(
+              sessionController: widget.client.sessionController,
+            ),
             child: widget.disableVideoButtonChild,
           )
         : RawMaterialButton(
-            onPressed: () => widget.client.sessionController.toggleCamera(),
+            onPressed: () => toggleCamera(
+              sessionController: widget.client.sessionController,
+            ),
             child: Icon(
               widget.client.sessionController.value.isLocalVideoDisabled
                   ? Icons.videocam_off
@@ -230,7 +245,9 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
 
   /// Default functionality of disconnect button is such that it pops the view and navigates the user to the previous screen.
   void _onCallEnd(BuildContext context) {
-    widget.client.sessionController.endCall();
+    endCall(
+      sessionController: widget.client.sessionController,
+    );
     widget.client.sessionController.dispose();
     Navigator.pop(context);
   }

@@ -16,14 +16,14 @@ class GridLayout extends StatefulWidget {
   final Widget? disabledVideoWidget;
 
   /// Render mode for local and remote video
-  final VideoRenderMode? videoRenderMode;
+  final VideoRenderMode videoRenderMode;
 
   const GridLayout({
     Key? key,
     required this.client,
     this.showNumberOfUsers,
     this.disabledVideoWidget = const DisabledVideoWidget(),
-    this.videoRenderMode,
+    this.videoRenderMode = VideoRenderMode.Hidden,
   }) : super(key: key);
 
   @override

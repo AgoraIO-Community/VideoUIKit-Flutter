@@ -53,7 +53,11 @@ export 'package:permission_handler/permission_handler.dart';
 
 export 'models/agora_channel_data.dart' show AgoraChannelData;
 export 'models/agora_connection_data.dart' show AgoraConnectionData;
-export 'models/agora_event_handlers.dart' show AgoraEventHandlers;
+export 'models/agora_rtc_event_handlers.dart' show AgoraRtcEventHandlers;
+export 'models/agora_rtm_client_event_handler.dart'
+    show AgoraRtmClientEventHandler;
+export 'models/agora_rtm_channel_event_handler.dart'
+    show AgoraRtmChannelEventHandler;
 export 'src/agora_client.dart' show AgoraClient;
 export 'src/buttons/buttons.dart' show AgoraVideoButtons;
 export 'src/enums.dart';
