@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:html';
 
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/src/enums.dart';
@@ -13,7 +14,7 @@ Future<void> getToken({
 }) async {
   final response = await http
       .get(Uri.parse('$tokenUrl/rtc/$channelName/publisher/uid/$uid'));
-  if (response.statusCode == 200) {
+  if (response.statusCode == HttpStatus.ok) {
     sessionController.value = sessionController.value
         .copyWith(generatedToken: jsonDecode(response.body)['rtcToken']);
   } else {

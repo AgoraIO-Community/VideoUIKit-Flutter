@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:html';
 
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/src/enums.dart';
@@ -11,7 +12,7 @@ Future<void> getRtmToken({
 }) async {
   final String url = "$tokenUrl/rtm/${sessionController.value.generatedRtmId}";
   final rtmResponse = await http.get(Uri.parse(url));
-  if (rtmResponse.statusCode == 200) {
+  if (rtmResponse.statusCode == HttpStatus.ok) {
     sessionController.value = sessionController.value.copyWith(
       generatedRtmToken: jsonDecode(rtmResponse.body)['rtmToken'],
     );
