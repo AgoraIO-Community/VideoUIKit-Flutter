@@ -14,7 +14,7 @@ dependencies:
   agora_rtm: ^1.1.0
   flutter:
     sdk: flutter
-  http: ^0.13.1
+  http: ^0.13.4
   lints: ^1.0.1
   permission_handler: ^9.2.0
 

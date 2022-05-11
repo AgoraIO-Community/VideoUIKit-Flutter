@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:agora_uikit/controllers/session_controller.dart';
+import 'package:agora_uikit/models/agora_rtm_mute_request.dart';
 import 'package:agora_uikit/src/enums.dart';
 
 void messageReceived({
@@ -12,9 +13,9 @@ void messageReceived({
     case "UserData":
       message.forEach((key, val) {
         if (key == "text") {
-          var json = jsonDecode(val);
-          String rtmId = json['rtmId'];
-          int rtcId = json['rtcId'];
+          var userData = UserData.fromJson(jsonDecode(val.toString()));
+          String rtmId = userData.rtmId;
+          int rtcId = userData.rtcId;
           _addToUidUserMap(
             rtcId: rtcId,
             rtmId: rtmId,
@@ -31,42 +32,31 @@ void messageReceived({
     case "MuteRequest":
       int? rtcId;
       bool? muted;
+      int? deviceId;
       message.forEach((key, val) {
         if (key == "text") {
-          var json = jsonDecode(val);
-          rtcId = json['rtcId'];
-          muted = json['mute'];
+          var muteRequest = MuteRequest.fromJson(jsonDecode(val.toString()));
+          rtcId = muteRequest.rtcId;
+          muted = muteRequest.mute;
+          deviceId = muteRequest.device;
         }
       });
-      sessionController.value = sessionController.value.copyWith(
-        displaySnackbar: true,
-        muteRequest: muted! ? MicState.unmuted : MicState.muted,
-        showCameraMessage: false,
-        showMicMessage: true,
-      );
-      Future.delayed(Duration(seconds: 10), () {
+      if (deviceId == 0) {
         sessionController.value = sessionController.value.copyWith(
-          displaySnackbar: false,
-          showMicMessage: false,
+          displaySnackbar: true,
+          muteRequest: muted! ? MicState.unmuted : MicState.muted,
+          showCameraMessage: false,
+          showMicMessage: true,
         );
-      });
-      break;
-    case "CameraRequest":
-      int? rtcId;
-      bool? disabled;
-      message.forEach((key, val) {
-        if (key == "text") {
-          var json = jsonDecode(val);
-          rtcId = json['rtcId'];
-          disabled = json['mute'];
-        }
-      });
-      sessionController.value = sessionController.value.copyWith(
-        displaySnackbar: true,
-        cameraRequest: disabled! ? CameraState.enabled : CameraState.disabled,
-        showMicMessage: false,
-        showCameraMessage: true,
-      );
+      } else if (deviceId == 1) {
+        sessionController.value = sessionController.value.copyWith(
+          displaySnackbar: true,
+          cameraRequest: muted! ? CameraState.enabled : CameraState.disabled,
+          showMicMessage: false,
+          showCameraMessage: true,
+        );
+      }
+
       Future.delayed(Duration(seconds: 10), () {
         sessionController.value = sessionController.value.copyWith(
           displaySnackbar: false,

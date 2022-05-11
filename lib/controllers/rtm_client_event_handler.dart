@@ -16,13 +16,12 @@ Future<void> rtmClientEventHandler({
 }) async {
   agoraRtmClient.onMessageReceived = (AgoraRtmMessage message, String peerId) {
     agoraRtmClientEventHandler.onMessageReceived?.call(message, peerId);
-
     Message msg = Message(text: message.text);
-
     String? messageType;
-    msg.toJson().forEach((key, val) {
+
+    message.toJson().forEach((key, val) {
       if (key == "text") {
-        var json = jsonDecode(val);
+        var json = jsonDecode(val.toString());
         messageType = json['messageType'];
       }
     });

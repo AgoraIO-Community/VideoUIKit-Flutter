@@ -31,10 +31,11 @@ class _HostControlsState extends State<HostControls> {
         PopupMenuItem(
           child: GestureDetector(
             onTap: () {
-              askForUserMic(
+              hostControl(
                 index: widget.index,
-                isMicEnabled: !widget.muted,
+                mute: !widget.muted,
                 sessionController: widget.client.sessionController,
+                device: Device.mic,
               );
               Navigator.pop(context);
             },
@@ -64,10 +65,11 @@ class _HostControlsState extends State<HostControls> {
         PopupMenuItem(
           child: GestureDetector(
             onTap: () {
-              askForUserCamera(
+              hostControl(
                 index: widget.index,
-                isCameraEnabled: !widget.videoDisabled,
+                mute: !widget.videoDisabled,
                 sessionController: widget.client.sessionController,
+                device: Device.camera,
               );
               Navigator.pop(context);
             },

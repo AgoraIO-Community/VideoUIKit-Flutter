@@ -1,10 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:agora_rtm/agora_rtm.dart';
 import 'package:agora_uikit/controllers/rtm_channel_event_handler.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/models/agora_rtm_channel_event_handler.dart';
+import 'package:agora_uikit/models/agora_rtm_mute_request.dart';
 import 'package:agora_uikit/models/rtm_message.dart';
 import 'package:agora_uikit/src/enums.dart';
 
@@ -93,25 +94,16 @@ Future<void> sendUserData({
   String? peerRtmId,
   required SessionController sessionController,
 }) async {
-  String platform = Platform.isAndroid ? "android" : "ios";
   int ts = DateTime.now().millisecondsSinceEpoch;
 
-  String json = '''{
-      "messageType": "UserData",
-      "rtmId": "${sessionController.value.generatedRtmId}",
-      "rtcId": ${sessionController.value.localUid},
-      "username": "$username",
-      "role": "${sessionController.value.clientRole}",
-      "agora": {
-        "rtm": "1.0.1",
-        "rtc": "4.0.6"
-      },
-      "uikit": {
-        "platform": "$platform",
-        "framework": "flutter",
-        "version": "1.0.0"
-      }
-    }''';
+  var userData = UserData(
+    rtmId: sessionController.value.generatedRtmId!,
+    rtcId: sessionController.value.localUid,
+    username: username,
+    role: sessionController.value.clientRole.index,
+  );
+
+  var json = jsonEncode(userData);
 
   Message message = Message(text: json, ts: ts, offline: false);
   AgoraRtmMessage msg = AgoraRtmMessage.fromJson(message.toJson());
