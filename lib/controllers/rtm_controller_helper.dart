@@ -30,13 +30,11 @@ void messageReceived({
       });
       break;
     case "MuteRequest":
-      int? rtcId;
       bool? muted;
       int? deviceId;
       message.forEach((key, val) {
         if (key == "text") {
           var muteRequest = MuteRequest.fromJson(jsonDecode(val.toString()));
-          rtcId = muteRequest.rtcId;
           muted = muteRequest.mute;
           deviceId = muteRequest.device;
         }
