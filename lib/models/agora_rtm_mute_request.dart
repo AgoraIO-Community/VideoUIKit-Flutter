@@ -1,5 +1,6 @@
 import 'dart:io';
 
+/// Class to send the mute request for camera and microphone.
 class MuteRequest {
   MuteRequest(
       {required this.rtcId,
@@ -28,6 +29,7 @@ class MuteRequest {
       };
 }
 
+/// Class to store and share the user data for RTC and RTM operations
 class UserData {
   UserData({
     required this.rtmId,
@@ -111,9 +113,10 @@ class AgoraUIKit {
       };
 }
 
+/// Class to store and share the Agora version for RTC and RTM
 class AgoraVersions {
   AgoraVersions();
-  String rtm = '1.0.1';
+  String rtm = '1.1.0';
   String rtc = '5.1.0';
 
   AgoraVersions.fromJson(Map<String, dynamic> json)

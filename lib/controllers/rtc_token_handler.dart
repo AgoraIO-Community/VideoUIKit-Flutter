@@ -6,6 +6,7 @@ import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/src/enums.dart';
 import 'package:http/http.dart' as http;
 
+/// Function to get the RTC token from the server. Follow t
 Future<void> getToken({
   String? tokenUrl,
   String? channelName,

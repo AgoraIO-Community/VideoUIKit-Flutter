@@ -1,3 +1,4 @@
+/// Class to decode the AgoraRtmMessage
 class Message {
   final String text;
   final int? ts;

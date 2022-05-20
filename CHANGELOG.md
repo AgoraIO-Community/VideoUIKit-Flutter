@@ -1,4 +1,13 @@
+## 1.0.0-beta.2
+
+- Updated RTC to v5.1.0
+- JSON serialization for all the host controls
+- Cleaning the `session_controller`
+- Added RTM event handlers
+- RTM is enabled by default
+
 ## 1.0.0-beta.1
+
   - Added Agora RTM SDK v1.1.0
   - Host Controls (Mute remote users audio and video)
   - Auto-permission for camera and mic (for all the broadcasters)

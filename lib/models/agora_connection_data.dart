@@ -30,6 +30,7 @@ class AgoraConnectionData {
   /// (Optional) The region for connection. This advanced feature applies to scenarios that have regional restrictions.
   final List<AreaCode> areaCode;
 
+  /// Whether you want to enable RTM or not. Enabling RTM adds the host controls which helps you to request a remote user to mute/unmute their video/mic. Host Controls are enabled by default, set this to `false` to disable it.
   final bool? rtmEnabled;
 
   AgoraConnectionData({
