@@ -52,7 +52,7 @@ class AgoraVideoButtons extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AgoraVideoButtonsState createState() => _AgoraVideoButtonsState();
+  State<AgoraVideoButtons> createState() => _AgoraVideoButtonsState();
 }
 
 class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {

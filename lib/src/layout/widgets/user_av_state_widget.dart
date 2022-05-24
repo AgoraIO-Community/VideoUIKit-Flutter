@@ -13,7 +13,7 @@ class UserAVStateWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _UserAVStateWidgetState createState() => _UserAVStateWidgetState();
+  State<UserAVStateWidget> createState() => _UserAVStateWidgetState();
 }
 
 class _UserAVStateWidgetState extends State<UserAVStateWidget> {

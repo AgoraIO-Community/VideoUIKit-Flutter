@@ -15,12 +15,13 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.4
-  lints: ^1.0.1
+  lints: '>=1.0.1 <2.1.0'
   permission_handler: ^9.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
 
 flutter:
   plugin:

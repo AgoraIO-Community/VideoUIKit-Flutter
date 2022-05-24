@@ -1,7 +1,11 @@
 enum Layout { grid, floating }
+
 enum BuiltInButtons { callEnd, switchCamera, toggleCamera, toggleMic }
+
 enum MicState { muted, unmuted }
+
 enum CameraState { enabled, disabled }
+
 enum Level { info, warning, error }
 
 extension LevelExtension on Level {

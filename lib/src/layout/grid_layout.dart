@@ -27,7 +27,7 @@ class GridLayout extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GridLayoutState createState() => _GridLayoutState();
+  State<GridLayout> createState() => _GridLayoutState();
 }
 
 class _GridLayoutState extends State<GridLayout> {
@@ -169,7 +169,7 @@ class DisabledVideoStfWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _DisabledVideoStfWidgetState createState() => _DisabledVideoStfWidgetState();
+  State<DisabledVideoStfWidget> createState() => _DisabledVideoStfWidgetState();
 }
 
 class _DisabledVideoStfWidgetState extends State<DisabledVideoStfWidget> {

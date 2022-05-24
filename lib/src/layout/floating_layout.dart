@@ -53,7 +53,7 @@ class FloatingLayout extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _FloatingLayoutState createState() => _FloatingLayoutState();
+  State<FloatingLayout> createState() => _FloatingLayoutState();
 }
 
 class _FloatingLayoutState extends State<FloatingLayout> {

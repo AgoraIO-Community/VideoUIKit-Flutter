@@ -5,7 +5,7 @@ class DisabledVideoWidget extends StatefulWidget {
   const DisabledVideoWidget({Key? key}) : super(key: key);
 
   @override
-  _DisabledVideoWidgetState createState() => _DisabledVideoWidgetState();
+  State<DisabledVideoWidget> createState() => _DisabledVideoWidgetState();
 }
 
 class _DisabledVideoWidgetState extends State<DisabledVideoWidget> {

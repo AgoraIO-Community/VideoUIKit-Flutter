@@ -54,7 +54,7 @@ class AgoraVideoViewer extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AgoraVideoViewerState createState() => _AgoraVideoViewerState();
+  State<AgoraVideoViewer> createState() => _AgoraVideoViewerState();
 }
 
 class _AgoraVideoViewerState extends State<AgoraVideoViewer> {

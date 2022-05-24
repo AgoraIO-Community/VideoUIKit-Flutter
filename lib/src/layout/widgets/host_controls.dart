@@ -17,7 +17,7 @@ class HostControls extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _HostControlsState createState() => _HostControlsState();
+  State<HostControls> createState() => _HostControlsState();
 }
 
 class _HostControlsState extends State<HostControls> {
