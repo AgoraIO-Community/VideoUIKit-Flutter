@@ -1,5 +1,11 @@
 ### 1.0.0
-  - Stable release
+
+  - Updated RTC to v5.2.0
+  - JSON serialization for all the host controls
+  - Cleaning the `session_controller`
+  - Added RTM event handlers
+  - RTM is enabled by default
+  - Supports Flutter 3.0
 
 ## 1.0.0-beta.2
 
