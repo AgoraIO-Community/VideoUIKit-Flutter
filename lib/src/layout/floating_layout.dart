@@ -1,4 +1,5 @@
 import 'package:agora_uikit/agora_uikit.dart';
+import 'package:agora_uikit/controllers/rtc_buttons.dart';
 import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
 import 'package:agora_uikit/src/layout/widgets/host_controls.dart';
 import 'package:agora_uikit/src/layout/widgets/number_of_users.dart';
@@ -35,7 +36,7 @@ class FloatingLayout extends StatefulWidget {
   final bool? showNumberOfUsers;
 
   /// Render mode for local and remote video
-  final VideoRenderMode? videoRenderMode;
+  final VideoRenderMode videoRenderMode;
 
   const FloatingLayout({
     Key? key,
@@ -48,11 +49,11 @@ class FloatingLayout extends StatefulWidget {
     this.showAVState = false,
     this.enableHostControl = false,
     this.showNumberOfUsers,
-    this.videoRenderMode,
+    this.videoRenderMode = VideoRenderMode.Hidden,
   }) : super(key: key);
 
   @override
-  _FloatingLayoutState createState() => _FloatingLayoutState();
+  State<FloatingLayout> createState() => _FloatingLayoutState();
 }
 
 class _FloatingLayoutState extends State<FloatingLayout> {
@@ -560,10 +561,14 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                             .showMicMessage &&
                                         !widget.client.sessionController.value
                                             .showCameraMessage
-                                    ? widget.client.sessionController
-                                        .toggleMute()
-                                    : widget.client.sessionController
-                                        .toggleCamera();
+                                    ? toggleMute(
+                                        sessionController:
+                                            widget.client.sessionController,
+                                      )
+                                    : toggleCamera(
+                                        sessionController:
+                                            widget.client.sessionController,
+                                      );
                                 widget.client.sessionController.value = widget
                                     .client.sessionController.value
                                     .copyWith(

@@ -1,6 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:agora_rtc_engine/rtc_engine.dart';
 
-class AgoraEventHandlers {
+class AgoraRtcEventHandlers {
   /// Occurs when a remote user [ChannelProfile.Communication]/host [ChannelProfile.LiveBroadcasting] joins the channel
   final Function(int uid, int elapsed)? userJoined;
 
@@ -148,7 +150,7 @@ class AgoraEventHandlers {
   final Function(String, int, InjectStreamStatus)? streamInjectedStatus;
 
   /// Occurs when the local user receives a remote data stream.
-  final Function(int, int, String)? streamMessage;
+  final Function(int, int, Uint8List)? streamMessage;
 
   /// Occurs when the local user fails to receive a remote data stream.
   final Function(int, int, ErrorCode, int, int)? streamMessageError;
@@ -167,7 +169,7 @@ class AgoraEventHandlers {
   final Function(ChannelMediaRelayEvent)? channelMediaRelayEvent;
 
   /// Occurs when the local user receives the metadata.
-  final Function(String, int, int)? metadataReceived;
+  final Function(Metadata)? metadataReceived;
 
   /// Occurs when the first video frame is published.
   final Function(int)? firstLocalVideoFramePublished;
@@ -201,7 +203,7 @@ class AgoraEventHandlers {
   /// @nodoc
   final Function(String, bool, UploadErrorReason)? uploadLogResult;
 
-  const AgoraEventHandlers({
+  const AgoraRtcEventHandlers({
     this.warning,
     this.apiCallExecuted,
     this.rejoinChannelSuccess,

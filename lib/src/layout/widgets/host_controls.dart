@@ -1,4 +1,5 @@
 import 'package:agora_uikit/agora_uikit.dart';
+import 'package:agora_uikit/controllers/rtm_mute_request.dart';
 import 'package:flutter/material.dart';
 
 class HostControls extends StatefulWidget {
@@ -16,7 +17,7 @@ class HostControls extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _HostControlsState createState() => _HostControlsState();
+  State<HostControls> createState() => _HostControlsState();
 }
 
 class _HostControlsState extends State<HostControls> {
@@ -30,8 +31,12 @@ class _HostControlsState extends State<HostControls> {
         PopupMenuItem(
           child: GestureDetector(
             onTap: () {
-              widget.client.sessionController.askForUserMic(
-                  index: widget.index, isMicEnabled: !widget.muted);
+              hostControl(
+                index: widget.index,
+                mute: !widget.muted,
+                sessionController: widget.client.sessionController,
+                device: Device.mic,
+              );
               Navigator.pop(context);
             },
             child: SizedBox(
@@ -60,8 +65,12 @@ class _HostControlsState extends State<HostControls> {
         PopupMenuItem(
           child: GestureDetector(
             onTap: () {
-              widget.client.sessionController.askForUserCamera(
-                  index: widget.index, isCameraEnabled: !widget.videoDisabled);
+              hostControl(
+                index: widget.index,
+                mute: !widget.videoDisabled,
+                sessionController: widget.client.sessionController,
+                device: Device.camera,
+              );
               Navigator.pop(context);
             },
             child: SizedBox(

@@ -10,7 +10,7 @@ class NumberOfUsers extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _NumberOfUsersState createState() => _NumberOfUsersState();
+  State<NumberOfUsers> createState() => _NumberOfUsersState();
 }
 
 class _NumberOfUsersState extends State<NumberOfUsers> {

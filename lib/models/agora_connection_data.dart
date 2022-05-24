@@ -30,6 +30,9 @@ class AgoraConnectionData {
   /// (Optional) The region for connection. This advanced feature applies to scenarios that have regional restrictions.
   final List<AreaCode> areaCode;
 
+  /// Whether you want to enable RTM or not. Enabling RTM adds the host controls which helps you to request a remote user to mute/unmute their video/mic. Host Controls are enabled by default, set this to `false` to disable it.
+  final bool rtmEnabled;
+
   AgoraConnectionData({
     required this.appId,
     required this.channelName,
@@ -41,6 +44,7 @@ class AgoraConnectionData {
     this.tempToken,
     this.tempRtmToken,
     this.areaCode = const [AreaCode.GLOB],
+    this.rtmEnabled = true,
   });
 
   AgoraConnectionData copyWith({
@@ -54,6 +58,7 @@ class AgoraConnectionData {
     String? tempRtmToken,
     String? tokenUrl,
     List<AreaCode>? areaCode,
+    bool? rtmEnabled,
   }) {
     return AgoraConnectionData(
       appId: appId ?? this.appId,
@@ -66,6 +71,7 @@ class AgoraConnectionData {
       tempRtmToken: tempRtmToken ?? this.tempRtmToken,
       tokenUrl: tokenUrl ?? this.tokenUrl,
       areaCode: areaCode ?? this.areaCode,
+      rtmEnabled: rtmEnabled ?? this.rtmEnabled,
     );
   }
 }

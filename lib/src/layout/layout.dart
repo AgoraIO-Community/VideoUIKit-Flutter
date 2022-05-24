@@ -1,4 +1,5 @@
 import 'package:agora_uikit/agora_uikit.dart';
+import 'package:agora_uikit/controllers/rtc_buttons.dart';
 import 'package:agora_uikit/src/layout/floating_layout.dart';
 import 'package:agora_uikit/src/layout/grid_layout.dart';
 import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
@@ -49,11 +50,11 @@ class AgoraVideoViewer extends StatefulWidget {
     this.showAVState = false,
     this.enableHostControls = false,
     this.showNumberOfUsers = false,
-    this.videoRenderMode = VideoRenderMode.Fit,
+    this.videoRenderMode = VideoRenderMode.Hidden,
   }) : super(key: key);
 
   @override
-  _AgoraVideoViewerState createState() => _AgoraVideoViewerState();
+  State<AgoraVideoViewer> createState() => _AgoraVideoViewerState();
 }
 
 class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
@@ -64,12 +65,6 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
           .updateLayoutType(updatedLayout: widget.layoutType);
     }
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    widget.client.sessionController.dispose();
   }
 
   @override
@@ -98,7 +93,9 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
               videoRenderMode: widget.videoRenderMode,
             ),
       onTap: () {
-        widget.client.sessionController.toggleVisible();
+        toggleVisible(
+          sessionController: widget.client.sessionController,
+        );
       },
     );
   }
