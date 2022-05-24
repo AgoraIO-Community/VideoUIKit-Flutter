@@ -74,22 +74,19 @@ class AgoraClient {
       return;
     }
 
-    if (agoraConnectionData.username == null) {
+    try {
+      await _sessionController.initializeEngine(
+          agoraConnectionData: agoraConnectionData);
+    } catch (e) {
+      log("Error while initializing Agora RTC SDK", level: Level.error.value);
+    }
+
+    if (agoraConnectionData.rtmEnabled) {
       try {
-        await _sessionController.initializeEngine(
-            agoraConnectionData: agoraConnectionData);
-      } catch (e) {
-        log("Error while initializing Agora SDK", level: Level.error.value);
-      }
-    } else {
-      try {
-        await _sessionController.initializeEngine(
-          agoraConnectionData: agoraConnectionData,
-        );
         await _sessionController.initializeRtm(
             agoraRtmClientEventHandler ?? AgoraRtmClientEventHandler());
       } catch (e) {
-        log("Error while initializing Agora SDK. ${e.toString()}",
+        log("Error while initializing Agora RTM SDK. ${e.toString()}",
             level: Level.error.value);
       }
     }

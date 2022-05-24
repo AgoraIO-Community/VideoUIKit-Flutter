@@ -173,7 +173,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         uid: value.connectionData!.uid,
         sessionController: this,
       );
-      if (value.connectionData!.username != null) {
+      if (value.connectionData!.rtmEnabled) {
         await getRtmToken(
           tokenUrl: value.connectionData!.tokenUrl,
           sessionController: this,

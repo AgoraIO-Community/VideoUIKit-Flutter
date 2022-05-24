@@ -200,7 +200,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
           clientRole: sessionController.value.clientRole,
         ),
       );
-      if (sessionController.value.connectionData!.username != null) {
+      if (sessionController.value.connectionData!.rtmEnabled) {
         rtmMethods(
           agoraRtmChannelEventHandler,
           sessionController,

@@ -41,7 +41,7 @@ Future<void> switchCamera(
 /// Function to dispose the RTC and RTM engine.
 Future<void> endCall({required SessionController sessionController}) async {
   await sessionController.value.engine?.leaveChannel();
-  if (sessionController.value.connectionData!.username != null) {
+  if (sessionController.value.connectionData!.rtmEnabled) {
     await sessionController.value.agoraRtmChannel?.leave();
     await sessionController.value.agoraRtmClient?.logout();
   }

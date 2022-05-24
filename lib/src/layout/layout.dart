@@ -68,12 +68,6 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    widget.client.sessionController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
