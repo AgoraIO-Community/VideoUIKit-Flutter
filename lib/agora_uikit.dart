@@ -49,6 +49,15 @@ export 'package:agora_rtc_engine/rtc_engine.dart'
         SuperResolutionStateReason,
         UploadErrorReason,
         VideoRenderMode;
+export 'package:agora_rtm/agora_rtm.dart'
+    show
+        AgoraRtmMessage,
+        AgoraRtmMember,
+        AgoraRtmChannelAttribute,
+        AgoraRtmChannelException,
+        AgoraRtmClientException,
+        AgoraRtmLocalInvitation,
+        AgoraRtmRemoteInvitation;
 export 'package:permission_handler/permission_handler.dart';
 
 export 'models/agora_channel_data.dart' show AgoraChannelData;
