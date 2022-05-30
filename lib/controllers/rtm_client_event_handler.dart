@@ -45,11 +45,11 @@ Future<void> rtmClientEventHandler({
     }
   };
 
-  agoraRtmClient.onError = () {
-    agoraRtmClientEventHandler.onError?.call();
+  agoraRtmClient.onError = (error) {
+    agoraRtmClientEventHandler.onError?.call(error);
 
     log(
-      'Error Occurred while initializing the RTM client',
+      'Error Occurred while initializing the RTM client: ${error.hashCode}',
       level: Level.error.value,
       name: 'AgoraUIKit',
     );

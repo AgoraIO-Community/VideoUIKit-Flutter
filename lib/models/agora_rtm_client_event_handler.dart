@@ -12,7 +12,7 @@ class AgoraRtmClientEventHandler {
   final Function()? onTokenExpired;
 
   /// Occurs when you receive error events.
-  final Function()? onError;
+  final Function(dynamic error)? onError;
 
   /// Callback to the caller: occurs when the caller receives the call invitation.
   final Function(AgoraRtmLocalInvitation)? onLocalInvitationReceivedByPeer;
