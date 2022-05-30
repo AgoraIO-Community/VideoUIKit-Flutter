@@ -3,6 +3,7 @@
 - Add Error param to delegate methods to pass through the error
 - Show correct versions of RTC and RTM
 - Show RTM classes
+- Update RTM to v1.1.1
 
 ## 1.0.0
 
