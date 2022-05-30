@@ -1,4 +1,11 @@
-### 1.0.0
+## 1.0.1
+
+- Add Error param to delegate methods to pass through the error
+- Show correct versions of RTC and RTM
+- Show RTM classes
+- Update RTM to v1.1.1
+
+## 1.0.0
 
   - Updated RTC to v5.2.0
   - JSON serialization for all the host controls
