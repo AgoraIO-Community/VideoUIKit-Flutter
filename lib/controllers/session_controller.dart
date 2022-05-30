@@ -12,6 +12,7 @@ import 'package:agora_uikit/models/agora_connection_data.dart';
 import 'package:agora_uikit/models/agora_rtc_event_handlers.dart';
 import 'package:agora_uikit/models/agora_rtm_channel_event_handler.dart';
 import 'package:agora_uikit/models/agora_rtm_client_event_handler.dart';
+import 'package:agora_uikit/models/agora_rtm_mute_request.dart';
 import 'package:agora_uikit/models/agora_settings.dart';
 import 'package:agora_uikit/models/agora_user.dart';
 import 'package:agora_uikit/src/enums.dart';
@@ -77,6 +78,12 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       ),
       connectionData: agoraConnectionData,
     );
+    // Getting SDK versions and assigning them
+    String? rtcVersion = await value.engine?.getSdkVersion();
+    AgoraVersions.staticRTM = await AgoraRtmClient.getSdkVersion();
+    if (rtcVersion != null) {
+      AgoraVersions.staticRTC = rtcVersion;
+    }
   }
 
   Future<void> askForUserCameraAndMicPermission() async {

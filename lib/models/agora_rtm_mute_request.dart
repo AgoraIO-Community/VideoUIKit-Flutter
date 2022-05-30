@@ -99,7 +99,7 @@ class AgoraUIKit {
   String platform = platformStr();
 
   String framework = "flutter";
-  String version = "1.0.0";
+  String version = "1.0.1";
 
   AgoraUIKit.fromJson(Map<String, dynamic> json)
       : platform = json['platform'],
@@ -116,8 +116,10 @@ class AgoraUIKit {
 /// Class to store and share the Agora version for RTC and RTM
 class AgoraVersions {
   AgoraVersions();
-  String rtm = '1.1.0';
-  String rtc = '5.1.0';
+  static String staticRTM = '1.1.1';
+  static String staticRTC = '5.2.0';
+  String rtm = AgoraVersions.staticRTM;
+  String rtc = AgoraVersions.staticRTC;
 
   AgoraVersions.fromJson(Map<String, dynamic> json)
       : rtm = json['rtm'],
