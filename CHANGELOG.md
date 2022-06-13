@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Fixes the issue with `enabledButtons`(issue [#86](https://github.com/AgoraIO-Community/Flutter-UIKit/issues/86))
+
 ## 1.0.1
 
 - Add Error param to delegate methods to pass through the error
