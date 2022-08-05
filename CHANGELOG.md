@@ -1,3 +1,9 @@
+## 1.0.3
+
+- Updated permission_handler to [10.0.0](https://pub.dev/packages/permission_handler/changelog#1000). `compileSdkVersion` must be set to 33 as a minimum to handle the new notifications.
+
+> When updating to version 1.0.3 make sure to update the android/app/build.gradle file and set the compileSdkVersion to 33.
+
 ## 1.0.2
 
 - Fixes the issue with `enabledButtons`(issue [#86](https://github.com/AgoraIO-Community/Flutter-UIKit/issues/86))
