@@ -1,3 +1,11 @@
+## 1.0.3
+
+- Updated permission_handler to [10.0.0](https://pub.dev/packages/permission_handler/changelog#1000). `compileSdkVersion` must be set to 33 as a minimum to handle the new notifications.
+- Fixes issue [#98](https://github.com/AgoraIO-Community/Flutter-UIKit/issues/98). Added `onDisconnect` function inside the `AgoraVideoButtons` widget that can be used to define any navigation or function that occurs when the end call button is pressed. 
+- Fixes issue [#96](https://github.com/AgoraIO-Community/Flutter-UIKit/issues/96). Added a broadcaster check before adding a user view to the grid layout. 
+
+> When updating to version 1.0.3 make sure to update the android/app/build.gradle file and set the compileSdkVersion to 33.
+
 ## 1.0.2
 
 - Fixes the issue with `enabledButtons`(issue [#86](https://github.com/AgoraIO-Community/Flutter-UIKit/issues/86))

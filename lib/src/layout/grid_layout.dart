@@ -33,34 +33,40 @@ class GridLayout extends StatefulWidget {
 class _GridLayoutState extends State<GridLayout> {
   List<Widget> _getRenderViews() {
     final List<StatefulWidget> list = [];
-    widget.client.sessionController.value.isLocalVideoDisabled
-        ? list.add(
-            DisabledVideoStfWidget(
-              disabledVideoWidget: widget.disabledVideoWidget,
-            ),
-          )
-        : list.add(
-            rtc_local_view.SurfaceView(
-              zOrderMediaOverlay: true,
-              renderMode: widget.videoRenderMode,
-            ),
-          );
 
-    for (AgoraUser user in widget.client.sessionController.value.users) {
-      user.videoDisabled
+    if (widget.client.agoraChannelData?.clientRole == ClientRole.Broadcaster ||
+        widget.client.agoraChannelData?.clientRole == null) {
+      widget.client.sessionController.value.isLocalVideoDisabled
           ? list.add(
               DisabledVideoStfWidget(
                 disabledVideoWidget: widget.disabledVideoWidget,
               ),
             )
           : list.add(
-              rtc_remote_view.SurfaceView(
-                channelId: widget
-                    .client.sessionController.value.connectionData!.channelName,
-                uid: user.uid,
+              rtc_local_view.SurfaceView(
+                zOrderMediaOverlay: true,
                 renderMode: widget.videoRenderMode,
               ),
             );
+    }
+
+    for (AgoraUser user in widget.client.sessionController.value.users) {
+      if (user.clientRole == ClientRole.Broadcaster) {
+        user.videoDisabled
+            ? list.add(
+                DisabledVideoStfWidget(
+                  disabledVideoWidget: widget.disabledVideoWidget,
+                ),
+              )
+            : list.add(
+                rtc_remote_view.SurfaceView(
+                  channelId: widget.client.sessionController.value
+                      .connectionData!.channelName,
+                  uid: user.uid,
+                  renderMode: widget.videoRenderMode,
+                ),
+              );
+      }
     }
 
     return list;
