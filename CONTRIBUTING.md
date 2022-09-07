@@ -1,10 +1,10 @@
-# How to contribute to Agora UIKit
+# How to contribute to Agora VideoUIKit
 
 ## **Did you find a bug?**
 
-* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/AgoraIO-Community/Flutter-UIKit/issues).
+* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/issues).
 
-* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/AgoraIO-Community/Flutter-UIKit/issues/new). Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
+* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/issues). Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
 
 * If possible, use the relevant bug report templates to create the issue.
 
@@ -16,17 +16,17 @@
 
 ## **Did you fix whitespace, format code, or make a purely cosmetic patch?**
 
-Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of Agora UIKit will generally not be accepted.
+Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of Agora VideoUIKit will generally not be accepted.
 
 ## **Do you intend to add a new feature or change an existing one?**
 
 * Suggest your change in the form of a Feature Request Issue on this repository.
 
-* One of the team at Agora will respond to your issue, and together we can figure out whether this feature is applicable to be added to Agora UIKit.
+* One of the team at Agora will respond to your issue, and together we can figure out whether this feature is applicable to be added to Agora VideoUIKit.
 
 ## **Do you have questions about the source code?**
 
-* Ask any question about how to use UIKit on the [RTE Dev Slack](https://www.agora.io/en/join-slack/).
+* Ask any question about how to use VideoUIKit on the [RTE Dev Slack](https://www.agora.io/en/join-slack/).
 
 ---
 

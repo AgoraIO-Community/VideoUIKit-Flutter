@@ -36,7 +36,7 @@ class AgoraVideoButtons extends StatefulWidget {
   /// Use this to style the disabled video button as per your liking while still keeping the default functionality.
   final Widget? disableVideoButtonChild;
 
-  /// Agora UIKit takes care of leaving the channel and destroying the engine. But if you want to add any other functionality to the disconnect button, use this.
+  /// Agora VideoUIKit takes care of leaving the channel and destroying the engine. But if you want to add any other functionality to the disconnect button, use this.
   final Function()? onDisconnect;
 
   const AgoraVideoButtons({

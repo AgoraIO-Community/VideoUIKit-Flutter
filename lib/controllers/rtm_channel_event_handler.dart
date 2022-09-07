@@ -13,6 +13,7 @@ Future<void> rtmChannelEventHandler({
   required AgoraRtmChannelEventHandler agoraRtmChannelEventHandler,
   required SessionController sessionController,
 }) async {
+  const String tag = "AgoraVideoUIKit";
   channel.onMessageReceived = (AgoraRtmMessage message, AgoraRtmMember member) {
     agoraRtmChannelEventHandler.onMessageReceived?.call(
       message,
@@ -22,7 +23,7 @@ Future<void> rtmChannelEventHandler({
     log(
       'Channel msg : ${message.text}, from : ${member.userId}',
       level: Level.info.value,
-      name: 'AgoraUIKit',
+      name: tag,
     );
     Message msg = Message(text: message.text);
     messageReceived(
@@ -38,7 +39,7 @@ Future<void> rtmChannelEventHandler({
     log(
       'Member joined : ${member.userId}',
       level: Level.info.value,
-      name: 'AgoraUIKit',
+      name: tag,
     );
     sendUserData(
       toChannel: false,
@@ -54,7 +55,7 @@ Future<void> rtmChannelEventHandler({
     log(
       'Member left : ${member.userId}',
       level: Level.info.value,
-      name: 'AgoraUIKit',
+      name: tag,
     );
 
     if (sessionController.value.userRtmMap!.containsKey(member.userId)) {
@@ -81,7 +82,7 @@ Future<void> rtmChannelEventHandler({
     log(
       'Member count updated : $count',
       level: Level.info.value,
-      name: 'AgoraUIKit',
+      name: tag,
     );
   };
 
@@ -91,7 +92,7 @@ Future<void> rtmChannelEventHandler({
     log(
       'Channel attributes updated : $attributes',
       level: Level.info.value,
-      name: 'AgoraUIKit',
+      name: tag,
     );
   };
 
@@ -101,7 +102,7 @@ Future<void> rtmChannelEventHandler({
     log(
       'RTM Channel error: $error',
       level: Level.info.value,
-      name: 'AgoraUIKit',
+      name: tag,
     );
   };
 }

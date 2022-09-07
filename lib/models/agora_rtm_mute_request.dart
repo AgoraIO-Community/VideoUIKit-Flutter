@@ -51,7 +51,7 @@ class UserData {
   /// Role of the user (broadcaster or audience)
   late int role; // Int, broadcaster = 0, audience = 1
 
-  /// Agora UIKit platform, framework, and version
+  /// Agora VideoUIKit platform, framework, and version
   var uikit = AgoraUIKit().toJson();
 
   /// Properties about the Agora SDK versions this user is using
@@ -99,7 +99,7 @@ class AgoraUIKit {
   String platform = platformStr();
 
   String framework = "flutter";
-  String version = "1.0.3";
+  String version = "1.0.4";
 
   AgoraUIKit.fromJson(Map<String, dynamic> json)
       : platform = json['platform'],

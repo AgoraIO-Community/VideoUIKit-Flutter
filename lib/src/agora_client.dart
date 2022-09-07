@@ -12,7 +12,7 @@ import 'package:agora_uikit/src/enums.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-/// [AgoraClient] is the main class in this UIKit. It is used to initialize our [RtcEngine], add the list of user permissions, define the channel properties and use extend the [RtcEngineEventHandler] class.
+/// [AgoraClient] is the main class in this VideoUIKit. It is used to initialize our [RtcEngine], add the list of user permissions, define the channel properties and use extend the [RtcEngineEventHandler] class.
 class AgoraClient {
   /// [AgoraConnectionData] is a class used to store all the connection details to authenticate your account with the Agora SDK.
   final AgoraConnectionData agoraConnectionData;
