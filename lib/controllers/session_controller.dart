@@ -18,7 +18,6 @@ import 'package:agora_uikit/models/agora_user.dart';
 import 'package:agora_uikit/src/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../src/enums.dart';
 
 class SessionController extends ValueNotifier<AgoraSettings> {
   SessionController()
