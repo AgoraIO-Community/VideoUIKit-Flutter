@@ -2,9 +2,9 @@
 # Agora VideoUIKit for Flutter
 
 <p align="center">
-    <a href="https://pub.dev/packages/agora_uikit"><img src="https://badges.bar/agora_uikit/likes"/></a>
-    <a href="https://pub.dev/packages/agora_uikit"><img src="https://badges.bar/agora_uikit/popularity"/></a>
-    <a href="https://pub.dev/packages/agora_uikit"><img src="https://badges.bar/agora_uikit/pub%20points"/></a><br/>
+    <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/likes/agora_uikit?logo=dart"/></a>
+    <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/popularity/agora_uikit?logo=dart"/></a>
+    <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/points/agora_uikit?logo=dart"/></a><br/>
   <img src="https://img.shields.io/badge/Platform-iOS%20%7C%20Android-blue?logo=flutter" alt="Platform" />
   <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/AgoraIO-Community/Flutter-UIKit/Flutter">
   <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/v/agora_uikit"/></a>
