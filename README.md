@@ -6,9 +6,9 @@
     <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/popularity/agora_uikit?logo=dart"/></a>
     <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/points/agora_uikit?logo=dart"/></a><br/>
   <img src="https://img.shields.io/badge/Platform-iOS%20%7C%20Android-blue?logo=flutter" alt="Platform" />
-  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/AgoraIO-Community/Flutter-UIKit/Flutter">
+  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/AgoraIO-Community/VideoUIKit-Flutter/Flutter">
   <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/v/agora_uikit"/></a>
-  <img src="https://img.shields.io/github/license/agoraio-community/flutter-uikit?color=red"
+  <img src="https://img.shields.io/github/license/agoraio-community/videouikit-flutter?color=red"
       alt="License: MIT" />
   <a href="https://www.agora.io/en/join-slack/"><img src="https://img.shields.io/badge/slack-@RTE%20Dev-blue.svg?logo=slack"></a>
 </p>
@@ -134,5 +134,5 @@ Widget build(BuildContext context) {
 
 ## VideoUIKits
 
-The plan is to grow this library and have similar offerings across all supported platforms. There are already similar libraries for [Android](https://github.com/AgoraIO-Community/Android-UIKit/), [React Native](https://github.com/AgoraIO-Community/ReactNative-UIKit), and [iOS](https://github.com/AgoraIO-Community/iOS-UIKit/), so be sure to check them out.
+The plan is to grow this library and have similar offerings across all supported platforms. There are already similar libraries for [Android](https://github.com/AgoraIO-Community/VideoUIKit-Android/), [iOS](https://github.com/AgoraIO-Community/VideoUIKit-iOS/), [React Native](https://github.com/AgoraIO-Community/ReactNative-UIKit), and [Web React](https://github.com/AgoraIO-Community/VideoUIKit-Web-React)  Aso be sure to check them out.
 
