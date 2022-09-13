@@ -134,5 +134,5 @@ Widget build(BuildContext context) {
 
 ## VideoUIKits
 
-The plan is to grow this library and have similar offerings across all supported platforms. There are already similar libraries for [Android](https://github.com/AgoraIO-Community/VideoUIKit-Android/), [iOS](https://github.com/AgoraIO-Community/VideoUIKit-iOS/), [React Native](https://github.com/AgoraIO-Community/ReactNative-UIKit), and [Web React](https://github.com/AgoraIO-Community/VideoUIKit-Web-React)  Aso be sure to check them out.
+The plan is to grow this library and have similar offerings across all supported platforms. There are already similar libraries for [Android](https://github.com/AgoraIO-Community/VideoUIKit-Android/), [iOS](https://github.com/AgoraIO-Community/VideoUIKit-iOS/), [React Native](https://github.com/AgoraIO-Community/ReactNative-UIKit), and [Web React](https://github.com/AgoraIO-Community/VideoUIKit-Web-React), so be sure to check them out.
 
