@@ -14,6 +14,8 @@ Future<void> rtmClientEventHandler({
   required AgoraRtmClientEventHandler agoraRtmClientEventHandler,
   required SessionController sessionController,
 }) async {
+  const String tag = "AgoraVideoUIKit";
+
   agoraRtmClient.onMessageReceived = (AgoraRtmMessage message, String peerId) {
     agoraRtmClientEventHandler.onMessageReceived?.call(message, peerId);
     Message msg = Message(text: message.text);
@@ -38,7 +40,7 @@ Future<void> rtmClientEventHandler({
     log(
       'Connection state changed : ${state.toString()}, reason : ${reason.toString()}',
       level: Level.info.value,
-      name: 'AgoraUIKit',
+      name: tag,
     );
     if (state == 5) {
       agoraRtmClient.logout();
@@ -51,7 +53,7 @@ Future<void> rtmClientEventHandler({
     log(
       'Error Occurred while initializing the RTM client: ${error.hashCode}',
       level: Level.error.value,
-      name: 'AgoraUIKit',
+      name: tag,
     );
   };
 

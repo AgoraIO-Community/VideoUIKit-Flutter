@@ -15,6 +15,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
   AgoraRtmChannelEventHandler agoraRtmChannelEventHandler,
   SessionController sessionController,
 ) async {
+  const String tag = "AgoraVideoUIKit";
   return RtcEngineEventHandler(
     warning: (warning) {
       agoraEventHandlers.warning?.call(warning);
@@ -183,13 +184,13 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     },
     error: (code) {
       final info = 'onError: $code';
-      log(info, level: Level.error.value);
+      log(info, name: tag, level: Level.error.value);
 
       agoraEventHandlers.onError?.call(code);
     },
     joinChannelSuccess: (channel, uid, elapsed) {
       final info = 'onJoinChannel: $channel, uid: $uid';
-      log(info, name: "AgoraUIKit", level: Level.info.value);
+      log(info, name: tag, level: Level.info.value);
       sessionController.value = sessionController.value.copyWith(localUid: uid);
       sessionController.value = sessionController.value.copyWith(
         mainAgoraUser: AgoraUser(
@@ -214,7 +215,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     },
     userJoined: (uid, elapsed) {
       final info = 'userJoined: $uid';
-      log(info, level: Level.info.value);
+      log(info, name: tag, level: Level.info.value);
       sessionController.addUser(
         callUser: AgoraUser(
           uid: uid,
@@ -225,7 +226,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     },
     userOffline: (uid, reason) {
       final info = 'userOffline: $uid , reason: $reason';
-      log(info, level: Level.info.value);
+      log(info, name: tag, level: Level.info.value);
       sessionController.checkForMaxUser(uid: uid);
       sessionController.removeUser(uid: uid);
 
@@ -245,7 +246,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     remoteVideoStateChanged: (uid, state, reason, elapsed) {
       final String info =
           "Remote video state changed for $uid, state: $state and reason: $reason";
-      log(info, level: Level.info.value);
+      log(info, name: tag, level: Level.info.value);
       if (uid != sessionController.value.localUid) {
         if (state == VideoRemoteState.Stopped) {
           sessionController.updateUserVideo(uid: uid, videoDisabled: true);
@@ -261,7 +262,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     remoteAudioStateChanged: (uid, state, reason, elapsed) {
       final String info =
           "Remote audio state changed for $uid, state: $state and reason: $reason";
-      log(info, level: Level.info.value);
+      log(info, name: tag, level: Level.info.value);
       if (state == AudioRemoteState.Stopped &&
           reason == AudioRemoteStateReason.RemoteMuted &&
           uid != sessionController.value.localUid) {
@@ -278,26 +279,26 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     localAudioStateChanged: (state, error) {
       final String info =
           "Local audio state changed state: $state and error: $error";
-      log(info, level: Level.info.value);
+      log(info, name: tag, level: Level.info.value);
       agoraEventHandlers.localAudioStateChanged?.call(state, error);
     },
     localVideoStateChanged: (localVideoState, error) {
       final String info =
           "Local video state changed state: $localVideoState and error: $error";
-      log(info, level: Level.info.value);
+      log(info, name: tag, level: Level.info.value);
 
       agoraEventHandlers.localVideoStateChanged?.call(localVideoState, error);
     },
     activeSpeaker: (uid) {
       final String info = "Active speaker: $uid";
-      log(info, level: Level.info.value);
+      log(info, name: tag, level: Level.info.value);
       if (sessionController.value.isActiveSpeakerDisabled == false &&
           sessionController.value.layoutType == Layout.floating) {
         final int index = sessionController.value.users
             .indexWhere((element) => element.uid == uid);
         sessionController.swapUser(index: index);
       } else {
-        log("Active speaker is disabled", level: Level.info.value);
+        log("Active speaker is disabled", level: Level.info.value, name: tag);
       }
 
       agoraEventHandlers.activeSpeaker?.call(uid);

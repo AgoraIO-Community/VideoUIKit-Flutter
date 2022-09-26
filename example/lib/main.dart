@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Agora UIKit'),
+          title: const Text('Agora VideoUIKit'),
           centerTitle: true,
         ),
         body: SafeArea(

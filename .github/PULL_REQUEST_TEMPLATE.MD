@@ -1,4 +1,4 @@
-<!-- Please refer to our contributing documentation for any questions on submitting a pull request, or let us know here if you need any help: https://github.com/AgoraIO-Community/Flutter-UIKit/blob/main/CONTRIBUTING.md -->
+<!-- Please refer to our contributing documentation for any questions on submitting a pull request, or let us know here if you need any help: https://github.com/AgoraIO-Community/VideoUIKit-Flutter/blob/main/CONTRIBUTING.md -->
 
 > Release Version:
 
@@ -54,7 +54,7 @@ Issue Number: N/A
 <!-- If no code has changed, remove this section -->
 ## QA Checklist
 
-### UIKit Update Checklist (Minor or Patch Release)
+### VideoUIKit Update Checklist (Minor or Patch Release)
 
 - [ ] Using the latest version of Agora's Video SDK
 - [ ] Example apps are all functional
@@ -67,7 +67,7 @@ Issue Number: N/A
 
 <!-- Remove the next section if not applicable -->
 
-### UIKit Update Checklist (Major Release)
+### VideoUIKit Update Checklist (Major Release)
 
 - [ ] The above checklist is completed (except backwards compatibility)
 - [ ] Thoroughly tested for crashes, across multiple platforms at the same time

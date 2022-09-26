@@ -19,8 +19,9 @@ Future<void> getToken({
     sessionController.value = sessionController.value
         .copyWith(generatedToken: jsonDecode(response.body)['rtcToken']);
   } else {
-    log("${response.reasonPhrase}", level: Level.error.value);
+    log("${response.reasonPhrase}",
+        level: Level.error.value, name: "AgoraVideoUIKit");
     log("Failed to generate the token : ${response.statusCode}",
-        level: Level.error.value);
+        level: Level.error.value, name: "AgoraVideoUIKit");
   }
 }
