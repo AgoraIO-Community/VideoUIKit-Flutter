@@ -1,3 +1,8 @@
+## 1.0.4
+
+- Updated README badges
+- Added GitHub actions for publishing to pub.dev
+
 ## 1.0.3
 
 - Updated permission_handler to [10.0.0](https://pub.dev/packages/permission_handler/changelog#1000). `compileSdkVersion` must be set to 33 as a minimum to handle the new notifications.
