@@ -42,7 +42,7 @@ class FloatingLayout extends StatefulWidget {
   final Widget? emptyViewWidget;
 
   /// Widget to show number of users in the channel. If not specified and [showNumberOfUsers] is true, the default widget will be used.
-  final Function<Widget>(int count)? numberOfUsersWidget;
+  final Widget Function(int count)? numberOfUsersWidget;
 
   const FloatingLayout({
     Key? key,
