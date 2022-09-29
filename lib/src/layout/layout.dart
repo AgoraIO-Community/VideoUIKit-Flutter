@@ -41,6 +41,9 @@ class AgoraVideoViewer extends StatefulWidget {
   /// Widget that will be displayed when the view is empty (When Host Have not joined). Typically  "Waiting for host to join..."
   final Widget? emptyViewWidget;
 
+  /// Widget to show number of users in the channel. If not specified and [showNumberOfUsers] is true, the default widget will be used.
+  final Function<Widget>(int count)? numberOfUsersWidget;
+
   const AgoraVideoViewer({
     Key? key,
     required this.client,
@@ -55,6 +58,7 @@ class AgoraVideoViewer extends StatefulWidget {
     this.showNumberOfUsers = false,
     this.videoRenderMode = VideoRenderMode.Hidden,
     this.emptyViewWidget,
+    this.numberOfUsersWidget,
   }) : super(key: key);
 
   @override
@@ -90,6 +94,7 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
               showNumberOfUsers: widget.showNumberOfUsers,
               videoRenderMode: widget.videoRenderMode,
               emptyViewWidget: widget.emptyViewWidget,
+              numberOfUsersWidget: widget.numberOfUsersWidget,
             )
           : GridLayout(
               client: widget.client,
@@ -97,6 +102,7 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
               disabledVideoWidget: widget.disabledVideoWidget,
               videoRenderMode: widget.videoRenderMode,
               emptyViewWidget: widget.emptyViewWidget,
+              numberOfUsersWidget: widget.numberOfUsersWidget,
             ),
       onTap: () {
         toggleVisible(
