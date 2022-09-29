@@ -129,18 +129,8 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                       )
                     : Row(
                         children: [
-                          if (widget.enabledButtons!
-                              .contains(BuiltInButtons.toggleMic))
-                            _muteMicButton(),
-                          if (widget.enabledButtons!
-                              .contains(BuiltInButtons.callEnd))
-                            _disconnectCallButton(),
-                          if (widget.enabledButtons!
-                              .contains(BuiltInButtons.switchCamera))
-                            _switchCameraButton(),
-                          if (widget.enabledButtons!
-                              .contains(BuiltInButtons.toggleCamera))
-                            _disableVideoButton(),
+                          for (var i = 0; i < buttonList!.length; i++)
+                            buttonList[i],
                           if (widget.extraButtons != null)
                             for (var i = 0;
                                 i < widget.extraButtons!.length;
