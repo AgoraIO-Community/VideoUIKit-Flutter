@@ -163,7 +163,8 @@ class _GridLayoutState extends State<GridLayout> {
                   ? Container()
                   : widget.numberOfUsersWidget != null
                       ? widget.numberOfUsersWidget!.call(
-                          widget.client.sessionController.value.users.length,
+                          widget.client.sessionController.value.users.length +
+                              1,
                         )
                       : Positioned.fill(
                           child: Align(
