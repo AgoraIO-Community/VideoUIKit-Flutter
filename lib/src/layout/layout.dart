@@ -38,6 +38,9 @@ class AgoraVideoViewer extends StatefulWidget {
   /// Render mode for local and remote video
   final VideoRenderMode videoRenderMode;
 
+  /// Widget that will be displayed when the view is empty (When Host Have not joined). Typically  "Waiting for host to join..."
+  final Widget? emptyViewWidget;
+
   const AgoraVideoViewer({
     Key? key,
     required this.client,
@@ -51,6 +54,7 @@ class AgoraVideoViewer extends StatefulWidget {
     this.enableHostControls = false,
     this.showNumberOfUsers = false,
     this.videoRenderMode = VideoRenderMode.Hidden,
+    this.emptyViewWidget,
   }) : super(key: key);
 
   @override
@@ -85,12 +89,14 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
               enableHostControl: widget.enableHostControls,
               showNumberOfUsers: widget.showNumberOfUsers,
               videoRenderMode: widget.videoRenderMode,
+              emptyViewWidget: widget.emptyViewWidget,
             )
           : GridLayout(
               client: widget.client,
               showNumberOfUsers: widget.showNumberOfUsers,
               disabledVideoWidget: widget.disabledVideoWidget,
               videoRenderMode: widget.videoRenderMode,
+              emptyViewWidget: widget.emptyViewWidget,
             ),
       onTap: () {
         toggleVisible(

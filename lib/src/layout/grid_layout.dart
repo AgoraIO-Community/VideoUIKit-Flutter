@@ -18,12 +18,16 @@ class GridLayout extends StatefulWidget {
   /// Render mode for local and remote video
   final VideoRenderMode videoRenderMode;
 
+  /// Widget that will be displayed when the view is empty (When Host Have not joined). Typically  "Waiting for host to join..."
+  final Widget? emptyViewWidget;
+
   const GridLayout({
     Key? key,
     required this.client,
     this.showNumberOfUsers,
     this.disabledVideoWidget = const DisabledVideoWidget(),
     this.videoRenderMode = VideoRenderMode.Hidden,
+    this.emptyViewWidget,
   }) : super(key: key);
 
   @override
@@ -89,17 +93,18 @@ class _GridLayoutState extends State<GridLayout> {
   Widget _viewGrid() {
     final views = _getRenderViews();
     if (views.isEmpty) {
-      return Expanded(
-        child: Container(
-          color: Colors.white,
-          child: Center(
-            child: Text(
-              'Waiting for the host to join',
-              style: TextStyle(color: Colors.black),
+      return widget.emptyViewWidget ??
+          Expanded(
+            child: Container(
+              color: Colors.white,
+              child: Center(
+                child: Text(
+                  'Waiting for the host to join',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
             ),
-          ),
-        ),
-      );
+          );
     } else if (views.length == 1) {
       return Container(
         child: Column(
