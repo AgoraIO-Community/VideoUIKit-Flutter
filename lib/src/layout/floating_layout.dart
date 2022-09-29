@@ -41,6 +41,9 @@ class FloatingLayout extends StatefulWidget {
   /// Widget that will be displayed when the view is empty (When Host Have not joined). Typically  "Waiting for host to join..."
   final Widget? emptyViewWidget;
 
+  /// Widget to show number of users in the channel. If not specified and [showNumberOfUsers] is true, the default widget will be used.
+  final Function<Widget>(int count)? numberOfUsersWidget;
+
   const FloatingLayout({
     Key? key,
     required this.client,
@@ -54,6 +57,7 @@ class FloatingLayout extends StatefulWidget {
     this.showNumberOfUsers,
     this.videoRenderMode = VideoRenderMode.Hidden,
     this.emptyViewWidget,
+    this.numberOfUsersWidget,
   }) : super(key: key);
 
   @override
@@ -525,15 +529,19 @@ class _FloatingLayoutState extends State<FloatingLayout> {
               widget.showNumberOfUsers == null ||
                       widget.showNumberOfUsers == false
                   ? Container()
-                  : Positioned.fill(
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: NumberOfUsers(
-                          userCount: widget
-                              .client.sessionController.value.users.length,
+                  : widget.numberOfUsersWidget != null
+                      ? widget.numberOfUsersWidget!.call(
+                          widget.client.sessionController.value.users.length,
+                        )
+                      : Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: NumberOfUsers(
+                              userCount: widget
+                                  .client.sessionController.value.users.length,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
               Positioned.fill(
                 child: Align(
                   alignment: Alignment.bottomCenter,
