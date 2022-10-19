@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 Future<void> getToken({
   String? tokenUrl,
   String? channelName,
-  int uid = 0,
+  int? uid = 0,
   required SessionController sessionController,
 }) async {
   final response = await http

@@ -45,7 +45,8 @@ Future<void> endCall({required SessionController sessionController}) async {
     await sessionController.value.agoraRtmChannel?.leave();
     await sessionController.value.agoraRtmClient?.logout();
   }
-  await sessionController.value.engine?.destroy();
+  await sessionController.value.engine?.stopPreview();
+  await sessionController.value.engine?.release();
 }
 
 Timer? timer;
