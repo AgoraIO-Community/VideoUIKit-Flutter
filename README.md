@@ -16,6 +16,8 @@
 
 Instantly integrate Agora video calling or video streaming into your Flutter application.  
 
+> NOTE: The Flutter VideoUIKit( >version 1.1.0) uses the latest version of the Agora 4.x SDK. To know more about the changes and the new features in the 4.x SDK, kindly take a look at the [docs](https://docs.agora.io/en/video-calling/reference/release-notes?platform=flutter). 
+
 ## Getting started
 
 <p align="center">
