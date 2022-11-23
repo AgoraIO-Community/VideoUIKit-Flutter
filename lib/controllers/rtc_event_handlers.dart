@@ -163,7 +163,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     log(info, name: tag, level: Level.error.value);
 
     agoraEventHandlers.onError?.call(err, msg);
-  }, onJoinChannelSuccess: (connection, elapsed) async{
+  }, onJoinChannelSuccess: (connection, elapsed) async {
     final info =
         'onJoinChannel: ${connection.channelId}, uid: ${connection.localUid}';
     log(info, name: tag, level: Level.info.value);
