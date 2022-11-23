@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_rtm/agora_rtm.dart';
 import 'package:agora_uikit/controllers/rtc_event_handlers.dart';
 import 'package:agora_uikit/controllers/rtc_token_handler.dart';
@@ -23,7 +23,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   SessionController()
       : super(
           AgoraSettings(
-            engine: null,
+            engine: createAgoraRtcEngine(),
             agoraRtmChannel: null,
             agoraRtmClient: null,
             users: [],
@@ -32,12 +32,12 @@ class SessionController extends ValueNotifier<AgoraSettings> {
               remote: true,
               muted: false,
               videoDisabled: false,
-              clientRole: ClientRole.Broadcaster,
+              clientRoleType: ClientRoleType.clientRoleBroadcaster,
             ),
             isLocalUserMuted: false,
             isLocalVideoDisabled: false,
             visible: true,
-            clientRole: ClientRole.Broadcaster,
+            clientRoleType: ClientRoleType.clientRoleBroadcaster,
             localUid: 0,
             generatedToken: null,
             generatedRtmId: null,
@@ -68,20 +68,17 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   /// Function to initialize the Agora RTC engine.
   Future<void> initializeEngine(
       {required AgoraConnectionData agoraConnectionData}) async {
-    value = value.copyWith(
-      engine: await RtcEngine.createWithContext(
-        RtcEngineContext(
-          agoraConnectionData.appId,
-          areaCode: agoraConnectionData.areaCode,
-        ),
-      ),
-      connectionData: agoraConnectionData,
-    );
+    value = value.copyWith(connectionData: agoraConnectionData);
+
+    await value.engine!
+        .initialize(RtcEngineContext(appId: value.connectionData!.appId));
+    log("SDK initialized: ${value.engine}", level: Level.error.value);
+
     // Getting SDK versions and assigning them
-    String? rtcVersion = await value.engine?.getSdkVersion();
+    SDKBuildInfo? rtcVersion = await value.engine?.getVersion();
     AgoraVersions.staticRTM = await AgoraRtmClient.getSdkVersion();
-    if (rtcVersion != null) {
-      AgoraVersions.staticRTC = rtcVersion;
+    if (rtcVersion?.version.toString() != null) {
+      AgoraVersions.staticRTC = rtcVersion!.version.toString();
     }
   }
 
@@ -94,7 +91,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     AgoraRtmChannelEventHandler agoraRtmChannelEventHandler,
     AgoraRtcEventHandlers agoraEventHandlers,
   ) async {
-    value.engine?.setEventHandler(
+    value.engine?.registerEventHandler(
       await rtcEngineEventHandler(
         agoraEventHandlers,
         agoraRtmChannelEventHandler,
@@ -114,9 +111,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   /// Function to set all the channel properties.
   void setChannelProperties(AgoraChannelData agoraChannelData) async {
-    await value.engine?.setChannelProfile(agoraChannelData.channelProfile);
-    if (agoraChannelData.channelProfile == ChannelProfile.LiveBroadcasting) {
-      await value.engine?.setClientRole(agoraChannelData.clientRole);
+    await value.engine?.setChannelProfile(agoraChannelData.channelProfileType);
+    if (agoraChannelData.channelProfileType ==
+        ChannelProfileType.channelProfileLiveBroadcasting) {
+      await value.engine?.setClientRole(role: agoraChannelData.clientRoleType);
     } else {
       log('You can only set channel profile in case of Live Broadcasting',
           level: Level.warning.value);
@@ -133,11 +131,11 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
     if (agoraChannelData.setBeautyEffectOptions != null) {
       await value.engine?.setBeautyEffectOptions(
-          true, agoraChannelData.setBeautyEffectOptions!);
+          enabled: true, options: agoraChannelData.setBeautyEffectOptions!);
     }
 
     await value.engine
-        ?.enableDualStreamMode(agoraChannelData.enableDualStreamMode);
+        ?.enableDualStreamMode(enabled: agoraChannelData.enableDualStreamMode);
 
     if (agoraChannelData.localPublishFallbackOption != null) {
       await value.engine?.setLocalPublishFallbackOption(
@@ -160,7 +158,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     await value.engine?.setCameraTorchOn(agoraChannelData.setCameraTorchOn);
 
     await value.engine?.setAudioProfile(
-        agoraChannelData.audioProfile, agoraChannelData.audioScenario);
+        profile: agoraChannelData.audioProfileType,
+        scenario: agoraChannelData.audioScenarioType);
   }
 
   /// Function to join the video call.
@@ -170,8 +169,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       generatedRtmId: value.connectionData!.rtmUid ??
           DateTime.now().millisecondsSinceEpoch.toString(),
     );
+    await value.engine?.setParameters("{\"rtc.using_ui_kit\": 1}");
     await value.engine?.enableVideo();
-    await value.engine?.enableAudioVolumeIndication(200, 3, true);
+    await value.engine?.enableAudioVolumeIndication(
+        interval: 200, smooth: 3, reportVad: true);
     if (value.connectionData?.tokenUrl != null) {
       await getToken(
         tokenUrl: value.connectionData!.tokenUrl,
@@ -186,11 +187,17 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         );
       }
     }
+
+    await value.engine?.startPreview();
+
     await value.engine?.joinChannel(
-      value.connectionData!.tempToken ?? value.generatedToken,
-      value.connectionData!.channelName,
-      null,
-      value.connectionData!.uid,
+      token: value.connectionData?.tempToken ?? value.generatedToken ?? "",
+      channelId: value.connectionData!.channelName,
+      uid: value.connectionData!.uid!,
+      options: ChannelMediaOptions(
+        channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+        clientRoleType: ClientRoleType.clientRoleBroadcaster,
+      ),
     );
   }
 
@@ -221,7 +228,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           remote: false,
           muted: value.isLocalUserMuted,
           videoDisabled: value.isLocalVideoDisabled,
-          clientRole: ClientRole.Broadcaster,
+          clientRoleType: ClientRoleType.clientRoleBroadcaster,
         ),
       );
     }

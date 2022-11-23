@@ -1,3 +1,4 @@
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/rtc_buttons.dart';
 import 'package:agora_uikit/src/layout/floating_layout.dart';
@@ -36,7 +37,7 @@ class AgoraVideoViewer extends StatefulWidget {
   final bool showNumberOfUsers;
 
   /// Render mode for local and remote video
-  final VideoRenderMode videoRenderMode;
+  final RenderModeType renderModeType;
 
   const AgoraVideoViewer({
     Key? key,
@@ -50,7 +51,7 @@ class AgoraVideoViewer extends StatefulWidget {
     this.showAVState = false,
     this.enableHostControls = false,
     this.showNumberOfUsers = false,
-    this.videoRenderMode = VideoRenderMode.Hidden,
+    this.renderModeType = RenderModeType.renderModeHidden,
   }) : super(key: key);
 
   @override
@@ -84,13 +85,13 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
               showAVState: widget.showAVState,
               enableHostControl: widget.enableHostControls,
               showNumberOfUsers: widget.showNumberOfUsers,
-              videoRenderMode: widget.videoRenderMode,
+              renderModeType: widget.renderModeType,
             )
           : GridLayout(
               client: widget.client,
               showNumberOfUsers: widget.showNumberOfUsers,
               disabledVideoWidget: widget.disabledVideoWidget,
-              videoRenderMode: widget.videoRenderMode,
+              renderModeType: widget.renderModeType,
             ),
       onTap: () {
         toggleVisible(

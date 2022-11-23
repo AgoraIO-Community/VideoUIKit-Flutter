@@ -10,8 +10,9 @@ import 'package:agora_uikit/models/rtm_message.dart';
 import 'package:agora_uikit/src/enums.dart';
 
 /// Function to join the RTM channel and send the user data to everyone inside that channel.
-Future<void> rtmMethods(AgoraRtmChannelEventHandler agoraRtmChannelEventHandler,
-    SessionController sessionController) async {
+Future<void> rtmMethods(
+    {required AgoraRtmChannelEventHandler agoraRtmChannelEventHandler,
+    required SessionController sessionController}) async {
   await _loginToRtm(sessionController);
   await _joinRtmChannel(
     agoraRtmChannelEventHandler,
@@ -100,7 +101,7 @@ Future<void> sendUserData({
     rtmId: sessionController.value.generatedRtmId!,
     rtcId: sessionController.value.localUid,
     username: username,
-    role: sessionController.value.clientRole.index,
+    role: sessionController.value.clientRoleType.index,
   );
 
   var json = jsonEncode(userData);

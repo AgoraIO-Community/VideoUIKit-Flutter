@@ -1,4 +1,4 @@
-import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 
 class AgoraConnectionData {
   /// The App ID issued to you by Agora. See [How to get the App ID](). Only users in apps with the same App ID can join the same channel and communicate with each other.
@@ -10,7 +10,7 @@ class AgoraConnectionData {
   final String? rtmChannelName;
 
   /// (Optional) The RTC user ID. A 32-bit unsigned integer with a value ranging from 1 to (232-1). This parameter must be unique. If uid is not assigned (or set as 0), the SDK assigns a uid and reports it in the onJoinChannelSuccess callback.
-  final int uid;
+  final int? uid;
 
   /// (Optional) The RTM user ID. A String value. If you don't provide a rtmUid, the UIKit automatically assigns a rtmUid based on timestamp.
   final String? rtmUid;
@@ -43,7 +43,7 @@ class AgoraConnectionData {
     this.tokenUrl,
     this.tempToken,
     this.tempRtmToken,
-    this.areaCode = const [AreaCode.GLOB],
+    this.areaCode = const [AreaCode.areaCodeGlob],
     this.rtmEnabled = true,
   });
 

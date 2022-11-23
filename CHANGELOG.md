@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Updated RTC to 4.x SDK 
+
 ## 1.0.4
 
 - Updated README badges

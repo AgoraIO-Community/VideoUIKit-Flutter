@@ -1,4 +1,4 @@
-import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_rtm/agora_rtm.dart';
 import 'package:agora_uikit/models/agora_connection_data.dart';
 import 'package:agora_uikit/src/enums.dart';
@@ -15,7 +15,7 @@ class AgoraSettings {
   final bool isLocalUserMuted;
   final bool isLocalVideoDisabled;
   final bool visible;
-  final ClientRole clientRole;
+  final ClientRoleType clientRoleType;
   final int localUid;
   String? generatedToken;
   String? generatedRtmToken;
@@ -43,7 +43,7 @@ class AgoraSettings {
     required this.isLocalUserMuted,
     required this.isLocalVideoDisabled,
     required this.visible,
-    required this.clientRole,
+    required this.clientRoleType,
     required this.localUid,
     this.generatedToken,
     this.generatedRtmToken,
@@ -72,7 +72,7 @@ class AgoraSettings {
     bool? isLocalUserMuted,
     bool? isLocalVideoDisabled,
     bool? visible,
-    ClientRole? clientRole,
+    ClientRoleType? clientRoleType,
     int? localUid,
     String? generatedToken,
     String? generatedRtmToken,
@@ -100,7 +100,7 @@ class AgoraSettings {
       isLocalUserMuted: isLocalUserMuted ?? this.isLocalUserMuted,
       isLocalVideoDisabled: isLocalVideoDisabled ?? this.isLocalVideoDisabled,
       visible: visible ?? this.visible,
-      clientRole: clientRole ?? this.clientRole,
+      clientRoleType: clientRoleType ?? this.clientRoleType,
       localUid: localUid ?? this.localUid,
       generatedToken: generatedToken ?? this.generatedToken,
       generatedRtmToken: generatedRtmToken ?? this.generatedRtmToken,

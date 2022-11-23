@@ -1,7 +1,6 @@
 import 'dart:developer';
-import 'dart:typed_data';
 
-import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_uikit/controllers/rtc_token_handler.dart';
 import 'package:agora_uikit/controllers/rtm_controller.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
@@ -16,292 +15,323 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
   SessionController sessionController,
 ) async {
   const String tag = "AgoraVideoUIKit";
-  return RtcEngineEventHandler(
-    warning: (warning) {
-      agoraEventHandlers.warning?.call(warning);
-    },
-    apiCallExecuted: (error, api, result) {
-      agoraEventHandlers.apiCallExecuted?.call(error, api, result);
-    },
-    rejoinChannelSuccess: (channel, uid, elapsed) {
-      agoraEventHandlers.rejoinChannelSuccess?.call(channel, uid, elapsed);
-    },
-    localUserRegistered: (uid, userAccount) {
-      agoraEventHandlers.localUserRegistered?.call(uid, userAccount);
-    },
-    userInfoUpdated: (uid, userInfo) {
-      agoraEventHandlers.userInfoUpdated?.call(uid, userInfo);
-    },
-    clientRoleChanged: (oldRole, newRole) {
-      agoraEventHandlers.clientRoleChanged?.call(oldRole, newRole);
-    },
-    connectionStateChanged: (state, reason) {
-      agoraEventHandlers.connectionStateChanged?.call(state, reason);
-    },
-    networkTypeChanged: (type) {
-      agoraEventHandlers.networkTypeChanged?.call(type);
-    },
-    connectionLost: () {
-      agoraEventHandlers.connectionLost?.call();
-    },
-    requestToken: () {
-      agoraEventHandlers.requestToken?.call();
-    },
-    audioVolumeIndication: (speakers, totalVolume) {
-      agoraEventHandlers.audioVolumeIndication?.call(speakers, totalVolume);
-    },
-    firstLocalAudioFrame: (elapsed) {
-      agoraEventHandlers.firstLocalAudioFrame?.call(elapsed);
-    },
-    firstLocalVideoFrame: (width, height, elapsed) {
-      agoraEventHandlers.firstLocalVideoFrame?.call(width, height, elapsed);
-    },
-    userMuteVideo: (uid, muted) {
-      agoraEventHandlers.userMuteVideo?.call(uid, muted);
-    },
-    videoSizeChanged: (uid, width, height, rotation) {
-      agoraEventHandlers.videoSizeChanged?.call(uid, width, height, rotation);
-    },
-    localPublishFallbackToAudioOnly: (isFallbackOrRecover) {
-      agoraEventHandlers.localPublishFallbackToAudioOnly
-          ?.call(isFallbackOrRecover);
-    },
-    remoteSubscribeFallbackToAudioOnly: (uid, isFallbackOrRecover) {
-      agoraEventHandlers.remoteSubscribeFallbackToAudioOnly
-          ?.call(uid, isFallbackOrRecover);
-    },
-    audioRouteChanged: (routing) {
-      agoraEventHandlers.audioRouteChanged?.call(routing);
-    },
-    cameraFocusAreaChanged: (rect) {
-      agoraEventHandlers.cameraFocusAreaChanged?.call(rect);
-    },
-    cameraExposureAreaChanged: (rect) {
-      agoraEventHandlers.cameraExposureAreaChanged?.call(rect);
-    },
-    facePositionChanged: (imageWidth, imageHeight, faces) {
-      agoraEventHandlers.facePositionChanged
-          ?.call(imageWidth, imageHeight, faces);
-    },
-    rtcStats: (stats) {
-      agoraEventHandlers.rtcStats?.call(stats);
-    },
-    lastmileQuality: (quality) {
-      agoraEventHandlers.lastmileQuality?.call(quality);
-    },
-    networkQuality: (uid, txQuality, rxQuality) {
-      agoraEventHandlers.networkQuality?.call(uid, txQuality, rxQuality);
-    },
-    lastmileProbeResult: (result) {
-      agoraEventHandlers.lastmileProbeResult?.call(result);
-    },
-    localVideoStats: (stats) {
-      agoraEventHandlers.localVideoStats?.call(stats);
-    },
-    localAudioStats: (stats) {
-      agoraEventHandlers.localAudioStats?.call(stats);
-    },
-    remoteVideoStats: (stats) {
-      agoraEventHandlers.remoteVideoStats?.call(stats);
-    },
-    remoteAudioStats: (stats) {
-      agoraEventHandlers.remoteAudioStats?.call(stats);
-    },
-    audioMixingFinished: () {
-      agoraEventHandlers.audioMixingFinished?.call();
-    },
-    audioMixingStateChanged: (state, reason) {
-      agoraEventHandlers.audioMixingStateChanged?.call(state, reason);
-    },
-    audioEffectFinished: (soundId) {
-      agoraEventHandlers.audioEffectFinished?.call(soundId);
-    },
-    rtmpStreamingStateChanged: (url, state, errCode) {
-      agoraEventHandlers.rtmpStreamingStateChanged?.call(url, state, errCode);
-    },
-    transcodingUpdated: () {
-      agoraEventHandlers.transcodingUpdated?.call();
-    },
-    streamInjectedStatus: (url, uid, status) {
-      agoraEventHandlers.streamInjectedStatus?.call(url, uid, status);
-    },
-    streamMessage: (int uid, int streamId, Uint8List data) {
-      agoraEventHandlers.streamMessage?.call(uid, streamId, data);
-    },
-    streamMessageError: (uid, streamId, error, missed, cached) {
-      agoraEventHandlers.streamMessageError
-          ?.call(uid, streamId, error, missed, cached);
-    },
-    mediaEngineLoadSuccess: () {
-      agoraEventHandlers.mediaEngineLoadSuccess?.call();
-    },
-    mediaEngineStartCallSuccess: () {
-      agoraEventHandlers.mediaEngineStartCallSuccess?.call();
-    },
-    channelMediaRelayStateChanged: (state, code) {
-      agoraEventHandlers.channelMediaRelayStateChanged?.call(state, code);
-    },
-    channelMediaRelayEvent: (code) {
-      agoraEventHandlers.channelMediaRelayEvent?.call(code);
-    },
-    metadataReceived: (metadata) {
-      agoraEventHandlers.metadataReceived?.call(metadata);
-    },
-    firstLocalVideoFramePublished: (elapsed) {
-      agoraEventHandlers.firstLocalVideoFramePublished?.call(elapsed);
-    },
-    firstLocalAudioFramePublished: (elapsed) {
-      agoraEventHandlers.firstLocalAudioFramePublished?.call(elapsed);
-    },
-    audioPublishStateChanged:
-        (channel, oldState, newState, elapseSinceLastState) {
-      agoraEventHandlers.audioPublishStateChanged
-          ?.call(channel, oldState, newState, elapseSinceLastState);
-    },
-    videoPublishStateChanged:
-        (channel, oldState, newState, elapseSinceLastState) {
-      agoraEventHandlers.videoPublishStateChanged
-          ?.call(channel, oldState, newState, elapseSinceLastState);
-    },
-    audioSubscribeStateChanged:
-        (channel, uid, oldState, newState, elapseSinceLastState) {
-      agoraEventHandlers.audioSubscribeStateChanged
-          ?.call(channel, uid, oldState, newState, elapseSinceLastState);
-    },
-    videoSubscribeStateChanged:
-        (channel, uid, oldState, newState, elapseSinceLastState) {
-      agoraEventHandlers.videoSubscribeStateChanged
-          ?.call(channel, uid, oldState, newState, elapseSinceLastState);
-    },
-    rtmpStreamingEvent: (url, eventCode) {
-      agoraEventHandlers.rtmpStreamingEvent?.call(url, eventCode);
-    },
-    userSuperResolutionEnabled: (uid, enabled, reason) {
-      agoraEventHandlers.userSuperResolutionEnabled?.call(uid, enabled, reason);
-    },
-    uploadLogResult: (requestId, success, reason) {
-      agoraEventHandlers.uploadLogResult?.call(requestId, success, reason);
-    },
-    error: (code) {
-      final info = 'onError: $code';
-      log(info, name: tag, level: Level.error.value);
+  return RtcEngineEventHandler(onApiCallExecuted: (err, api, result) {
+    agoraEventHandlers.onApiCallExecuted?.call(err, api, result);
+  }, onRejoinChannelSuccess: (connection, elapsed) {
+    agoraEventHandlers.onRejoinChannelSuccess?.call(connection, elapsed);
+  }, onLocalUserRegistered: (uid, userAccount) {
+    agoraEventHandlers.onLocalUserRegistered?.call(uid, userAccount);
+  }, onUserInfoUpdated: (uid, info) {
+    agoraEventHandlers.onUserInfoUpdated?.call(uid, info);
+  }, onClientRoleChanged: (connection, oldRole, newRole) {
+    agoraEventHandlers.onClientRoleChanged?.call(connection, oldRole, newRole);
+  }, onClientRoleChangeFailed: (connection, reason, currentRole) {
+    agoraEventHandlers.onClientRoleChangeFailed
+        ?.call(connection, reason, currentRole);
+  }, onConnectionStateChanged: (connection, state, reason) {
+    agoraEventHandlers.onConnectionStateChanged
+        ?.call(connection, state, reason);
+  }, onNetworkQuality: (connection, remoteUid, txQuality, rxQuality) {
+    agoraEventHandlers.onNetworkQuality
+        ?.call(connection, remoteUid, txQuality, rxQuality);
+  }, onNetworkTypeChanged: (connection, type) {
+    agoraEventHandlers.onNetworkTypeChanged?.call(connection, type);
+  }, onUplinkNetworkInfoUpdated: (info) {
+    agoraEventHandlers.onUplinkNetworkInfoUpdated?.call(info);
+  }, onDownlinkNetworkInfoUpdated: (info) {
+    agoraEventHandlers.onDownlinkNetworkInfoUpdated?.call(info);
+  }, onConnectionLost: (connection) {
+    agoraEventHandlers.onConnectionLost?.call(connection);
+  }, onConnectionBanned: (connection) {
+    agoraEventHandlers.onConnectionBanned?.call(connection);
+  }, onConnectionInterrupted: (connection) {
+    agoraEventHandlers.onConnectionInterrupted?.call(connection);
+  }, onContentInspectResult: (result) {
+    agoraEventHandlers.onContentInspectResult?.call(result);
+  }, onProxyConnected: (channel, uid, proxyType, localProxyIp, elapsed) {
+    agoraEventHandlers.onProxyConnected
+        ?.call(channel, uid, proxyType, localProxyIp, elapsed);
+  }, onRequestToken: (connection) {
+    agoraEventHandlers.onRequestToken?.call(connection);
+  }, onAudioVolumeIndication: (connection, speakers, speakerNumber, totalVolume) {
+    agoraEventHandlers.onAudioVolumeIndication
+        ?.call(connection, speakers, speakerNumber, totalVolume);
+  }, onFirstLocalAudioFramePublished: (connection, elapsed) {
+    agoraEventHandlers.onFirstLocalAudioFramePublished
+        ?.call(connection, elapsed);
+  }, onFirstLocalVideoFrame: (connection, width, height, elapsed) {
+    agoraEventHandlers.onFirstLocalVideoFrame
+        ?.call(connection, width, height, elapsed);
+  }, onFirstLocalVideoFramePublished: (connection, elapsed) {
+    agoraEventHandlers.onFirstLocalVideoFramePublished
+        ?.call(connection, elapsed);
+  }, onFirstRemoteAudioDecoded: (connection, uid, elapsed) {
+    agoraEventHandlers.onFirstRemoteAudioDecoded
+        ?.call(connection, uid, elapsed);
+  }, onFirstRemoteAudioFrame: (connection, userId, elapsed) {
+    agoraEventHandlers.onFirstRemoteAudioFrame
+        ?.call(connection, userId, elapsed);
+  }, onFirstRemoteVideoFrame: (connection, remoteUid, width, height, elapsed) {
+    agoraEventHandlers.onFirstRemoteVideoFrame
+        ?.call(connection, remoteUid, width, height, elapsed);
+  }, onFirstRemoteVideoDecoded: (connection, remoteUid, width, height, elapsed) {
+    agoraEventHandlers.onFirstRemoteVideoDecoded
+        ?.call(connection, remoteUid, width, height, elapsed);
+  }, onUserMuteVideo: (connection, remoteUid, muted) {
+    agoraEventHandlers.onUserMuteVideo?.call(connection, remoteUid, muted);
+  }, onUserMuteAudio: (connection, remoteUid, muted) {
+    agoraEventHandlers.onUserMuteAudio?.call(connection, remoteUid, muted);
+  }, onVideoSizeChanged: (connection, sourceType, uid, width, height, rotation) {
+    agoraEventHandlers.onVideoSizeChanged
+        ?.call(connection, sourceType, uid, width, height, rotation);
+  }, onLocalPublishFallbackToAudioOnly: (isFallbackOrRecover) {
+    agoraEventHandlers.onLocalPublishFallbackToAudioOnly
+        ?.call(isFallbackOrRecover);
+  }, onRemoteSubscribeFallbackToAudioOnly: (uid, isFallbackOrRecover) {
+    agoraEventHandlers.onRemoteSubscribeFallbackToAudioOnly
+        ?.call(uid, isFallbackOrRecover);
+  }, onAudioRoutingChanged: (routing) {
+    agoraEventHandlers.onAudioRoutingChanged?.call(routing);
+  }, onCameraFocusAreaChanged: (x, y, width, height) {
+    agoraEventHandlers.onCameraExposureAreaChanged?.call(x, y, width, height);
+  }, onCameraExposureAreaChanged: (x, y, width, height) {
+    agoraEventHandlers.onCameraExposureAreaChanged?.call(x, y, width, height);
+  }, onFacePositionChanged:
+      (imageWidth, imageHeight, vecRectangle, vecDistance, numFaces) {
+    agoraEventHandlers.onFacePositionChanged
+        ?.call(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
+  }, onRtcStats: (connection, stats) {
+    agoraEventHandlers.onRtcStats?.call(connection, stats);
+  }, onLastmileQuality: (quality) {
+    agoraEventHandlers.onLastmileQuality?.call(quality);
+  }, onLastmileProbeResult: (result) {
+    agoraEventHandlers.onLastmileProbeResult?.call(result);
+  }, onLocalVideoStats: (connection, stats) {
+    agoraEventHandlers.onLocalVideoStats?.call(connection, stats);
+  }, onLocalAudioStats: (connection, stats) {
+    agoraEventHandlers.onLocalAudioStats?.call(connection, stats);
+  }, onRemoteVideoStats: (connection, stats) {
+    agoraEventHandlers.onRemoteVideoStats?.call(connection, stats);
+  }, onRemoteAudioStats: (connection, stats) {
+    agoraEventHandlers.onRemoteAudioStats?.call(connection, stats);
+  }, onAudioMixingFinished: () {
+    agoraEventHandlers.onAudioMixingFinished?.call();
+  }, onAudioMixingStateChanged: (state, reason) {
+    agoraEventHandlers.onAudioMixingStateChanged?.call(state, reason);
+  }, onAudioEffectFinished: (soundId) {
+    agoraEventHandlers.onAudioEffectFinished?.call(soundId);
+  }, onRtmpStreamingStateChanged: (url, state, errCode) {
+    agoraEventHandlers.onRtmpStreamingStateChanged?.call(url, state, errCode);
+  }, onRtmpStreamingEvent: (url, eventCode) {
+    agoraEventHandlers.onRtmpStreamingEvent?.call(url, eventCode);
+  }, onTranscodingUpdated: () {
+    agoraEventHandlers.onTranscodingUpdated?.call();
+  }, onStreamMessage: (connection, remoteUid, streamId, data, length, sentTs) {
+    agoraEventHandlers.onStreamMessage
+        ?.call(connection, remoteUid, streamId, data, length, sentTs);
+  }, onStreamMessageError:
+      (connection, remoteUid, streamId, code, missed, cached) {
+    agoraEventHandlers.onStreamMessageError
+        ?.call(connection, remoteUid, streamId, code, missed, cached);
+  }, onChannelMediaRelayEvent: (code) {
+    agoraEventHandlers.onChannelMediaRelayEvent?.call(code);
+  }, onChannelMediaRelayStateChanged: (state, code) {
+    agoraEventHandlers.onChannelMediaRelayStateChanged?.call(state, code);
+  }, onMediaDeviceChanged: (deviceType) {
+    agoraEventHandlers.onMediaDeviceChanged?.call(deviceType);
+  }, onAudioPublishStateChanged:
+      (channel, oldState, newState, elapseSinceLastState) {
+    agoraEventHandlers.onAudioPublishStateChanged
+        ?.call(channel, oldState, newState, elapseSinceLastState);
+  }, onVideoPublishStateChanged:
+      (source, channel, oldState, newState, elapseSinceLastState) {
+    agoraEventHandlers.onVideoPublishStateChanged
+        ?.call(source, channel, oldState, newState, elapseSinceLastState);
+  }, onAudioSubscribeStateChanged:
+      (channel, uid, oldState, newState, elapseSinceLastState) {
+    agoraEventHandlers.onAudioSubscribeStateChanged
+        ?.call(channel, uid, oldState, newState, elapseSinceLastState);
+  }, onVideoSubscribeStateChanged:
+      (channel, uid, oldState, newState, elapseSinceLastState) {
+    agoraEventHandlers.onVideoSubscribeStateChanged
+        ?.call(channel, uid, oldState, newState, elapseSinceLastState);
+  }, onUploadLogResult: (connection, requestId, success, reason) {
+    agoraEventHandlers.onUploadLogResult
+        ?.call(connection, requestId, success, reason);
+  }, onError: (err, msg) {
+    final info = 'onError: $err';
+    log(info, name: tag, level: Level.error.value);
 
-      agoraEventHandlers.onError?.call(code);
-    },
-    joinChannelSuccess: (channel, uid, elapsed) {
-      final info = 'onJoinChannel: $channel, uid: $uid';
-      log(info, name: tag, level: Level.info.value);
-      sessionController.value = sessionController.value.copyWith(localUid: uid);
-      sessionController.value = sessionController.value.copyWith(
-        mainAgoraUser: AgoraUser(
-          uid: uid,
-          remote: false,
-          muted: sessionController.value.isLocalUserMuted,
-          videoDisabled: sessionController.value.isLocalVideoDisabled,
-          clientRole: sessionController.value.clientRole,
-        ),
-      );
-      if (sessionController.value.connectionData!.rtmEnabled) {
-        rtmMethods(
-          agoraRtmChannelEventHandler,
-          sessionController,
-        );
+    agoraEventHandlers.onError?.call(err, msg);
+  }, onJoinChannelSuccess: (connection, elapsed) async{
+    final info =
+        'onJoinChannel: ${connection.channelId}, uid: ${connection.localUid}';
+    log(info, name: tag, level: Level.info.value);
+    sessionController.value =
+        sessionController.value.copyWith(localUid: connection.localUid);
+
+    await rtmMethods(
+        agoraRtmChannelEventHandler: agoraRtmChannelEventHandler,
+        sessionController: sessionController);
+
+    sessionController.value = sessionController.value.copyWith(
+      mainAgoraUser: AgoraUser(
+        uid: connection.localUid!,
+        remote: false,
+        muted: sessionController.value.isLocalUserMuted,
+        videoDisabled: sessionController.value.isLocalVideoDisabled,
+        clientRoleType: sessionController.value.clientRoleType,
+      ),
+    );
+
+    agoraEventHandlers.onJoinChannelSuccess?.call(connection, elapsed);
+  }, onLeaveChannel: (connection, stats) {
+    sessionController.clearUsers();
+
+    agoraEventHandlers.onLeaveChannel?.call(connection, stats);
+  }, onUserJoined: (connection, remoteUid, elapsed) {
+    final info = 'userJoined: $remoteUid';
+    log(info, name: tag, level: Level.info.value);
+    sessionController.addUser(
+      callUser: AgoraUser(
+        uid: remoteUid,
+      ),
+    );
+
+    agoraEventHandlers.onUserJoined?.call(connection, remoteUid, elapsed);
+  }, onUserOffline: (connection, remoteUid, reason) {
+    final info = 'userOffline: $remoteUid , reason: $reason';
+    log(info, name: tag, level: Level.info.value);
+    sessionController.checkForMaxUser(uid: remoteUid);
+    sessionController.removeUser(uid: remoteUid);
+
+    agoraEventHandlers.onUserOffline?.call(connection, remoteUid, reason);
+  }, onTokenPrivilegeWillExpire: (connection, token) async {
+    await getToken(
+      tokenUrl: sessionController.value.connectionData!.tokenUrl,
+      channelName: sessionController.value.connectionData!.channelName,
+      uid: sessionController.value.connectionData!.uid,
+      sessionController: sessionController,
+    );
+    await sessionController.value.engine?.renewToken(token);
+
+    agoraEventHandlers.onTokenPrivilegeWillExpire?.call(connection, token);
+  }, onRemoteVideoStateChanged: (connection, remoteUid, state, reason, elapsed) {
+    final String info =
+        "Remote video state changed for $remoteUid, state: $state and reason: $reason";
+    log(info, name: tag, level: Level.info.value);
+    if (remoteUid != sessionController.value.localUid) {
+      if (state == RemoteVideoState.remoteVideoStateStopped) {
+        sessionController.updateUserVideo(uid: remoteUid, videoDisabled: true);
+      } else if (state == RemoteVideoState.remoteVideoStateDecoding &&
+          reason == RemoteVideoState.remoteVideoStateStarting) {
+        sessionController.updateUserVideo(uid: remoteUid, videoDisabled: false);
       }
-      agoraEventHandlers.joinChannelSuccess?.call(channel, uid, elapsed);
-    },
-    leaveChannel: (stats) {
-      sessionController.clearUsers();
-      agoraEventHandlers.leaveChannel?.call(stats);
-    },
-    userJoined: (uid, elapsed) {
-      final info = 'userJoined: $uid';
-      log(info, name: tag, level: Level.info.value);
-      sessionController.addUser(
-        callUser: AgoraUser(
-          uid: uid,
-        ),
-      );
+    }
 
-      agoraEventHandlers.userJoined?.call(uid, elapsed);
-    },
-    userOffline: (uid, reason) {
-      final info = 'userOffline: $uid , reason: $reason';
-      log(info, name: tag, level: Level.info.value);
-      sessionController.checkForMaxUser(uid: uid);
-      sessionController.removeUser(uid: uid);
+    agoraEventHandlers.onRemoteVideoStateChanged
+        ?.call(connection, remoteUid, state, reason, elapsed);
+  }, onRemoteAudioStateChanged: (connection, remoteUid, state, reason, elapsed) {
+    final String info =
+        "Remote audio state changed for $remoteUid, state: $state and reason: $reason";
+    log(info, name: tag, level: Level.info.value);
+    if (state == RemoteAudioState.remoteAudioStateStopped &&
+        reason == RemoteAudioStateReason.remoteAudioReasonRemoteMuted &&
+        remoteUid != sessionController.value.localUid) {
+      sessionController.updateUserAudio(uid: remoteUid, muted: true);
+    } else if (state == RemoteAudioState.remoteAudioStateDecoding &&
+        reason == RemoteAudioStateReason.remoteAudioReasonRemoteUnmuted &&
+        remoteUid != sessionController.value.localUid) {
+      sessionController.updateUserAudio(uid: remoteUid, muted: false);
+    }
 
-      agoraEventHandlers.userOffline?.call(uid, reason);
-    },
-    tokenPrivilegeWillExpire: (token) async {
-      await getToken(
-        tokenUrl: sessionController.value.connectionData!.tokenUrl,
-        channelName: sessionController.value.connectionData!.channelName,
-        uid: sessionController.value.connectionData!.uid,
-        sessionController: sessionController,
-      );
-      await sessionController.value.engine?.renewToken(token);
+    agoraEventHandlers.onRemoteAudioStateChanged
+        ?.call(connection, remoteUid, state, reason, elapsed);
+  }, onLocalAudioStateChanged: (connection, state, error) {
+    final String info =
+        "Local audio state changed state: $state and error: $error";
+    log(info, name: tag, level: Level.info.value);
 
-      agoraEventHandlers.tokenPrivilegeWillExpire?.call(token);
-    },
-    remoteVideoStateChanged: (uid, state, reason, elapsed) {
-      final String info =
-          "Remote video state changed for $uid, state: $state and reason: $reason";
-      log(info, name: tag, level: Level.info.value);
-      if (uid != sessionController.value.localUid) {
-        if (state == VideoRemoteState.Stopped) {
-          sessionController.updateUserVideo(uid: uid, videoDisabled: true);
-        } else if (state == VideoRemoteState.Decoding &&
-            reason == VideoRemoteStateReason.RemoteUnmuted) {
-          sessionController.updateUserVideo(uid: uid, videoDisabled: false);
-        }
-      }
+    agoraEventHandlers.onLocalAudioStateChanged?.call(connection, state, error);
+  }, onLocalVideoStateChanged: (source, state, error) {
+    final String info =
+        "Local video state changed state: $state and error: $error";
+    log(info, name: tag, level: Level.info.value);
 
-      agoraEventHandlers.remoteVideoStateChanged
-          ?.call(uid, state, reason, elapsed);
-    },
-    remoteAudioStateChanged: (uid, state, reason, elapsed) {
-      final String info =
-          "Remote audio state changed for $uid, state: $state and reason: $reason";
-      log(info, name: tag, level: Level.info.value);
-      if (state == AudioRemoteState.Stopped &&
-          reason == AudioRemoteStateReason.RemoteMuted &&
-          uid != sessionController.value.localUid) {
-        sessionController.updateUserAudio(uid: uid, muted: true);
-      } else if (state == AudioRemoteState.Decoding &&
-          reason == AudioRemoteStateReason.RemoteUnmuted &&
-          uid != sessionController.value.localUid) {
-        sessionController.updateUserAudio(uid: uid, muted: false);
-      }
+    agoraEventHandlers.onLocalVideoStateChanged?.call(source, state, error);
+  }, onActiveSpeaker: (connection, uid) {
+    final String info = "Active speaker: $uid";
+    log(info, name: tag, level: Level.info.value);
+    if (sessionController.value.isActiveSpeakerDisabled == false &&
+        sessionController.value.layoutType == Layout.floating) {
+      final int index = sessionController.value.users
+          .indexWhere((element) => element.uid == uid);
+      sessionController.swapUser(index: index);
+    } else {
+      log("Active speaker is disabled", level: Level.info.value, name: tag);
+    }
 
-      agoraEventHandlers.remoteAudioStateChanged
-          ?.call(uid, state, reason, elapsed);
-    },
-    localAudioStateChanged: (state, error) {
-      final String info =
-          "Local audio state changed state: $state and error: $error";
-      log(info, name: tag, level: Level.info.value);
-      agoraEventHandlers.localAudioStateChanged?.call(state, error);
-    },
-    localVideoStateChanged: (localVideoState, error) {
-      final String info =
-          "Local video state changed state: $localVideoState and error: $error";
-      log(info, name: tag, level: Level.info.value);
-
-      agoraEventHandlers.localVideoStateChanged?.call(localVideoState, error);
-    },
-    activeSpeaker: (uid) {
-      final String info = "Active speaker: $uid";
-      log(info, name: tag, level: Level.info.value);
-      if (sessionController.value.isActiveSpeakerDisabled == false &&
-          sessionController.value.layoutType == Layout.floating) {
-        final int index = sessionController.value.users
-            .indexWhere((element) => element.uid == uid);
-        sessionController.swapUser(index: index);
-      } else {
-        log("Active speaker is disabled", level: Level.info.value, name: tag);
-      }
-
-      agoraEventHandlers.activeSpeaker?.call(uid);
-    },
-  );
+    agoraEventHandlers.onActiveSpeaker?.call(connection, uid);
+  }, onAudioDeviceStateChanged: (deviceId, deviceType, deviceState) {
+    agoraEventHandlers.onAudioDeviceStateChanged
+        ?.call(deviceId, deviceType, deviceState);
+  }, onAudioDeviceVolumeChanged: (deviceType, volume, muted) {
+    agoraEventHandlers.onAudioDeviceVolumeChanged
+        ?.call(deviceType, volume, muted);
+  }, onAudioQuality: (connection, remoteUid, quality, delay, lost) {
+    agoraEventHandlers.onAudioQuality
+        ?.call(connection, remoteUid, quality, delay, lost);
+  }, onCameraReady: () {
+    agoraEventHandlers.onCameraReady?.call();
+  }, onEncryptionError: (connection, errorType) {
+    agoraEventHandlers.onEncryptionError?.call(connection, errorType);
+  }, onExtensionError: (provider, extension, error, message) {
+    agoraEventHandlers.onExtensionError
+        ?.call(provider, extension, error, message);
+  }, onExtensionEvent: (provider, extension, key, value) {
+    agoraEventHandlers.onExtensionEvent?.call(provider, extension, key, value);
+  }, onExtensionStarted: (provider, extension) {
+    agoraEventHandlers.onExtensionStarted?.call(provider, extension);
+  }, onExtensionStopped: (provider, extension) {
+    agoraEventHandlers.onExtensionStopped?.call(provider, extension);
+  }, onIntraRequestReceived: (connection) {
+    agoraEventHandlers.onIntraRequestReceived?.call(connection);
+  }, onPermissionError: (permissionType) {
+    agoraEventHandlers.onPermissionError?.call(permissionType);
+  }, onRemoteAudioTransportStats:
+      (connection, remoteUid, delay, lost, rxKBitRate) {
+    agoraEventHandlers.onRemoteAudioTransportStats
+        ?.call(connection, remoteUid, delay, lost, rxKBitRate);
+  }, onRemoteVideoTransportStats:
+      (connection, remoteUid, delay, lost, rxKBitRate) {
+    agoraEventHandlers.onRemoteVideoTransportStats
+        ?.call(connection, remoteUid, delay, lost, rxKBitRate);
+  }, onRhythmPlayerStateChanged: (state, errorCode) {
+    agoraEventHandlers.onRhythmPlayerStateChanged?.call(state, errorCode);
+  }, onSnapshotTaken: (connection, uid, filePath, width, height, errCode) {
+    agoraEventHandlers.onSnapshotTaken
+        ?.call(connection, uid, filePath, width, height, errCode);
+  }, onUserAccountUpdated: (connection, remoteUid, userAccount) {
+    agoraEventHandlers.onUserAccountUpdated
+        ?.call(connection, remoteUid, userAccount);
+  }, onUserEnableLocalVideo: (connection, remoteUid, enabled) {
+    agoraEventHandlers.onUserEnableLocalVideo
+        ?.call(connection, remoteUid, enabled);
+  }, onUserEnableVideo: (connection, remoteUid, enabled) {
+    agoraEventHandlers.onUserEnableLocalVideo
+        ?.call(connection, remoteUid, enabled);
+  }, onUserStateChanged: (connection, remoteUid, state) {
+    agoraEventHandlers.onUserStateChanged?.call(connection, remoteUid, state);
+  }, onVideoDeviceStateChanged: (deviceId, deviceType, deviceState) {
+    agoraEventHandlers.onVideoDeviceStateChanged
+        ?.call(deviceId, deviceType, deviceState);
+  }, onVideoStopped: () {
+    agoraEventHandlers.onVideoStopped?.call();
+  }, onWlAccMessage: (connection, reason, action, wlAccMsg) {
+    agoraEventHandlers.onWlAccMessage
+        ?.call(connection, reason, action, wlAccMsg);
+  }, onWlAccStats: (connection, currentStats, averageStats) {
+    agoraEventHandlers.onWlAccStats
+        ?.call(connection, currentStats, averageStats);
+  });
 }

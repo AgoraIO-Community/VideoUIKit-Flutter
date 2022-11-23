@@ -1,19 +1,19 @@
-import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 
 /// Use this class to define the properties of a channel and the behaviour of a user inside that channel.
 class AgoraChannelData {
   /// The Agora [RtcEngine] differentiates channel profiles and applies different optimization algorithms accordingly.
   ///
-  /// You can choose between 3 default channel profiles [ChannelProfile.Communication], [ChannelProfile.LiveBroadcasting] and [ChannelProfile.Game]
-  final ChannelProfile channelProfile;
+  /// You can choose between 3 default channel profiles [ChannelProfileType.channelProfileCommunication], [ChannelProfileType.channelProfileLiveBroadcasting], [ChannelProfileType.channelProfileCommunication1v1], [ChannelProfileType.channelProfileCloudGaming] and [ChannelProfileType.channelProfileGame]
+  final ChannelProfileType channelProfileType;
 
   /// Sets the role of a user in a live interactive streaming.
-  /// This method applies only when [channelProfile] is set to [ChannelProfile.LiveBroadcasting]
+  /// This method applies only when [channelProfileType] is set to [ChannelProfileType.channelProfileLiveBroadcasting]
   ///
-  /// Use this to set the user behaviour inside a channel. A user can choose between a [ClientRole.Audience] or [ClientRole.Broadcaster].
+  /// Use this to set the user behaviour inside a channel. A user can choose between a [ClientRoleType.clientRoleAudience] or [ClientRoleType.clientRoleBroadcaster].
   /// - An audience member can only receive the stream.
   /// - A broadcaster can send and receive the stream.
-  ClientRole clientRole;
+  ClientRoleType clientRoleType;
 
   /// Each video encoder configuration corresponds to a set of video parameters, including the resolution, frame rate, bitrate, and video orientation.
   ///
@@ -60,13 +60,13 @@ class AgoraChannelData {
   /// Sets the sample rate, bitrate, encoding mode, and the number of channels.
   ///
   /// To know more about AudioProfile have a look over here [AudioProfile]
-  AudioProfile audioProfile;
+  AudioProfileType audioProfileType;
 
   /// Sets the audio parameters and application scenarios.
   ///
   /// Sets the audio application scenarios. Under different audio scenarios, the device uses different volume tracks, i.e. either the in-call volume or the media volume. S
   /// To know more about AudioScenario have a look over here [AudioScenario]
-  AudioScenario audioScenario;
+  AudioScenarioType audioScenarioType;
 
   /// Enhancess the image being streamed on the channel.
   ///
@@ -104,15 +104,15 @@ class AgoraChannelData {
   final bool isActiveSpeakerDisabled;
 
   AgoraChannelData({
-    this.channelProfile = ChannelProfile.Communication,
-    this.clientRole = ClientRole.Broadcaster,
+    this.channelProfileType = ChannelProfileType.channelProfileCommunication,
+    this.clientRoleType = ClientRoleType.clientRoleBroadcaster,
     this.videoEncoderConfiguration,
     this.setCameraAutoFocusFaceModeEnabled = false,
     this.enableDualStreamMode = false,
     this.localPublishFallbackOption,
     this.remoteSubscribeFallbackOption,
-    this.audioProfile = AudioProfile.Default,
-    this.audioScenario = AudioScenario.Default,
+    this.audioProfileType = AudioProfileType.audioProfileDefault,
+    this.audioScenarioType = AudioScenarioType.audioScenarioDefault,
     this.setBeautyEffectOptions,
     this.setCameraTorchOn = false,
     this.muteAllRemoteAudioStreams = false,
@@ -121,15 +121,15 @@ class AgoraChannelData {
   });
 
   AgoraChannelData copyWith({
-    final ChannelProfile? channelProfile,
-    ClientRole? clientRole,
+    final ChannelProfileType? channelProfileType,
+    ClientRoleType? clientRoleType,
     VideoEncoderConfiguration? videoEncoderConfiguration,
     bool? setCameraAutoFocusFaceModeEnabled,
     bool? enableDualStreamMode,
     StreamFallbackOptions? localPublishFallbackOption,
     StreamFallbackOptions? remoteSubscribeFallbackOption,
-    AudioProfile? audioProfile,
-    AudioScenario? audioScenario,
+    AudioProfileType? audioProfileType,
+    AudioScenarioType? audioScenarioType,
     BeautyOptions? setBeautyEffectOptions,
     bool? setCameraTorchOn,
     bool? muteAllRemoteVideoStreams,
@@ -137,8 +137,8 @@ class AgoraChannelData {
     bool? isActiveSpeakerDisabled,
   }) {
     return AgoraChannelData(
-      channelProfile: channelProfile ?? this.channelProfile,
-      clientRole: clientRole ?? this.clientRole,
+      channelProfileType: channelProfileType ?? this.channelProfileType,
+      clientRoleType: clientRoleType ?? this.clientRoleType,
       videoEncoderConfiguration:
           videoEncoderConfiguration ?? this.videoEncoderConfiguration,
       setCameraAutoFocusFaceModeEnabled: setCameraAutoFocusFaceModeEnabled ??
@@ -148,8 +148,8 @@ class AgoraChannelData {
           localPublishFallbackOption ?? this.localPublishFallbackOption,
       remoteSubscribeFallbackOption:
           remoteSubscribeFallbackOption ?? this.remoteSubscribeFallbackOption,
-      audioProfile: audioProfile ?? this.audioProfile,
-      audioScenario: audioScenario ?? this.audioScenario,
+      audioProfileType: audioProfileType ?? this.audioProfileType,
+      audioScenarioType: audioScenarioType ?? this.audioScenarioType,
       setBeautyEffectOptions:
           setBeautyEffectOptions ?? this.setBeautyEffectOptions,
       setCameraTorchOn: setCameraTorchOn ?? this.setCameraTorchOn,
