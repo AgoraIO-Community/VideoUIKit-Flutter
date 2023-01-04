@@ -101,9 +101,6 @@ class AgoraRtcEventHandlers {
   final void Function(String deviceId, MediaDeviceType deviceType,
       MediaDeviceStateType deviceState)? onVideoDeviceStateChanged;
 
-  /// @nodoc
-  final void Function(MediaDeviceType deviceType)? onMediaDeviceChanged;
-
   /// Reports the last mile network quality of each user in the channel.
   /// This callback reports the last mile network conditions of each user in the channel. Last mile refers to the connection between the local device and Agora's edge server.The SDK triggers this callback once every two seconds. If a channel includes multiple users, the SDK triggers this callback as many times.txQuality is rxQuality is
   ///
@@ -499,8 +496,11 @@ class AgoraRtcEventHandlers {
   /// * [connection] The connection information. See RtcConnection .
   /// * [oldRole] Role that the user switches from: ClientRoleType .
   /// * [newRole] Role that the user switches to: ClientRoleType .
-  final void Function(RtcConnection connection, ClientRoleType oldRole,
-      ClientRoleType newRole)? onClientRoleChanged;
+  final void Function(
+      RtcConnection connection,
+      ClientRoleType oldRole,
+      ClientRoleType newRole,
+      ClientRoleOptions newRoleOptions)? onClientRoleChanged;
 
   /// Occurs when the user role switch fails in the interactive live streaming.
   /// In the live broadcasting channel profile, when the local user calls setClientRole [1/2] to switch their user role after joining the channel but the switch fails, the SDK triggers this callback to report the reason for the failure and the current user role.
@@ -758,7 +758,6 @@ class AgoraRtcEventHandlers {
     this.onAudioMixingFinished,
     this.onAudioEffectFinished,
     this.onVideoDeviceStateChanged,
-    this.onMediaDeviceChanged,
     this.onNetworkQuality,
     this.onIntraRequestReceived,
     this.onUplinkNetworkInfoUpdated,
