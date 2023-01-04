@@ -24,7 +24,8 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
   }, onUserInfoUpdated: (uid, info) {
     agoraEventHandlers.onUserInfoUpdated?.call(uid, info);
   }, onClientRoleChanged: (connection, oldRole, newRole, newRoleOptions) {
-    agoraEventHandlers.onClientRoleChanged?.call(connection, oldRole, newRole, newRoleOptions);
+    agoraEventHandlers.onClientRoleChanged
+        ?.call(connection, oldRole, newRole, newRoleOptions);
   }, onClientRoleChangeFailed: (connection, reason, currentRole) {
     agoraEventHandlers.onClientRoleChangeFailed
         ?.call(connection, reason, currentRole);
