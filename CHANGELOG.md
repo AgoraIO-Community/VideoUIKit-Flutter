@@ -1,3 +1,8 @@
+## 1.1.1
+
+- Updated RTC to v6.1.0
+- Updated RTM to v1.5.0
+
 ## 1.1.0
 
 - Updated RTC to 4.x SDK 
