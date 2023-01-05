@@ -11,7 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Check Versions 🔎
+        run: |
+          export VRSN=$(grep 'String version = ' lib/models/agora_rtm_mute_request.dart | sed -e 's,.*\"\(.*\)\";,\1,')
+          export PUBSPEC_VERSION=$(grep 'version: ' pubspec.yaml | sed -e 's,.*: \(.*\),\1,')
+          if [ "$PUBSPEC_VERSION" != "$VRSN" ]; then
+            echo "Version in 'lib/models/agora_rtm_mute_request.dart' does not match pubspec.";
+            exit 1;
+          fi
       - uses: axel-op/dart-package-analyzer@v3
         id: analysis
         with:

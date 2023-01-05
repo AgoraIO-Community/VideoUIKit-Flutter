@@ -23,8 +23,9 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     agoraEventHandlers.onLocalUserRegistered?.call(uid, userAccount);
   }, onUserInfoUpdated: (uid, info) {
     agoraEventHandlers.onUserInfoUpdated?.call(uid, info);
-  }, onClientRoleChanged: (connection, oldRole, newRole) {
-    agoraEventHandlers.onClientRoleChanged?.call(connection, oldRole, newRole);
+  }, onClientRoleChanged: (connection, oldRole, newRole, newRoleOptions) {
+    agoraEventHandlers.onClientRoleChanged
+        ?.call(connection, oldRole, newRole, newRoleOptions);
   }, onClientRoleChangeFailed: (connection, reason, currentRole) {
     agoraEventHandlers.onClientRoleChangeFailed
         ?.call(connection, reason, currentRole);
@@ -137,8 +138,6 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     agoraEventHandlers.onChannelMediaRelayEvent?.call(code);
   }, onChannelMediaRelayStateChanged: (state, code) {
     agoraEventHandlers.onChannelMediaRelayStateChanged?.call(state, code);
-  }, onMediaDeviceChanged: (deviceType) {
-    agoraEventHandlers.onMediaDeviceChanged?.call(deviceType);
   }, onAudioPublishStateChanged:
       (channel, oldState, newState, elapseSinceLastState) {
     agoraEventHandlers.onAudioPublishStateChanged
