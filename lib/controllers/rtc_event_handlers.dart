@@ -223,7 +223,9 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
       if (state == RemoteVideoState.remoteVideoStateStopped) {
         sessionController.updateUserVideo(uid: remoteUid, videoDisabled: true);
       } else if (state == RemoteVideoState.remoteVideoStateDecoding &&
-          reason == RemoteVideoState.remoteVideoStateStarting) {
+          (reason == RemoteVideoState.remoteVideoStateStarting ||
+              reason ==
+                  RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted)) {
         sessionController.updateUserVideo(uid: remoteUid, videoDisabled: false);
       }
     }
