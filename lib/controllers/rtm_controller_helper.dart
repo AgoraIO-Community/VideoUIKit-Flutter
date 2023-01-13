@@ -42,16 +42,16 @@ void messageReceived({
       if (deviceId == 0) {
         sessionController.value = sessionController.value.copyWith(
           displaySnackbar: true,
-          muteRequest: muted! ? MicState.unmuted : MicState.muted,
-          showCameraMessage: false,
-          showMicMessage: true,
+          cameraRequest: muted! ? CameraState.enabled : CameraState.disabled,
+          showMicMessage: false,
+          showCameraMessage: true,
         );
       } else if (deviceId == 1) {
         sessionController.value = sessionController.value.copyWith(
           displaySnackbar: true,
-          cameraRequest: muted! ? CameraState.enabled : CameraState.disabled,
-          showMicMessage: false,
-          showCameraMessage: true,
+          muteRequest: muted! ? MicState.unmuted : MicState.muted,
+          showCameraMessage: false,
+          showMicMessage: true,
         );
       }
 

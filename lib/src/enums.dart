@@ -23,4 +23,4 @@ extension LevelExtension on Level {
   }
 }
 
-enum Device { mic, camera }
+enum Device { camera, mic }
