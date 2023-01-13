@@ -169,8 +169,9 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                             shape:
                                                                 BoxShape.circle,
                                                           ),
-                                                          child: Image.network(
-                                                            'https://i.ibb.co/JrJ7R3w/unpin-icon.png',
+                                                          child: Icon(
+                                                            Icons
+                                                                .push_pin_rounded,
                                                             color: Colors.white,
                                                           ),
                                                         ),
@@ -430,12 +431,19 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                         children: [
                           Container(
                             padding: widget.floatingLayoutMainViewPadding,
-                            child: Column(
-                              children: [
-                                _videoView(_getRemoteViews(widget.client
-                                    .sessionController.value.mainAgoraUser.uid))
-                              ],
-                            ),
+                            child: widget.client.sessionController.value
+                                    .mainAgoraUser.videoDisabled
+                                ? widget.disabledVideoWidget
+                                : Column(
+                                    children: [
+                                      _videoView(_getRemoteViews(widget
+                                          .client
+                                          .sessionController
+                                          .value
+                                          .mainAgoraUser
+                                          .uid))
+                                    ],
+                                  ),
                           ),
                           Align(
                             alignment: Alignment.topRight,

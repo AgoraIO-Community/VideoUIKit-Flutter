@@ -79,8 +79,20 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     agoraEventHandlers.onFirstRemoteVideoDecoded
         ?.call(connection, remoteUid, width, height, elapsed);
   }, onUserMuteVideo: (connection, remoteUid, muted) {
+    log("onUserMuteVideo- muted: $muted, uid: $remoteUid",
+        name: tag, error: Level.info.value);
+    if (remoteUid != sessionController.value.localUid) {
+      sessionController.updateUserVideo(uid: remoteUid, videoDisabled: muted);
+    }
+
     agoraEventHandlers.onUserMuteVideo?.call(connection, remoteUid, muted);
   }, onUserMuteAudio: (connection, remoteUid, muted) {
+    log("onUserMuteAudio- muted: $muted, uid: $remoteUid",
+        name: tag, error: Level.info.value);
+    if (remoteUid != sessionController.value.localUid) {
+      sessionController.updateUserAudio(uid: remoteUid, muted: muted);
+    }
+
     agoraEventHandlers.onUserMuteAudio?.call(connection, remoteUid, muted);
   }, onVideoSizeChanged: (connection, sourceType, uid, width, height, rotation) {
     agoraEventHandlers.onVideoSizeChanged
@@ -319,6 +331,8 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     agoraEventHandlers.onUserEnableLocalVideo
         ?.call(connection, remoteUid, enabled);
   }, onUserEnableVideo: (connection, remoteUid, enabled) {
+    log("onUserEnableVideo- enabled: $enabled, uid: $remoteUid",
+        name: tag, error: Level.info.value);
     agoraEventHandlers.onUserEnableLocalVideo
         ?.call(connection, remoteUid, enabled);
   }, onUserStateChanged: (connection, remoteUid, state) {
