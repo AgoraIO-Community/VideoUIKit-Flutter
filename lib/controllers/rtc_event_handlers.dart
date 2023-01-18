@@ -331,8 +331,6 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     agoraEventHandlers.onUserEnableLocalVideo
         ?.call(connection, remoteUid, enabled);
   }, onUserEnableVideo: (connection, remoteUid, enabled) {
-    log("onUserEnableVideo- enabled: $enabled, uid: $remoteUid",
-        name: tag, error: Level.info.value);
     agoraEventHandlers.onUserEnableLocalVideo
         ?.call(connection, remoteUid, enabled);
   }, onUserStateChanged: (connection, remoteUid, state) {
