@@ -240,6 +240,9 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     if (uid == value.localUid) {
       value = value.copyWith(isLocalVideoDisabled: videoDisabled);
       // if remote user updates video
+    } else if (uid == value.mainAgoraUser.uid) {
+      value = value.copyWith(
+          mainAgoraUser: AgoraUser(uid: uid, videoDisabled: videoDisabled));
     } else {
       List<AgoraUser> tempList = value.users;
       int indexOfUser = tempList.indexWhere((element) => element.uid == uid);
@@ -255,6 +258,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     if (uid == value.localUid) {
       value = value.copyWith(isLocalUserMuted: muted);
       // if remote user updates audio
+    } else if (uid == value.mainAgoraUser.uid) {
+      value = value.copyWith(mainAgoraUser: AgoraUser(uid: uid, muted: muted));
     } else {
       List<AgoraUser> tempList = value.users;
       int indexOfUser = tempList.indexWhere((element) => element.uid == uid);

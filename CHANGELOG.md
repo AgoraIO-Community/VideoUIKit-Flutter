@@ -1,3 +1,9 @@
+# 1.1.2
+
+- Fixes issue [#115](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/issues/115)
+- Fixes view of remote user with a disabled video
+- Fixes pinning a remote user causing white screen error
+
 ## 1.1.1
 
 - Updated RTC to v6.1.0
