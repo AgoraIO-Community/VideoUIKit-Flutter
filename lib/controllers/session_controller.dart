@@ -73,7 +73,6 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     await value.engine!
         .initialize(RtcEngineContext(appId: value.connectionData!.appId));
     log("SDK initialized: ${value.engine}", level: Level.error.value);
-
     // Getting SDK versions and assigning them
     SDKBuildInfo? rtcVersion = await value.engine?.getVersion();
     AgoraVersions.staticRTM = await AgoraRtmClient.getSdkVersion();
@@ -164,6 +163,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   /// Function to join the video call.
   Future<void> joinVideoChannel() async {
+    if (value.layoutType == Layout.oneToOne && value.users.length == 1) return;
+
     // [generatedRtmId] is the unique ID for a user generated using the timestamp in milliseconds.
     value = value.copyWith(
       generatedRtmId: value.connectionData!.rtmUid ??

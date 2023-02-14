@@ -36,6 +36,8 @@ class AgoraVideoButtons extends StatefulWidget {
   /// Use this to style the disabled video button as per your liking while still keeping the default functionality.
   final Widget? disableVideoButtonChild;
 
+  final Widget? screenSharingButtonWidget;
+
   /// Agora VideoUIKit takes care of leaving the channel and destroying the engine. But if you want to add any other functionality to the disconnect button, use this.
   final Function()? onDisconnect;
 
@@ -52,6 +54,7 @@ class AgoraVideoButtons extends StatefulWidget {
     this.muteButtonChild,
     this.switchCameraButtonChild,
     this.disableVideoButtonChild,
+    this.screenSharingButtonWidget,
     this.onDisconnect,
   }) : super(key: key);
 
@@ -83,6 +86,7 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
       BuiltInButtons.callEnd: _disconnectCallButton(),
       BuiltInButtons.switchCamera: _switchCameraButton(),
       BuiltInButtons.toggleCamera: _disableVideoButton(),
+      BuiltInButtons.screenSharing: _screenSharingButton(),
     };
 
     if (widget.enabledButtons != null) {
@@ -120,6 +124,7 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                           _disconnectCallButton(),
                           _switchCameraButton(),
                           _disableVideoButton(),
+                          _screenSharingButton(),
                           if (widget.extraButtons != null)
                             for (var i = 0;
                                 i < widget.extraButtons!.length;
@@ -141,6 +146,9 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                           if (widget.enabledButtons!
                               .contains(BuiltInButtons.toggleCamera))
                             _disableVideoButton(),
+                          if (widget.enabledButtons!
+                              .contains(BuiltInButtons.screenSharing))
+                            _screenSharingButton(),
                           if (widget.extraButtons != null)
                             for (var i = 0;
                                 i < widget.extraButtons!.length;
@@ -154,6 +162,34 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
         ],
       ),
     );
+  }
+
+  Widget _screenSharingButton() {
+    return widget.screenSharingButtonWidget != null
+        ? RawMaterialButton(
+            onPressed: () =>
+                shareScreen(sessionController: widget.client.sessionController),
+            child: widget.screenSharingButtonWidget,
+          )
+        : RawMaterialButton(
+            onPressed: () =>
+                shareScreen(sessionController: widget.client.sessionController),
+            child: Icon(
+              widget.client.sessionController.value.isScreenShared
+                  ? Icons.stop_screen_share_outlined
+                  : Icons.screen_share_outlined,
+              color: widget.client.sessionController.value.isScreenShared
+                  ? Colors.white
+                  : Colors.blueAccent,
+              size: 20.0,
+            ),
+            shape: CircleBorder(),
+            elevation: 2.0,
+            fillColor: widget.client.sessionController.value.isScreenShared
+                ? Colors.blueAccent
+                : Colors.white,
+            padding: const EdgeInsets.all(12.0),
+          );
   }
 
   Widget _muteMicButton() {

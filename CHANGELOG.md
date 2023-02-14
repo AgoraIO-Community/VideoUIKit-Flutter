@@ -1,4 +1,11 @@
-# 1.1.2
+## 1.2.0
+
+- Added screen sharing for Android/iOS
+- Added layout for one to one video calling
+- Fixes issue [#122](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/issues/122)
+
+
+## 1.1.2
 
 - Fixes issue [#115](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/issues/115)
 - Fixes view of remote user with a disabled video

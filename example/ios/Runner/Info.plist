@@ -26,6 +26,15 @@
 	<string>The app tries to use your camera</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>The app tries to use your microphone</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>audio</string>
+		<string>processing</string>
+		<string>voip</string>
+	</array>
+	<key>UIFileSharingEnabled</key>
+ 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

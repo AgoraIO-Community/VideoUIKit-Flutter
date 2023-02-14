@@ -62,14 +62,24 @@ class FloatingLayout extends StatefulWidget {
 
 class _FloatingLayoutState extends State<FloatingLayout> {
   Widget _getLocalViews() {
-    return AgoraVideoView(
-      controller: VideoViewController(
-        rtcEngine: widget.client.sessionController.value.engine!,
-        canvas: VideoCanvas(uid: 0, renderMode: widget.renderModeType),
-        useFlutterTexture: widget.useFlutterTexture!,
-        useAndroidSurfaceView: widget.useAndroidSurfaceView!,
-      ),
-    );
+    return widget.client.sessionController.value.isScreenShared
+        ? AgoraVideoView(
+            controller: VideoViewController(
+              rtcEngine: widget.client.sessionController.value.engine!,
+              canvas: const VideoCanvas(
+                uid: 0,
+                sourceType: VideoSourceType.videoSourceScreen,
+              ),
+            ),
+          )
+        : AgoraVideoView(
+            controller: VideoViewController(
+              rtcEngine: widget.client.sessionController.value.engine!,
+              canvas: VideoCanvas(uid: 0, renderMode: widget.renderModeType),
+              useFlutterTexture: widget.useFlutterTexture!,
+              useAndroidSurfaceView: widget.useAndroidSurfaceView!,
+            ),
+          );
   }
 
   Widget _getRemoteViews(int uid) {
@@ -254,9 +264,8 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                           alignment: Alignment
                                                               .topRight,
                                                           child:
-                                                              widget.enableHostControl ==
-                                                                          null ||
-                                                                      false
+                                                              widget.enableHostControl !=
+                                                                      true
                                                                   ? Container()
                                                                   : HostControls(
                                                                       client: widget
@@ -370,9 +379,8 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                           alignment: Alignment
                                                               .topRight,
                                                           child:
-                                                              widget.enableHostControl ==
-                                                                          null ||
-                                                                      false
+                                                              widget.enableHostControl !=
+                                                                      true
                                                                   ? Container()
                                                                   : HostControls(
                                                                       client: widget
@@ -447,7 +455,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                           ),
                           Align(
                             alignment: Alignment.topRight,
-                            child: widget.enableHostControl == null || false
+                            child: widget.enableHostControl != true
                                 ? Container()
                                 : HostControls(
                                     client: widget.client,

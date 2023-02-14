@@ -30,7 +30,8 @@ Instantly integrate Agora video calling or video streaming into your Flutter app
 - [ ] Add Usernames
 - [x] More Event Callbacks
 - [x] Add RTM SDK
-- [ ] Screen Sharing
+- [x] Screen Sharing
+- [x] Layout for One to One Video Call
 - [ ] Layout for Voice Calls
 - [ ] Re-orderable list view (Floating Layout)
 - [ ] Cloud recording
@@ -137,4 +138,3 @@ Widget build(BuildContext context) {
 ## VideoUIKits
 
 The plan is to grow this library and have similar offerings across all supported platforms. There are already similar libraries for [Android](https://github.com/AgoraIO-Community/VideoUIKit-Android/), [iOS](https://github.com/AgoraIO-Community/VideoUIKit-iOS/), [React Native](https://github.com/AgoraIO-Community/ReactNative-UIKit), and [Web React](https://github.com/AgoraIO-Community/VideoUIKit-Web-React), so be sure to check them out.
-
