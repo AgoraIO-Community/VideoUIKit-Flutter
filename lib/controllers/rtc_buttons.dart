@@ -85,7 +85,7 @@ Future<void> shareScreen({required SessionController sessionController}) async {
   if (sessionController.value.isScreenShared) {
     await sessionController.value.engine?.startScreenCapture(
       const ScreenCaptureParameters2(
-        captureAudio: true,
+        captureAudio: false,
         audioParams: ScreenAudioParameters(
           sampleRate: 16000,
           channels: 2,
