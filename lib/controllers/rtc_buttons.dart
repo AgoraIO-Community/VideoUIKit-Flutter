@@ -79,10 +79,10 @@ void toggleVisible({
 }
 
 Future<void> shareScreen({required SessionController sessionController}) async {
-  sessionController.value = sessionController.value
-      .copyWith(isScreenShared: !(sessionController.value.isScreenShared));
+  sessionController.value = sessionController.value.copyWith(
+      turnOnScreenSharing: !(sessionController.value.turnOnScreenSharing));
 
-  if (sessionController.value.isScreenShared) {
+  if (sessionController.value.turnOnScreenSharing) {
     await sessionController.value.engine?.startScreenCapture(
       const ScreenCaptureParameters2(
         captureAudio: false,

@@ -271,6 +271,15 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
         "Local video state changed, source: $source, state: $state and error: $error";
     log(info, name: tag, level: Level.info.value);
 
+    if (source == VideoSourceType.videoSourceScreenPrimary &&
+        state == LocalVideoStreamState.localVideoStreamStateCapturing) {
+      sessionController.value =
+          sessionController.value.copyWith(isScreenShared: true);
+    } else {
+      sessionController.value =
+          sessionController.value.copyWith(isScreenShared: false);
+    }
+
     agoraEventHandlers.onLocalVideoStateChanged?.call(source, state, error);
   }, onActiveSpeaker: (connection, uid) {
     final String info = "Active speaker: $uid";

@@ -144,10 +144,15 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                   ),
                                                 ),
                                                 !widget
-                                                        .client
-                                                        .sessionController
-                                                        .value
-                                                        .isLocalVideoDisabled
+                                                            .client
+                                                            .sessionController
+                                                            .value
+                                                            .isLocalVideoDisabled &&
+                                                        !widget
+                                                            .client
+                                                            .sessionController
+                                                            .value
+                                                            .isScreenShared
                                                     ? Column(
                                                         children: [
                                                           _videoView(
@@ -484,7 +489,9 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                       child: Container(
                         padding: widget.floatingLayoutMainViewPadding,
                         child: widget.client.sessionController.value
-                                .isLocalVideoDisabled
+                                    .isLocalVideoDisabled &&
+                                !widget.client.sessionController.value
+                                    .isScreenShared
                             ? widget.disabledVideoWidget
                             : Stack(
                                 children: [
@@ -499,7 +506,9 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                   ),
                                   Column(
                                     children: [
-                                      _videoView(_getLocalViews()),
+                                      _videoView(
+                                        _getLocalViews(),
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -510,7 +519,8 @@ class _FloatingLayoutState extends State<FloatingLayout> {
           )
         : widget.client.sessionController.value.clientRoleType ==
                 ClientRoleType.clientRoleBroadcaster
-            ? widget.client.sessionController.value.isLocalVideoDisabled
+            ? widget.client.sessionController.value.isLocalVideoDisabled &&
+                    !widget.client.sessionController.value.isScreenShared
                 ? Column(
                     children: [
                       Expanded(child: widget.disabledVideoWidget),

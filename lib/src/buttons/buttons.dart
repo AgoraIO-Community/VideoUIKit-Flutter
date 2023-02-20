@@ -41,6 +41,9 @@ class AgoraVideoButtons extends StatefulWidget {
   /// Agora VideoUIKit takes care of leaving the channel and destroying the engine. But if you want to add any other functionality to the disconnect button, use this.
   final Function()? onDisconnect;
 
+  /// Adds Screen Sharing button to the layout and let's user share their screen using the same. Currently only on Android and iOS. The deafult value is set to `false`. So, if you want to add screen sharing set [addScreenSharing] to `true`.
+  final bool? addScreenSharing;
+
   const AgoraVideoButtons({
     Key? key,
     required this.client,
@@ -56,6 +59,7 @@ class AgoraVideoButtons extends StatefulWidget {
     this.disableVideoButtonChild,
     this.screenSharingButtonWidget,
     this.onDisconnect,
+    this.addScreenSharing = false,
   }) : super(key: key);
 
   @override
@@ -124,7 +128,9 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                           _disconnectCallButton(),
                           _switchCameraButton(),
                           _disableVideoButton(),
-                          _screenSharingButton(),
+                          widget.addScreenSharing!
+                              ? _screenSharingButton()
+                              : Container(),
                           if (widget.extraButtons != null)
                             for (var i = 0;
                                 i < widget.extraButtons!.length;
@@ -175,17 +181,17 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
             onPressed: () =>
                 shareScreen(sessionController: widget.client.sessionController),
             child: Icon(
-              widget.client.sessionController.value.isScreenShared
+              widget.client.sessionController.value.turnOnScreenSharing
                   ? Icons.stop_screen_share_outlined
                   : Icons.screen_share_outlined,
-              color: widget.client.sessionController.value.isScreenShared
+              color: widget.client.sessionController.value.turnOnScreenSharing
                   ? Colors.white
                   : Colors.blueAccent,
               size: 20.0,
             ),
             shape: CircleBorder(),
             elevation: 2.0,
-            fillColor: widget.client.sessionController.value.isScreenShared
+            fillColor: widget.client.sessionController.value.turnOnScreenSharing
                 ? Colors.blueAccent
                 : Colors.white,
             padding: const EdgeInsets.all(12.0),

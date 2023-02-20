@@ -49,6 +49,7 @@ class _MyAppState extends State<MyApp> {
               ),
               AgoraVideoButtons(
                 client: client,
+                addScreenSharing: false, // Add this to enable screen sharing
               ),
             ],
           ),

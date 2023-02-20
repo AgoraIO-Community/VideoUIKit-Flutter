@@ -7,7 +7,7 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.broadcast-services-upload</string>
 		<key>NSExtensionPrincipalClass</key>
-		<string>AgoraReplayKitHandler</string>
+		<string>$(PRODUCT_MODULE_NAME).SampleHandler</string>
 		<key>RPBroadcastProcessMode</key>
 		<string>RPBroadcastProcessModeSampleBuffer</string>
 	</dict>
