@@ -30,7 +30,7 @@ Instantly integrate Agora video calling or video streaming into your Flutter app
 - [ ] Add Usernames
 - [x] More Event Callbacks
 - [x] Add RTM SDK
-- [x] Screen Sharing
+- [x] Screen Sharing (Currently in Beta)
 - [x] Layout for One to One Video Call
 - [ ] Layout for Voice Calls
 - [ ] Re-orderable list view (Floating Layout)

@@ -42,6 +42,8 @@ class AgoraVideoButtons extends StatefulWidget {
   final Function()? onDisconnect;
 
   /// Adds Screen Sharing button to the layout and let's user share their screen using the same. Currently only on Android and iOS. The deafult value is set to `false`. So, if you want to add screen sharing set [addScreenSharing] to `true`.
+  ///
+  /// Note: This feature is currently in beta
   final bool? addScreenSharing;
 
   const AgoraVideoButtons({
