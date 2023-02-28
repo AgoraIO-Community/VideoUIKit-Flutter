@@ -6,7 +6,8 @@
     <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/popularity/agora_uikit?logo=dart"/></a>
     <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/points/agora_uikit?logo=dart"/></a><br/>
   <img src="https://img.shields.io/badge/Platform-iOS%20%7C%20Android-blue?logo=flutter" alt="Platform" />
-  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/AgoraIO-Community/VideoUIKit-Flutter/Flutter">
+  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/AgoraIO-Community/VideoUIKit-Flutter/pub-score.yml?branch=main
+">
   <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/v/agora_uikit"/></a>
   <img src="https://img.shields.io/github/license/agoraio-community/videouikit-flutter?color=red"
       alt="License: MIT" />
