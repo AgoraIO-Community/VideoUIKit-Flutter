@@ -32,6 +32,8 @@ class AgoraClient {
   /// [AgoraRtmChannelEventHandlers] is a class that contains all the Agora RTM channel event handlers. Use it to add your own functions or methods.
   final AgoraRtmChannelEventHandler? agoraRtmChannelEventHandler;
 
+  final bool? addPreCallScreen;
+
   bool _initialized = false;
 
   AgoraClient({
@@ -41,6 +43,7 @@ class AgoraClient {
     this.agoraEventHandlers,
     this.agoraRtmClientEventHandler,
     this.agoraRtmChannelEventHandler,
+    this.addPreCallScreen = false,
   }) : _initialized = false;
 
   /// Useful to check if [AgoraClient] is ready for further usage
@@ -92,6 +95,9 @@ class AgoraClient {
       }
     }
 
+    await _sessionController.updatePreCallScreen(
+        addPreCallScreen: addPreCallScreen!);
+
     if (agoraChannelData?.clientRoleType ==
             ClientRoleType.clientRoleBroadcaster ||
         agoraChannelData?.clientRoleType == null) {
@@ -110,7 +116,9 @@ class AgoraClient {
       _sessionController.setChannelProperties(agoraChannelData!);
     }
 
-    await _sessionController.joinVideoChannel();
+    if (addPreCallScreen == false) {
+      await _sessionController.joinVideoChannel();
+    }
     _initialized = true;
   }
 }

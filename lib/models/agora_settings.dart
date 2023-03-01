@@ -34,6 +34,8 @@ class AgoraSettings {
   final Map<int, String>? uidToUserIdMap;
   final bool isScreenShared;
   final bool turnOnScreenSharing;
+  final bool addPreCallScreen;
+  final QualityType qualityType;
 
   AgoraSettings({
     this.engine,
@@ -64,6 +66,8 @@ class AgoraSettings {
     this.uidToUserIdMap,
     this.isScreenShared = false,
     this.turnOnScreenSharing = false,
+    this.addPreCallScreen = false,
+    this.qualityType = QualityType.qualityUnknown,
   });
 
   AgoraSettings copyWith({
@@ -95,6 +99,8 @@ class AgoraSettings {
     Map<int, String>? uidToUserIdMap,
     bool? isScreenShared,
     bool? turnOnScreenSharing,
+    bool? addPreCallScreen,
+    QualityType? qualityType,
   }) {
     return AgoraSettings(
       engine: engine ?? this.engine,
@@ -126,6 +132,8 @@ class AgoraSettings {
       uidToUserIdMap: uidToUserIdMap ?? this.uidToUserIdMap,
       isScreenShared: isScreenShared ?? this.isScreenShared,
       turnOnScreenSharing: turnOnScreenSharing ?? this.turnOnScreenSharing,
+      addPreCallScreen: addPreCallScreen ?? this.addPreCallScreen,
+      qualityType: qualityType ?? this.qualityType,
     );
   }
 }

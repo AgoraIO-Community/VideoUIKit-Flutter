@@ -47,6 +47,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
             cameraRequest: CameraState.enabled,
             showMicMessage: false,
             showCameraMessage: false,
+            addPreCallScreen: false,
+            qualityType: QualityType.qualityDetecting,
           ),
         );
 
@@ -106,6 +108,20 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       agoraRtmClientEventHandler: agoraRtmClientEventHandler,
       sessionController: this,
     );
+  }
+
+  Future<void> updatePreCallScreen({required bool addPreCallScreen}) async {
+    value = value.copyWith(addPreCallScreen: addPreCallScreen);
+    LastmileProbeConfig config =
+        LastmileProbeConfig(probeUplink: true, probeDownlink: true);
+
+    if (!addPreCallScreen) {
+      await value.engine!.stopLastmileProbeTest();
+      await joinVideoChannel();
+    } else {
+      await value.engine!.startPreview();
+      await value.engine!.startLastmileProbeTest(config);
+    }
   }
 
   /// Function to set all the channel properties.
@@ -281,5 +297,9 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   void updateLayoutType({required Layout updatedLayout}) {
     value = value.copyWith(layoutType: updatedLayout);
+  }
+
+  void updateNetworkQualityStatus(QualityType qualityType) {
+    value = value.copyWith(qualityType: qualityType);
   }
 }

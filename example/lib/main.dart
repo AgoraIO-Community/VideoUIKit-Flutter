@@ -1,12 +1,18 @@
-import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
 
+import 'package:agora_uikit/agora_uikit.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(
+    MaterialApp(
+      title: 'Agora VideoUIKit',
+      home: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -19,6 +25,8 @@ class _MyAppState extends State<MyApp> {
       channelName: "test",
       username: "user",
     ),
+    // Allows you to add a screen before the Video Calling page to check your video and network state.
+    addPreCallScreen: true,
   );
 
   @override
@@ -33,26 +41,66 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Agora VideoUIKit'),
-          centerTitle: true,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Agora VideoUIKit'),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            AgoraPreCallViewer(
+              client: client,
+              joinCallButton: () {
+                // Add Navigation to your call page here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VideoCallingClass(client: client),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
-        body: SafeArea(
-          child: Stack(
-            children: [
-              AgoraVideoViewer(
-                client: client,
-                layoutType: Layout.floating,
-                enableHostControls: true, // Add this to enable host controls
-              ),
-              AgoraVideoButtons(
-                client: client,
-                addScreenSharing: false, // Add this to enable screen sharing
-              ),
-            ],
-          ),
+      ),
+    );
+  }
+}
+
+class VideoCallingClass extends StatefulWidget {
+  final AgoraClient client;
+
+  const VideoCallingClass({
+    Key? key,
+    required this.client,
+  }) : super(key: key);
+
+  @override
+  State<VideoCallingClass> createState() => _VideoCallingClassState();
+}
+
+class _VideoCallingClassState extends State<VideoCallingClass> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Agora VideoUIKit'),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            AgoraVideoViewer(
+              client: widget.client,
+              layoutType: Layout.floating,
+              enableHostControls: true, // Add this to enable host controls
+            ),
+            AgoraVideoButtons(
+              client: widget.client,
+              addScreenSharing: false, // Add this to enable screen sharing
+            ),
+          ],
         ),
       ),
     );

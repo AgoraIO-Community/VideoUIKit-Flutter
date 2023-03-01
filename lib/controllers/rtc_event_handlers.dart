@@ -117,6 +117,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     agoraEventHandlers.onRtcStats?.call(connection, stats);
   }, onLastmileQuality: (quality) {
     agoraEventHandlers.onLastmileQuality?.call(quality);
+    sessionController.updateNetworkQualityStatus(quality);
   }, onLastmileProbeResult: (result) {
     agoraEventHandlers.onLastmileProbeResult?.call(result);
   }, onLocalVideoStats: (connection, stats) {
