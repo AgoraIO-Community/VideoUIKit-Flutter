@@ -80,7 +80,7 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
         if (mounted) {
           setState(() {
             toggleVisible(
-              sessionController: widget.client.sessionController,
+              value: widget.client.sessionController.value,
             );
           });
         }

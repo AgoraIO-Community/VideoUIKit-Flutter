@@ -1,6 +1,7 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/rtc_buttons.dart';
+import 'package:agora_uikit/models/agora_settings.dart';
 import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
 import 'package:agora_uikit/src/layout/widgets/host_controls.dart';
 import 'package:agora_uikit/src/layout/widgets/number_of_users.dart';
@@ -552,7 +553,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.client.sessionController,
-      builder: (context, counter, widgetx) {
+      builder: (context, AgoraSettings agoraSettings, widgetx) {
         return Center(
           child: Stack(
             children: [
