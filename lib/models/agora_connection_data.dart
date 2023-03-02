@@ -33,6 +33,10 @@ class AgoraConnectionData {
   /// Whether you want to enable RTM or not. Enabling RTM adds the host controls which helps you to request a remote user to mute/unmute their video/mic. Host Controls are enabled by default, set this to `false` to disable it.
   final bool rtmEnabled;
 
+  final int? screenSharingUid;
+
+  final bool screenSharingEnabled;
+
   AgoraConnectionData({
     required this.appId,
     required this.channelName,
@@ -45,6 +49,8 @@ class AgoraConnectionData {
     this.tempRtmToken,
     this.areaCode = const [AreaCode.areaCodeGlob],
     this.rtmEnabled = true,
+    this.screenSharingUid = 1000,
+    this.screenSharingEnabled = true,
   });
 
   AgoraConnectionData copyWith({
@@ -59,6 +65,8 @@ class AgoraConnectionData {
     String? tokenUrl,
     List<AreaCode>? areaCode,
     bool? rtmEnabled,
+    int? screenSharingUid,
+    bool? screenSharingEnabled,
   }) {
     return AgoraConnectionData(
       appId: appId ?? this.appId,
@@ -72,6 +80,8 @@ class AgoraConnectionData {
       tokenUrl: tokenUrl ?? this.tokenUrl,
       areaCode: areaCode ?? this.areaCode,
       rtmEnabled: rtmEnabled ?? this.rtmEnabled,
+      screenSharingUid: screenSharingUid ?? this.screenSharingUid,
+      screenSharingEnabled: screenSharingEnabled ?? this.screenSharingEnabled,
     );
   }
 }

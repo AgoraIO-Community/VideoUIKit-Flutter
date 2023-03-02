@@ -39,3 +39,11 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
   end
 end
+
+target 'Example_ScreenSharing_Extension' do
+  use_frameworks!
+  use_modular_headers!
+  
+  # pod 'AgoraRtcEngine_iOS', '4.1.0' 
+  pod 'AgoraBroadcastExtensionHelper_iOS', '4.0.7'
+end
