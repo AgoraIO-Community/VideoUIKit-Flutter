@@ -303,9 +303,7 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
 
   /// Default functionality of disconnect button is such that it pops the view and navigates the user to the previous screen.
   Future<void> _onCallEnd(BuildContext context) async {
-    await endCall(
-      sessionController: widget.client.sessionController,
-    );
+    await widget.client.release();
     if (widget.onDisconnect != null) {
       await widget.onDisconnect!();
     } else {
