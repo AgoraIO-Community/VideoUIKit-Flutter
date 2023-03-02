@@ -1,6 +1,7 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/rtc_buttons.dart';
+import 'package:agora_uikit/models/agora_settings.dart';
 import 'package:agora_uikit/src/layout/floating_layout.dart';
 import 'package:agora_uikit/src/layout/grid_layout.dart';
 import 'package:agora_uikit/src/layout/one_to_one_layout.dart';
@@ -62,10 +63,8 @@ class AgoraVideoViewer extends StatefulWidget {
 class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
   @override
   void initState() {
-    if (widget.client.isInitialized) {
-      widget.client.sessionController
-          .updateLayoutType(updatedLayout: widget.layoutType);
-    }
+    widget.client.sessionController
+        .updateLayoutType(updatedLayout: widget.layoutType);
     super.initState();
   }
 
@@ -117,13 +116,16 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.client.sessionController,
-      builder: (BuildContext context, dynamic value, Widget? child) {
+      builder: (BuildContext context, AgoraSettings value, Widget? child) {
+        if (!widget.client.isInitialized) {
+          return Center(child: CircularProgressIndicator());
+        }
         return GestureDetector(
           behavior: HitTestBehavior.translucent,
-          child: _returnLayoutClass(layout: widget.layoutType),
+          child: _returnLayoutClass(layout: value.layoutType),
           onTap: () {
             toggleVisible(
-              sessionController: widget.client.sessionController,
+              value: value,
             );
           },
         );

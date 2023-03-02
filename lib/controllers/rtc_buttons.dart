@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
+import 'package:agora_uikit/models/agora_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -61,20 +62,17 @@ Timer? timer;
 /// Function to auto hide the button class.
 void toggleVisible({
   int autoHideButtonTime = 5,
-  required SessionController sessionController,
+  required AgoraSettings value,
 }) async {
-  if (!(sessionController.value.visible)) {
-    sessionController.value = sessionController.value
-        .copyWith(visible: !(sessionController.value.visible));
+  if (!(value.visible)) {
+    value = value.copyWith(visible: !(value.visible));
     timer = Timer(Duration(seconds: autoHideButtonTime), () {
-      if (!(sessionController.value.visible)) return;
-      sessionController.value = sessionController.value
-          .copyWith(visible: !(sessionController.value.visible));
+      if (!(value.visible)) return;
+      value = value.copyWith(visible: !(value.visible));
     });
   } else {
     timer?.cancel();
-    sessionController.value = sessionController.value
-        .copyWith(visible: !(sessionController.value.visible));
+    value = value.copyWith(visible: !(value.visible));
   }
 }
 
