@@ -117,7 +117,9 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
     return ValueListenableBuilder(
       valueListenable: widget.client.sessionController,
       builder: (BuildContext context, AgoraSettings value, Widget? child) {
-        if (!widget.client.isInitialized) return CircularProgressIndicator();
+        if (!widget.client.isInitialized) {
+          return Center(child: CircularProgressIndicator());
+        }
         return GestureDetector(
           behavior: HitTestBehavior.translucent,
           child: _returnLayoutClass(layout: value.layoutType),
