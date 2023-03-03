@@ -100,7 +100,9 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
       BuiltInButtons.switchCamera: _switchCameraButton(),
       BuiltInButtons.toggleCamera: _disableVideoButton(),
       BuiltInButtons.screenSharing: _screenSharingButton(),
-      BuiltInButtons.cloudRecording: _cloudRecordingButton(),
+      BuiltInButtons.cloudRecording: CloudRecordingButton(
+        sessionController: widget.client.sessionController,
+      ),
     };
 
     if (widget.enabledButtons != null) {
@@ -138,7 +140,9 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                           _disconnectCallButton(),
                           _switchCameraButton(),
                           _disableVideoButton(),
-                          _cloudRecordingButton(),
+                          CloudRecordingButton(
+                            sessionController: widget.client.sessionController,
+                          ),
                           widget.addScreenSharing!
                               ? _screenSharingButton()
                               : Container(),
@@ -165,7 +169,10 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                             _disableVideoButton(),
                           if (widget.enabledButtons!
                               .contains(BuiltInButtons.cloudRecording))
-                            _cloudRecordingButton(),
+                            CloudRecordingButton(
+                              sessionController:
+                                  widget.client.sessionController,
+                            ),
                           if (widget.enabledButtons!
                               .contains(BuiltInButtons.screenSharing))
                             _screenSharingButton(),
@@ -239,17 +246,6 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                 ? Colors.blueAccent
                 : Colors.white,
             padding: const EdgeInsets.all(12.0),
-          );
-  }
-
-  Widget _cloudRecordingButton() {
-    return widget.cloudRecordingButtonWidget != null
-        ? CustomCloudRecordingButton(
-            child: widget.cloudRecordingButtonWidget!,
-            sessionController: widget.client.sessionController,
-          )
-        : CloudRecordingButton(
-            sessionController: widget.client.sessionController,
           );
   }
 
