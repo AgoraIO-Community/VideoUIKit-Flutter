@@ -125,3 +125,10 @@ Future<void> _showRPSystemBroadcastPickerViewIfNeed() async {
   print("invoking channel method");
   await iosScreenShareChannel.invokeMethod('showRPSystemBroadcastPickerView');
 }
+
+/// Function to start and stop cloud recording
+Future<void> toggleCloudRecording(
+    {required SessionController sessionController}) async {
+  sessionController.value = sessionController.value
+      .copyWith(isCloudRecording: !(sessionController.value.isCloudRecording));
+}
