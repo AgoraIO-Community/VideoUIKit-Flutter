@@ -1,13 +1,14 @@
 import 'package:agora_uikit/controllers/rtc_buttons.dart';
-import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:flutter/material.dart';
+
+import '../agora_client.dart';
 
 class CloudRecordingButton extends StatelessWidget {
   final Widget? child;
-  final SessionController sessionController;
+  final AgoraClient client;
   const CloudRecordingButton({
     Key? key,
-    required this.sessionController,
+    required this.client,
     this.child,
   }) : super(key: key);
 
@@ -15,25 +16,23 @@ class CloudRecordingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return child != null
         ? RawMaterialButton(
-            onPressed: () =>
-                toggleCloudRecording(sessionController: sessionController),
+            onPressed: () => toggleCloudRecording(client: client),
             child: child,
           )
         : RawMaterialButton(
-            onPressed: () =>
-                toggleCloudRecording(sessionController: sessionController),
+            onPressed: () => toggleCloudRecording(client: client),
             child: Icon(
-              sessionController.value.isCloudRecording
+              client.sessionController.value.isCloudRecording
                   ? Icons.stop
                   : Icons.circle_outlined,
-              color: sessionController.value.isCloudRecording
+              color: client.sessionController.value.isCloudRecording
                   ? Colors.white
                   : Colors.blueAccent,
               size: 20.0,
             ),
             shape: CircleBorder(),
             elevation: 2.0,
-            fillColor: sessionController.value.isCloudRecording
+            fillColor: client.sessionController.value.isCloudRecording
                 ? Colors.blueAccent
                 : Colors.white,
             padding: const EdgeInsets.all(12.0),

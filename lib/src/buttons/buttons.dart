@@ -101,7 +101,7 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
       BuiltInButtons.toggleCamera: _disableVideoButton(),
       BuiltInButtons.screenSharing: _screenSharingButton(),
       BuiltInButtons.cloudRecording: CloudRecordingButton(
-        sessionController: widget.client.sessionController,
+        client: widget.client,
       ),
     };
 
@@ -141,7 +141,7 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                           _switchCameraButton(),
                           _disableVideoButton(),
                           CloudRecordingButton(
-                            sessionController: widget.client.sessionController,
+                            client: widget.client,
                           ),
                           widget.addScreenSharing!
                               ? _screenSharingButton()
@@ -170,8 +170,7 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                           if (widget.enabledButtons!
                               .contains(BuiltInButtons.cloudRecording))
                             CloudRecordingButton(
-                              sessionController:
-                                  widget.client.sessionController,
+                              client: widget.client,
                             ),
                           if (widget.enabledButtons!
                               .contains(BuiltInButtons.screenSharing))
