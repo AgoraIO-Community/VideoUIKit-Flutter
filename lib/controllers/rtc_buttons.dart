@@ -152,14 +152,7 @@ Future<void> toggleCloudRecording({required AgoraClient client}) async {
 
     http.Response response = await http.post(url, headers: headers, body: body);
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-    print("RESPONSE FROM RECORDING STOPPED");
-    print(decodedResponse);
-    print("URL FROM RECORDING STOPPED");
-    print(url);
-    print("body FROM RECORDING STOPPED");
-    print(body);
     if (response.statusCode == 200) {
-      print("recording stopped");
     } else {
       if (decodedResponse["code"] == 435) {
         //recording wasn't running for long enough, so it wasn't saved
@@ -187,8 +180,8 @@ Future<void> toggleCloudRecording({required AgoraClient client}) async {
         },
         "storageConfig": {
           "secretKey": client.cloudStorageData!.secretKey,
-          "vendor": 6,
-          "region": 3,
+          "vendor": client.cloudStorageData!.cloudStorageProvider,
+          "region": 3, // this doesn't matter for google cloud
           "bucket": client.cloudStorageData!.bucketName,
           "accessKey": client.cloudStorageData!.accessKey,
         },
@@ -203,8 +196,6 @@ Future<void> toggleCloudRecording({required AgoraClient client}) async {
     http.Response response = await http.post(url, headers: headers, body: body);
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
     if (response.statusCode == 200) {
-      print("RESPONSE FROM RECORDING START");
-      print(decodedResponse);
       client.setSid = decodedResponse["sid"];
     } else {
       throw (response.reasonPhrase.toString());
