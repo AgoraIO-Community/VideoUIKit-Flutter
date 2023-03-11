@@ -116,8 +116,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
         LastmileProbeConfig(probeUplink: true, probeDownlink: true);
 
     if (!addPreCallScreen) {
-      await value.engine!.stopLastmileProbeTest();
       await joinVideoChannel();
+      await value.engine!.stopLastmileProbeTest();
     } else {
       await value.engine!.startPreview();
       await value.engine!.startLastmileProbeTest(config);

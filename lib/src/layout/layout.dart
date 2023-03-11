@@ -1,4 +1,6 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:flutter/material.dart';
+
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/rtc_buttons.dart';
 import 'package:agora_uikit/models/agora_settings.dart';
@@ -6,7 +8,6 @@ import 'package:agora_uikit/src/layout/floating_layout.dart';
 import 'package:agora_uikit/src/layout/grid_layout.dart';
 import 'package:agora_uikit/src/layout/one_to_one_layout.dart';
 import 'package:agora_uikit/src/layout/widgets/disabled_video_widget.dart';
-import 'package:flutter/material.dart';
 
 /// A UI class to style how the video layout looks like. Use this class to choose between the two default layouts [FloatingLayout] and [GridLayout], enable active speaker, display number of users, display mic and video state of the user.
 class AgoraVideoViewer extends StatefulWidget {
@@ -41,6 +42,8 @@ class AgoraVideoViewer extends StatefulWidget {
   /// Render mode for local and remote video
   final RenderModeType renderModeType;
 
+  final int? remoteUid;
+
   const AgoraVideoViewer({
     Key? key,
     required this.client,
@@ -54,6 +57,7 @@ class AgoraVideoViewer extends StatefulWidget {
     this.enableHostControls = false,
     this.showNumberOfUsers = false,
     this.renderModeType = RenderModeType.renderModeHidden,
+    this.remoteUid,
   }) : super(key: key);
 
   @override

@@ -18,6 +18,8 @@ class OneToOneLayout extends StatefulWidget {
   /// Render mode for local and remote video
   final RenderModeType? renderModeType;
 
+  final int? remoteUid;
+
   const OneToOneLayout({
     Key? key,
     required this.client,
@@ -25,6 +27,7 @@ class OneToOneLayout extends StatefulWidget {
     this.showAVState,
     this.enableHostControl,
     this.renderModeType = RenderModeType.renderModeHidden,
+    this.remoteUid,
   }) : super(key: key);
 
   @override
@@ -100,7 +103,8 @@ class _OneToOneLayoutState extends State<OneToOneLayout> {
                                 child: Column(
                                   children: [
                                     _videoView(
-                                      _getRemoteViews(widget.client.users[0]),
+                                      _getRemoteViews(widget.remoteUid ??
+                                          widget.client.users[0]),
                                     ),
                                   ],
                                 ),
