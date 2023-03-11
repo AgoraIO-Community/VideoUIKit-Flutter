@@ -1,3 +1,9 @@
+## 1.2.1
+
+- Fixes requestPort bug when joining from separate screen
+- Fixes post call exception when going back to previous screen
+
+
 ## 1.2.0
 
 - Added screen sharing for Android/iOS
