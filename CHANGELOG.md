@@ -1,3 +1,7 @@
+## 1.3.0
+
+- Added Cloud Recording to Google Cloud. Follow the [Guide](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/wiki/Examples#cloud-recording)
+
 ## 1.2.1
 
 - Fixes requestPort bug when joining from separate screen

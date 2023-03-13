@@ -124,7 +124,6 @@ Future<void> _showRPSystemBroadcastPickerViewIfNeed() async {
 
   final MethodChannel iosScreenShareChannel =
       const MethodChannel('example_screensharing_ios');
-  print("invoking channel method");
   await iosScreenShareChannel.invokeMethod('showRPSystemBroadcastPickerView');
 }
 
@@ -190,8 +189,6 @@ Future<void> toggleCloudRecording({required AgoraClient client}) async {
         },
       }
     });
-
-    print(body);
 
     http.Response response = await http.post(url, headers: headers, body: body);
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
