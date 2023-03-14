@@ -48,10 +48,6 @@ class AgoraClient {
   /// Useful to check if [AgoraClient] is ready for further usage
   bool get isInitialized => _initialized;
 
-  String? _sid;
-  set setSid(String? sid) => _sid = sid;
-  String? get sid => _sid;
-
   static const MethodChannel _channel = MethodChannel('agora_uikit');
 
   static Future<String> platformVersion() async {

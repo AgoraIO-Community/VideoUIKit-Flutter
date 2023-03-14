@@ -31,7 +31,3 @@ extension LevelExtension on Level {
 }
 
 enum Device { camera, mic }
-
-enum CloudStorageProvider {
-  googleCloud,
-}
