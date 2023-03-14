@@ -190,6 +190,9 @@ Future<void> toggleCloudRecording({required AgoraClient client}) async {
           "region": 3, // this doesn't matter for google cloud
           "bucket": client.cloudStorageData!.bucketName,
           "accessKey": client.cloudStorageData!.accessKey,
+          "fileNamePrefix": [
+            "agora",
+          ]
         },
         "recordingFileConfig": {
           "avFileType": ["hls", "mp4"]
