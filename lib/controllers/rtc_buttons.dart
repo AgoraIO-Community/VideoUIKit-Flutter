@@ -170,7 +170,14 @@ Future<void> toggleCloudRecording({required AgoraClient client}) async {
     var url = Uri.parse(
         'https://api.agora.io/v1/apps/${client.agoraConnectionData.appId}/cloud_recording/resourceid/$resourceId/mode/mix/start');
 
-    var body = json.encode({
+    int vendor = 0;
+    switch (client.cloudStorageData!.cloudStorageProvider) {
+      case CloudStorageProvider.googleCloud:
+        vendor = 6;
+        break;
+      default:
+    }
+    var body = jsonEncode({
       "cname": client.agoraConnectionData.channelName,
       "uid": client.cloudRecordingId,
       "clientRequest": {
@@ -179,7 +186,7 @@ Future<void> toggleCloudRecording({required AgoraClient client}) async {
         },
         "storageConfig": {
           "secretKey": client.cloudStorageData!.secretKey,
-          "vendor": client.cloudStorageData!.cloudStorageProvider,
+          "vendor": vendor,
           "region": 3, // this doesn't matter for google cloud
           "bucket": client.cloudStorageData!.bucketName,
           "accessKey": client.cloudStorageData!.accessKey,
