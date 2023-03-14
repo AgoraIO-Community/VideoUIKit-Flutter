@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
@@ -17,6 +18,7 @@ import 'package:agora_uikit/models/agora_settings.dart';
 import 'package:agora_uikit/models/agora_user.dart';
 import 'package:agora_uikit/src/enums.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 
 class SessionController extends ValueNotifier<AgoraSettings> {
@@ -281,5 +283,43 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   void updateLayoutType({required Layout updatedLayout}) {
     value = value.copyWith(layoutType: updatedLayout);
+  }
+
+  Future<void> startCloudRecording(
+      {required AgoraConnectionData connectionData}) async {
+    final response = await http.post(
+      Uri.parse('${connectionData.cloudRecordingUrl}/api/start/call'),
+      body: {"channel": connectionData.channelName},
+    );
+
+    if (response.statusCode == 200) {
+      print('Recording Started');
+      value = value.copyWith(sid: jsonDecode(response.body)['data']['sid']);
+
+      // rid = jsonDecode(response.body)['data']['rid'];
+      // recUid = jsonDecode(response.body)['data']['uid'];
+      // sid = jsonDecode(response.body)['data']['sid'];
+    } else {
+      print('Couldn\'t start the recording : ${response.statusCode}');
+    }
+  }
+
+  Future<void> stopCloudRecording(
+      {required AgoraConnectionData connectionData}) async {
+    final response = await http.post(
+      Uri.parse('${connectionData.cloudRecordingUrl}/api/stop/call'),
+      body: {
+        "channel": connectionData.channelName,
+        // "rid": mRid,
+        "sid": value.sid,
+        // "uid": mRecUid.toString()
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print('Recording Ended');
+    } else {
+      print('Couldn\'t end the recording : ${response.statusCode}');
+    }
   }
 }

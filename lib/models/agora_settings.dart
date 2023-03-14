@@ -35,6 +35,7 @@ class AgoraSettings {
   final bool isScreenShared;
   final bool turnOnScreenSharing;
   final bool isCloudRecording;
+  final String? sid;
 
   AgoraSettings({
     this.engine,
@@ -66,6 +67,7 @@ class AgoraSettings {
     this.isScreenShared = false,
     this.turnOnScreenSharing = false,
     this.isCloudRecording = false,
+    this.sid,
   });
 
   AgoraSettings copyWith({
@@ -98,6 +100,7 @@ class AgoraSettings {
     bool? isScreenShared,
     bool? turnOnScreenSharing,
     bool? isCloudRecording,
+    String? sid,
   }) {
     return AgoraSettings(
       engine: engine ?? this.engine,
@@ -130,6 +133,7 @@ class AgoraSettings {
       isScreenShared: isScreenShared ?? this.isScreenShared,
       turnOnScreenSharing: turnOnScreenSharing ?? this.turnOnScreenSharing,
       isCloudRecording: isCloudRecording ?? this.isCloudRecording,
+      sid: sid ?? this.sid,
     );
   }
 }

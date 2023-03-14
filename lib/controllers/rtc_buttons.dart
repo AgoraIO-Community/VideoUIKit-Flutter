@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_uikit/agora_uikit.dart';
@@ -7,7 +6,6 @@ import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/models/agora_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
 /// Function to mute/unmute the microphone
 Future<void> toggleMute({required SessionController sessionController}) async {
@@ -129,84 +127,14 @@ Future<void> _showRPSystemBroadcastPickerViewIfNeed() async {
 
 /// Function to start and stop cloud recording
 Future<void> toggleCloudRecording({required AgoraClient client}) async {
-  String credential = client.cloudRecordingCredential;
-  String resourceId =
-      client.cloudRecordingResourceId ?? await client.generateResourceId();
   if (client.sessionController.value.isCloudRecording) {
     //stop cloud recording
-    String sid = client.sid!;
-    var headers = {
-      'Authorization': 'basic $credential',
-      'Content-Type': 'application/json',
-    };
-
-    var url = Uri.parse(
-        'https://api.agora.io/v1/apps/${client.agoraConnectionData.appId}/cloud_recording/resourceid/$resourceId/sid/$sid/mode/mix/stop');
-
-    var body = json.encode({
-      "cname": client.agoraConnectionData.channelName,
-      "uid": client.cloudRecordingId,
-      "clientRequest": {}
-    });
-
-    http.Response response = await http.post(url, headers: headers, body: body);
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-    if (response.statusCode == 200) {
-    } else {
-      if (decodedResponse["code"] == 435) {
-        //recording wasn't running for long enough, so it wasn't saved
-      } else {
-        throw (response.reasonPhrase.toString());
-      }
-    }
-    client.resetResourceId();
+    await client.sessionController
+        .stopCloudRecording(connectionData: client.agoraConnectionData);
   } else {
     //start cloud recording
-    var headers = {
-      'Authorization': 'basic $credential',
-      'Content-Type': 'application/json',
-    };
-
-    var url = Uri.parse(
-        'https://api.agora.io/v1/apps/${client.agoraConnectionData.appId}/cloud_recording/resourceid/$resourceId/mode/mix/start');
-
-    int vendor = 0;
-    switch (client.cloudStorageData!.cloudStorageProvider) {
-      case CloudStorageProvider.googleCloud:
-        vendor = 6;
-        break;
-      default:
-    }
-    var body = jsonEncode({
-      "cname": client.agoraConnectionData.channelName,
-      "uid": client.cloudRecordingId,
-      "clientRequest": {
-        "recordingConfig": {
-          "maxIdleTime": 3,
-        },
-        "storageConfig": {
-          "secretKey": client.cloudStorageData!.secretKey,
-          "vendor": vendor,
-          "region": 3, // this doesn't matter for google cloud
-          "bucket": client.cloudStorageData!.bucketName,
-          "accessKey": client.cloudStorageData!.accessKey,
-          "fileNamePrefix": [
-            "agora",
-          ]
-        },
-        "recordingFileConfig": {
-          "avFileType": ["hls", "mp4"]
-        },
-      }
-    });
-
-    http.Response response = await http.post(url, headers: headers, body: body);
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-    if (response.statusCode == 200) {
-      client.setSid = decodedResponse["sid"];
-    } else {
-      throw (response.reasonPhrase.toString());
-    }
+    await client.sessionController
+        .startCloudRecording(connectionData: client.agoraConnectionData);
   }
 
   client.sessionController.value = client.sessionController.value.copyWith(
