@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/models/agora_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 /// Function to mute/unmute the microphone
 Future<void> toggleMute({required SessionController sessionController}) async {
@@ -122,6 +122,21 @@ Future<void> _showRPSystemBroadcastPickerViewIfNeed() async {
 
   final MethodChannel iosScreenShareChannel =
       const MethodChannel('example_screensharing_ios');
-  print("invoking channel method");
   await iosScreenShareChannel.invokeMethod('showRPSystemBroadcastPickerView');
+}
+
+/// Function to start and stop cloud recording
+Future<void> toggleCloudRecording({required AgoraClient client}) async {
+  if (client.sessionController.value.isCloudRecording) {
+    //stop cloud recording
+    await client.sessionController
+        .stopCloudRecording(connectionData: client.agoraConnectionData);
+  } else {
+    //start cloud recording
+    await client.sessionController
+        .startCloudRecording(connectionData: client.agoraConnectionData);
+  }
+
+  client.sessionController.value = client.sessionController.value.copyWith(
+      isCloudRecording: !(client.sessionController.value.isCloudRecording));
 }
