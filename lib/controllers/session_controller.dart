@@ -293,10 +293,11 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     );
 
     if (response.statusCode == 200) {
-      log('Recording Started');
+      log('Recording Started', level: Level.warning.value);
       value = value.copyWith(sid: jsonDecode(response.body)['data']['sid']);
     } else {
-      log('Couldn\'t start the recording : ${response.statusCode}');
+      log('Couldn\'t start the recording : ${response.statusCode}',
+          level: Level.error.value);
     }
   }
 
@@ -311,9 +312,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     );
 
     if (response.statusCode == 200) {
-      log('Recording Ended');
+      log('Recording Ended', level: Level.warning.value);
     } else {
-      log('Couldn\'t end the recording : ${response.statusCode}');
+      log('Couldn\'t end the recording : ${response.statusCode}',
+          level: Level.error.value);
     }
   }
 }
