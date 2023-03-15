@@ -293,14 +293,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     );
 
     if (response.statusCode == 200) {
-      print('Recording Started');
+      log('Recording Started');
       value = value.copyWith(sid: jsonDecode(response.body)['data']['sid']);
-
-      // rid = jsonDecode(response.body)['data']['rid'];
-      // recUid = jsonDecode(response.body)['data']['uid'];
-      // sid = jsonDecode(response.body)['data']['sid'];
     } else {
-      print('Couldn\'t start the recording : ${response.statusCode}');
+      log('Couldn\'t start the recording : ${response.statusCode}');
     }
   }
 
@@ -310,16 +306,14 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       Uri.parse('${connectionData.cloudRecordingUrl}/api/stop/call'),
       body: {
         "channel": connectionData.channelName,
-        // "rid": mRid,
         "sid": value.sid,
-        // "uid": mRecUid.toString()
       },
     );
 
     if (response.statusCode == 200) {
-      print('Recording Ended');
+      log('Recording Ended');
     } else {
-      print('Couldn\'t end the recording : ${response.statusCode}');
+      log('Couldn\'t end the recording : ${response.statusCode}');
     }
   }
 }
