@@ -140,9 +140,11 @@ class _AgoraVideoButtonsState extends State<AgoraVideoButtons> {
                           _disconnectCallButton(),
                           _switchCameraButton(),
                           _disableVideoButton(),
-                          CloudRecordingButton(
-                            client: widget.client,
-                          ),
+                          widget.cloudRecordingEnabled!
+                              ? CloudRecordingButton(
+                                  client: widget.client,
+                                )
+                              : Container(),
                           widget.addScreenSharing!
                               ? _screenSharingButton()
                               : Container(),

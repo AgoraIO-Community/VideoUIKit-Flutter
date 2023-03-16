@@ -1,3 +1,7 @@
+## 1.3.1
+
+- BUG FIX: No longer shows cloud recording by default. Need to enable it with `cloudRecordingEnabled: true`
+
 ## 1.3.0
 
 - Added Cloud Recording. Follow the [Guide](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/wiki/Examples#cloud-recording)
