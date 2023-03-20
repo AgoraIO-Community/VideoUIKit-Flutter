@@ -42,7 +42,13 @@ export 'package:agora_rtc_engine/agora_rtc_engine.dart'
         StreamPublishState,
         StreamSubscribeState,
         RtmpStreamingEvent,
-        UploadErrorReason;
+        UploadErrorReason,
+        ContentInspectConfig,
+        ContentInspectModule,
+        ContentInspectResult,
+        ContentInspectType,
+        ContentInspectResultExt,
+        ContentInspectTypeExt;
 export 'package:agora_rtm/agora_rtm.dart'
     show
         AgoraRtmMessage,
