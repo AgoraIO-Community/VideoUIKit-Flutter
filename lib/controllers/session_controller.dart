@@ -288,13 +288,17 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   Future<void> startCloudRecording(
       {required AgoraConnectionData connectionData}) async {
     final response = await http.post(
-      Uri.parse('${connectionData.cloudRecordingUrl}/api/start/call'),
-      body: {"channel": connectionData.channelName},
+      Uri.parse(
+          '${connectionData.cloudRecordingUrl}/start-recording/${connectionData.channelName}'),
     );
 
     if (response.statusCode == 200) {
-      log('Recording Started', level: Level.warning.value);
-      value = value.copyWith(sid: jsonDecode(response.body)['data']['sid']);
+      log('Recording Started with SID ${value.sid} and RESOURCE ID: ${value.resourceId}',
+          level: Level.warning.value);
+      value = value.copyWith(
+        sid: jsonDecode(response.body)['sid'],
+        resourceId: jsonDecode(response.body)['resource_id'],
+      );
     } else {
       log('Couldn\'t start the recording : ${response.statusCode}',
           level: Level.error.value);
@@ -304,11 +308,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   Future<void> stopCloudRecording(
       {required AgoraConnectionData connectionData}) async {
     final response = await http.post(
-      Uri.parse('${connectionData.cloudRecordingUrl}/api/stop/call'),
-      body: {
-        "channel": connectionData.channelName,
-        "sid": value.sid,
-      },
+      Uri.parse(
+          '${connectionData.cloudRecordingUrl}/stop-recording/${connectionData.channelName}/${value.sid}/${value.resourceId}'),
     );
 
     if (response.statusCode == 200) {
