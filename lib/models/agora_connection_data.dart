@@ -40,6 +40,8 @@ class AgoraConnectionData {
 
   final bool screenSharingEnabled;
 
+  final Function? cloudRecordingReturn;
+
   AgoraConnectionData({
     required this.appId,
     required this.channelName,
@@ -55,6 +57,7 @@ class AgoraConnectionData {
     this.rtmEnabled = true,
     this.screenSharingUid = 1000,
     this.screenSharingEnabled = true,
+    this.cloudRecordingReturn,
   });
 
   AgoraConnectionData copyWith({
@@ -72,6 +75,7 @@ class AgoraConnectionData {
     bool? rtmEnabled,
     int? screenSharingUid,
     bool? screenSharingEnabled,
+    Function? cloudRecordingReturn,
   }) {
     return AgoraConnectionData(
       appId: appId ?? this.appId,
@@ -88,6 +92,7 @@ class AgoraConnectionData {
       rtmEnabled: rtmEnabled ?? this.rtmEnabled,
       screenSharingUid: screenSharingUid ?? this.screenSharingUid,
       screenSharingEnabled: screenSharingEnabled ?? this.screenSharingEnabled,
+      cloudRecordingReturn: cloudRecordingReturn ?? this.cloudRecordingReturn,
     );
   }
 }
