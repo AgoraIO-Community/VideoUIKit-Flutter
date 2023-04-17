@@ -314,8 +314,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
     if (response.statusCode == 200) {
       log('Recording Ended', level: Level.warning.value);
-      if (connectionData.cloudRecordingReturn != null) {
-        connectionData.cloudRecordingReturn!(
+      if (connectionData.cloudRecordingCallback != null) {
+        connectionData.cloudRecordingCallback!(
             jsonDecode(response.body)['mp4_link'],
             jsonDecode(response.body)['m3u8_link']);
       }
