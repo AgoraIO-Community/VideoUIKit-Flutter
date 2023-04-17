@@ -293,12 +293,12 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     );
 
     if (response.statusCode == 200) {
-      log('Recording Started with SID ${value.sid} and RESOURCE ID: ${value.resourceId}',
-          level: Level.warning.value);
       value = value.copyWith(
         sid: jsonDecode(response.body)['sid'],
         resourceId: jsonDecode(response.body)['resource_id'],
       );
+      log('Recording Started with SID ${value.sid} and RESOURCE ID: ${value.resourceId}',
+          level: Level.warning.value);
     } else {
       log('Couldn\'t start the recording : ${response.statusCode}',
           level: Level.error.value);
