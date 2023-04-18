@@ -34,7 +34,7 @@ class AgoraSettings {
   final Map<int, String>? uidToUserIdMap;
   final bool isScreenShared;
   final bool turnOnScreenSharing;
-  final bool isCloudRecording;
+  final RecordingState isCloudRecording;
   final String? sid;
   final String? resourceId;
 
@@ -67,7 +67,7 @@ class AgoraSettings {
     this.uidToUserIdMap,
     this.isScreenShared = false,
     this.turnOnScreenSharing = false,
-    this.isCloudRecording = false,
+    this.isCloudRecording = RecordingState.off,
     this.sid,
     this.resourceId,
   });
@@ -101,7 +101,7 @@ class AgoraSettings {
     Map<int, String>? uidToUserIdMap,
     bool? isScreenShared,
     bool? turnOnScreenSharing,
-    bool? isCloudRecording,
+    RecordingState? isCloudRecording,
     String? sid,
     String? resourceId,
   }) {
