@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_rtm/agora_rtm.dart';
@@ -292,7 +293,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           '${connectionData.cloudRecordingUrl}/start-recording/${connectionData.channelName}'),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       value = value.copyWith(
         sid: jsonDecode(response.body)['sid'],
         resourceId: jsonDecode(response.body)['resource_id'],
@@ -312,7 +313,7 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           '${connectionData.cloudRecordingUrl}/stop-recording/${connectionData.channelName}/${value.sid}/${value.resourceId}'),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       log('Recording Ended', level: Level.warning.value);
       if (connectionData.cloudRecordingCallback != null) {
         connectionData.cloudRecordingCallback!(
