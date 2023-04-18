@@ -127,16 +127,29 @@ Future<void> _showRPSystemBroadcastPickerViewIfNeed() async {
 
 /// Function to start and stop cloud recording
 Future<void> toggleCloudRecording({required AgoraClient client}) async {
-  if (client.sessionController.value.isCloudRecording) {
+  if (client.sessionController.value.isCloudRecording ==
+      RecordingState.recording) {
     //stop cloud recording
+    client.sessionController.value = client.sessionController.value.copyWith(
+      isCloudRecording: RecordingState.loading,
+    );
     await client.sessionController
         .stopCloudRecording(connectionData: client.agoraConnectionData);
-  } else {
+    client.sessionController.value = client.sessionController.value.copyWith(
+      isCloudRecording: RecordingState.off,
+    );
+  } else if (client.sessionController.value.isCloudRecording ==
+      RecordingState.off) {
     //start cloud recording
+    client.sessionController.value = client.sessionController.value.copyWith(
+      isCloudRecording: RecordingState.loading,
+    );
     await client.sessionController
         .startCloudRecording(connectionData: client.agoraConnectionData);
+    client.sessionController.value = client.sessionController.value.copyWith(
+      isCloudRecording: RecordingState.recording,
+    );
+  } else {
+    //do nothing
   }
-
-  client.sessionController.value = client.sessionController.value.copyWith(
-      isCloudRecording: !(client.sessionController.value.isCloudRecording));
 }

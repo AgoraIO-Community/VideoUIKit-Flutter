@@ -1,3 +1,9 @@
+## 1.3.2
+
+- Added callback for cloud recording destination URL
+- Added loading state for cloud recording button
+- Update to use new cloud recording schema
+
 ## 1.3.1
 
 - BUG FIX: No longer shows cloud recording by default. Need to enable it with `cloudRecordingEnabled: true`

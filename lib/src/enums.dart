@@ -31,3 +31,5 @@ extension LevelExtension on Level {
 }
 
 enum Device { camera, mic }
+
+enum RecordingState { off, loading, recording }

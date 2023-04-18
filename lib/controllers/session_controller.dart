@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_rtm/agora_rtm.dart';
@@ -288,13 +289,17 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   Future<void> startCloudRecording(
       {required AgoraConnectionData connectionData}) async {
     final response = await http.post(
-      Uri.parse('${connectionData.cloudRecordingUrl}/api/start/call'),
-      body: {"channel": connectionData.channelName},
+      Uri.parse(
+          '${connectionData.cloudRecordingUrl}/start-recording/${connectionData.channelName}'),
     );
 
-    if (response.statusCode == 200) {
-      log('Recording Started', level: Level.warning.value);
-      value = value.copyWith(sid: jsonDecode(response.body)['data']['sid']);
+    if (response.statusCode == HttpStatus.ok) {
+      value = value.copyWith(
+        sid: jsonDecode(response.body)['sid'],
+        resourceId: jsonDecode(response.body)['resource_id'],
+      );
+      log('Recording Started with SID ${value.sid} and RESOURCE ID: ${value.resourceId}',
+          level: Level.warning.value);
     } else {
       log('Couldn\'t start the recording : ${response.statusCode}',
           level: Level.error.value);
@@ -304,15 +309,17 @@ class SessionController extends ValueNotifier<AgoraSettings> {
   Future<void> stopCloudRecording(
       {required AgoraConnectionData connectionData}) async {
     final response = await http.post(
-      Uri.parse('${connectionData.cloudRecordingUrl}/api/stop/call'),
-      body: {
-        "channel": connectionData.channelName,
-        "sid": value.sid,
-      },
+      Uri.parse(
+          '${connectionData.cloudRecordingUrl}/stop-recording/${connectionData.channelName}/${value.sid}/${value.resourceId}'),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       log('Recording Ended', level: Level.warning.value);
+      if (connectionData.cloudRecordingCallback != null) {
+        connectionData.cloudRecordingCallback!(
+            jsonDecode(response.body)['mp4_link'],
+            jsonDecode(response.body)['m3u8_link']);
+      }
     } else {
       log('Couldn\'t end the recording : ${response.statusCode}',
           level: Level.error.value);

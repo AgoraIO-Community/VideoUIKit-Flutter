@@ -34,8 +34,9 @@ class AgoraSettings {
   final Map<int, String>? uidToUserIdMap;
   final bool isScreenShared;
   final bool turnOnScreenSharing;
-  final bool isCloudRecording;
+  final RecordingState isCloudRecording;
   final String? sid;
+  final String? resourceId;
 
   AgoraSettings({
     this.engine,
@@ -66,8 +67,9 @@ class AgoraSettings {
     this.uidToUserIdMap,
     this.isScreenShared = false,
     this.turnOnScreenSharing = false,
-    this.isCloudRecording = false,
+    this.isCloudRecording = RecordingState.off,
     this.sid,
+    this.resourceId,
   });
 
   AgoraSettings copyWith({
@@ -99,8 +101,9 @@ class AgoraSettings {
     Map<int, String>? uidToUserIdMap,
     bool? isScreenShared,
     bool? turnOnScreenSharing,
-    bool? isCloudRecording,
+    RecordingState? isCloudRecording,
     String? sid,
+    String? resourceId,
   }) {
     return AgoraSettings(
       engine: engine ?? this.engine,
@@ -134,6 +137,7 @@ class AgoraSettings {
       turnOnScreenSharing: turnOnScreenSharing ?? this.turnOnScreenSharing,
       isCloudRecording: isCloudRecording ?? this.isCloudRecording,
       sid: sid ?? this.sid,
+      resourceId: resourceId ?? this.resourceId,
     );
   }
 }
