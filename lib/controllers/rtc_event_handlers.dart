@@ -60,9 +60,9 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
   }, onFirstLocalAudioFramePublished: (connection, elapsed) {
     agoraEventHandlers.onFirstLocalAudioFramePublished
         ?.call(connection, elapsed);
-  }, onFirstLocalVideoFrame: (connection, width, height, elapsed) {
+  }, onFirstLocalVideoFrame: (videoSourceType, width, height, elapsed) {
     agoraEventHandlers.onFirstLocalVideoFrame
-        ?.call(connection, width, height, elapsed);
+        ?.call(videoSourceType, width, height, elapsed);
   }, onFirstLocalVideoFramePublished: (connection, elapsed) {
     agoraEventHandlers.onFirstLocalVideoFramePublished
         ?.call(connection, elapsed);

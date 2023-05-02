@@ -146,7 +146,7 @@ class AgoraRtcEventHandlers {
   /// * [height] The height (px) of the first local video frame.
   /// * [elapsed] Time elapsed (ms) from the local user calling joinChannel [2/2] until the SDK triggers this callback. If you call startPreview before calling joinChannel [2/2], then this parameter is the time elapsed from calling the startPreview method until the SDK triggers this callback.
   final void Function(
-          RtcConnection connection, int width, int height, int elapsed)?
+          VideoSourceType videoSourceType, int width, int height, int elapsed)?
       onFirstLocalVideoFrame;
 
   /// Occurs when the first video frame is published.
