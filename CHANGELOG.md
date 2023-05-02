@@ -1,3 +1,7 @@
+## 1.3.3
+
+- BREAKING CHANGE: VideoSourceType for `onFirstLocalVideoFrame` callback
+
 ## 1.3.2
 
 - Added callback for cloud recording destination URL
