@@ -107,7 +107,7 @@ Future<void> sendUserData({
   var json = jsonEncode(userData);
 
   Message message = Message(text: json, ts: ts, offline: false);
-  AgoraRtmMessage msg = AgoraRtmMessage.fromJson(message.toJson());
+  RtmMessage msg = RtmMessage.fromJson(message.toJson());
 
   if (sessionController.value.agoraRtmChannel != null && toChannel) {
     await sessionController.value.agoraRtmChannel?.sendMessage(msg);

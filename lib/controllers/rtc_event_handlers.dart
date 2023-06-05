@@ -15,9 +15,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
   SessionController sessionController,
 ) async {
   const String tag = "AgoraVideoUIKit";
-  return RtcEngineEventHandler(onApiCallExecuted: (err, api, result) {
-    agoraEventHandlers.onApiCallExecuted?.call(err, api, result);
-  }, onRejoinChannelSuccess: (connection, elapsed) {
+  return RtcEngineEventHandler(onRejoinChannelSuccess: (connection, elapsed) {
     agoraEventHandlers.onRejoinChannelSuccess?.call(connection, elapsed);
   }, onLocalUserRegistered: (uid, userAccount) {
     agoraEventHandlers.onLocalUserRegistered?.call(uid, userAccount);

@@ -24,7 +24,7 @@ void hostControl({
 
   var json = jsonEncode(muteRequest);
   Message message = Message(text: json);
-  AgoraRtmMessage msg = AgoraRtmMessage.fromJson(message.toJson());
+  RtmMessage msg = RtmMessage.fromJson(message.toJson());
   sessionController.value.uidToUserIdMap!.forEach((key, val) {
     if (key == sessionController.value.users[index].uid) {
       peerId = val;

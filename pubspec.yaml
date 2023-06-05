@@ -10,8 +10,8 @@ environment:
   flutter: ">=2.2.0"
 
 dependencies:
-  agora_rtc_engine: ">= 6.1.1 <6.2.0"
-  agora_rtm: ^1.5.0
+  agora_rtc_engine: ^6.2.0
+  agora_rtm: ^1.5.2
   flutter:
     sdk: flutter
   http: ^0.13.5
