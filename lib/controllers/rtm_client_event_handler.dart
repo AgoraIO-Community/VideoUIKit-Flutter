@@ -34,15 +34,15 @@ Future<void> rtmClientEventHandler({
     );
   };
 
-  agoraRtmClient.onConnectionStateChanged = (int state, int reason) {
-    agoraRtmClientEventHandler.onConnectionStateChanged?.call(state, reason);
+  agoraRtmClient.onConnectionStateChanged2 = (state, reason) {
+    agoraRtmClientEventHandler.onConnectionStateChanged2?.call(state, reason);
 
     log(
       'Connection state changed : ${state.toString()}, reason : ${reason.toString()}',
       level: Level.info.value,
       name: tag,
     );
-    if (state == 5) {
+    if (state == RtmConnectionState.aborted) {
       agoraRtmClient.logout();
     }
   };

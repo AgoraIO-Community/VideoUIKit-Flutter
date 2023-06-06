@@ -6,7 +6,9 @@ class AgoraRtmClientEventHandler {
   final void Function(dynamic error)? onError;
 
   /// Occurs when the connection state between the SDK and the Agora RTM system changes.
-  final void Function(int state, int reason)? onConnectionStateChanged;
+  final void Function(
+          RtmConnectionState state, RtmConnectionChangeReason reason)?
+      onConnectionStateChanged2;
 
   /// Occurs when the local user receives a peer-to-peer message.
   final void Function(RtmMessage message, String peerId)? onMessageReceived;
@@ -16,12 +18,12 @@ class AgoraRtmClientEventHandler {
 
   final void Function()? onTokenPrivilegeWillExpire;
 
-  final void Function(Map<String, bool> peersStatus)?
+  final void Function(Map<String, RtmPeerOnlineState> peersStatus)?
       onPeersOnlineStatusChanged;
 
   const AgoraRtmClientEventHandler({
     this.onError,
-    this.onConnectionStateChanged,
+    this.onConnectionStateChanged2,
     this.onMessageReceived,
     this.onTokenExpired,
     this.onTokenPrivilegeWillExpire,

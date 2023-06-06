@@ -110,13 +110,13 @@ Future<void> sendUserData({
   RtmMessage msg = RtmMessage.fromJson(message.toJson());
 
   if (sessionController.value.agoraRtmChannel != null && toChannel) {
-    await sessionController.value.agoraRtmChannel?.sendMessage(msg);
+    await sessionController.value.agoraRtmChannel?.sendMessage2(msg);
     log('User data sent to channel', level: Level.info.value);
   } else if (sessionController.value.agoraRtmClient != null &&
       !toChannel &&
       peerRtmId != null) {
     await sessionController.value.agoraRtmClient
-        ?.sendMessageToPeer(peerRtmId, msg);
+        ?.sendMessageToPeer2(peerRtmId, msg);
     log('User data sent to peer', level: Level.info.value);
   } else {
     log("No user in the channel", level: Level.warning.value);

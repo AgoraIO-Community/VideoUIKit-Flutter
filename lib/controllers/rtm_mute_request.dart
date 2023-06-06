@@ -29,7 +29,8 @@ void hostControl({
     if (key == sessionController.value.users[index].uid) {
       peerId = val;
       if (sessionController.value.isLoggedIn) {
-        sessionController.value.agoraRtmClient?.sendMessageToPeer(peerId!, msg);
+        sessionController.value.agoraRtmClient
+            ?.sendMessageToPeer2(peerId!, msg);
       } else {
         log("User not logged in", level: Level.warning.value);
       }
