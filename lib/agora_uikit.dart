@@ -44,15 +44,8 @@ export 'package:agora_rtc_engine/agora_rtc_engine.dart'
         RtmpStreamingEvent,
         UploadErrorReason;
 export 'package:agora_rtm/agora_rtm.dart'
-    show
-        AgoraRtmChannelException,
-        AgoraRtmClientException,
-        RtmMessage,
-        RtmAttribute,
-        RtmChannelAttribute,
-        RtmChannelMember,
-        RtmChannelMemberCount,
-        RtmMessageType;
+    show AgoraRtmChannelException, AgoraRtmClientException, AgoraRtmMessage;
+
 export 'package:permission_handler/permission_handler.dart';
 
 export 'models/agora_channel_data.dart' show AgoraChannelData;

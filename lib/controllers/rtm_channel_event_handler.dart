@@ -14,7 +14,7 @@ Future<void> rtmChannelEventHandler({
   required SessionController sessionController,
 }) async {
   const String tag = "AgoraVideoUIKit";
-  channel.onMessageReceived = (RtmMessage message, RtmChannelMember member) {
+  channel.onMessageReceived = (AgoraRtmMessage message, AgoraRtmMember member) {
     agoraRtmChannelEventHandler.onMessageReceived?.call(
       message,
       member,
@@ -33,7 +33,7 @@ Future<void> rtmChannelEventHandler({
     );
   };
 
-  channel.onMemberJoined = (RtmChannelMember member) {
+  channel.onMemberJoined = (AgoraRtmMember member) {
     agoraRtmChannelEventHandler.onMemberJoined?.call(member);
 
     log(
@@ -49,7 +49,7 @@ Future<void> rtmChannelEventHandler({
     );
   };
 
-  channel.onMemberLeft = (RtmChannelMember member) {
+  channel.onMemberLeft = (AgoraRtmMember member) {
     agoraRtmChannelEventHandler.onMemberLeft?.call(member);
 
     log(
@@ -86,7 +86,7 @@ Future<void> rtmChannelEventHandler({
     );
   };
 
-  channel.onAttributesUpdated = (List<RtmChannelAttribute> attributes) {
+  channel.onAttributesUpdated = (List<AgoraRtmChannelAttribute> attributes) {
     agoraRtmChannelEventHandler.onAttributesUpdated?.call(attributes);
 
     log(

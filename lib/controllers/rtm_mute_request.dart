@@ -24,13 +24,12 @@ void hostControl({
 
   var json = jsonEncode(muteRequest);
   Message message = Message(text: json);
-  RtmMessage msg = RtmMessage.fromJson(message.toJson());
+  AgoraRtmMessage msg = AgoraRtmMessage.fromJson(message.toJson());
   sessionController.value.uidToUserIdMap!.forEach((key, val) {
     if (key == sessionController.value.users[index].uid) {
       peerId = val;
       if (sessionController.value.isLoggedIn) {
-        sessionController.value.agoraRtmClient
-            ?.sendMessageToPeer2(peerId!, msg);
+        sessionController.value.agoraRtmClient?.sendMessageToPeer(peerId!, msg);
       } else {
         log("User not logged in", level: Level.warning.value);
       }

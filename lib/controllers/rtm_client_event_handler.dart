@@ -16,7 +16,7 @@ Future<void> rtmClientEventHandler({
 }) async {
   const String tag = "AgoraVideoUIKit";
 
-  agoraRtmClient.onMessageReceived = (RtmMessage message, String peerId) {
+  agoraRtmClient.onMessageReceived = (AgoraRtmMessage message, String peerId) {
     agoraRtmClientEventHandler.onMessageReceived?.call(message, peerId);
     Message msg = Message(text: message.text);
     String? messageType;
@@ -34,15 +34,15 @@ Future<void> rtmClientEventHandler({
     );
   };
 
-  agoraRtmClient.onConnectionStateChanged2 = (state, reason) {
-    agoraRtmClientEventHandler.onConnectionStateChanged2?.call(state, reason);
+  agoraRtmClient.onConnectionStateChanged = (int state, int reason) {
+    agoraRtmClientEventHandler.onConnectionStateChanged?.call(state, reason);
 
     log(
       'Connection state changed : ${state.toString()}, reason : ${reason.toString()}',
       level: Level.info.value,
       name: tag,
     );
-    if (state == RtmConnectionState.aborted) {
+    if (state == 5) {
       agoraRtmClient.logout();
     }
   };
@@ -66,7 +66,57 @@ Future<void> rtmClientEventHandler({
     );
   };
 
-  agoraRtmClient.onPeersOnlineStatusChanged = (peersStatus) {
-    agoraRtmClientEventHandler.onPeersOnlineStatusChanged?.call(peersStatus);
+  agoraRtmClient.onLocalInvitationReceivedByPeer =
+      (AgoraRtmLocalInvitation invitation) {
+    agoraRtmClientEventHandler.onLocalInvitationReceivedByPeer
+        ?.call(invitation);
+  };
+
+  agoraRtmClient.onLocalInvitationAccepted =
+      (AgoraRtmLocalInvitation invitation) {
+    agoraRtmClientEventHandler.onLocalInvitationAccepted?.call(invitation);
+  };
+
+  agoraRtmClient.onLocalInvitationRefused =
+      (AgoraRtmLocalInvitation invitation) {
+    agoraRtmClientEventHandler.onLocalInvitationRefused?.call(invitation);
+  };
+
+  agoraRtmClient.onLocalInvitationCanceled =
+      (AgoraRtmLocalInvitation invitation) {
+    agoraRtmClientEventHandler.onLocalInvitationCanceled?.call(invitation);
+  };
+
+  agoraRtmClient.onLocalInvitationFailure =
+      (AgoraRtmLocalInvitation invitation, int errorCode) {
+    agoraRtmClientEventHandler.onLocalInvitationFailure
+        ?.call(invitation, errorCode);
+  };
+
+  agoraRtmClient.onRemoteInvitationReceivedByPeer =
+      (AgoraRtmRemoteInvitation invitation) {
+    agoraRtmClientEventHandler.onRemoteInvitationReceivedByPeer
+        ?.call(invitation);
+  };
+
+  agoraRtmClient.onRemoteInvitationAccepted =
+      (AgoraRtmRemoteInvitation invitation) {
+    agoraRtmClientEventHandler.onRemoteInvitationAccepted?.call(invitation);
+  };
+
+  agoraRtmClient.onRemoteInvitationRefused =
+      (AgoraRtmRemoteInvitation invitation) {
+    agoraRtmClientEventHandler.onRemoteInvitationRefused?.call(invitation);
+  };
+
+  agoraRtmClient.onRemoteInvitationCanceled =
+      (AgoraRtmRemoteInvitation invitation) {
+    agoraRtmClientEventHandler.onRemoteInvitationCanceled?.call(invitation);
+  };
+
+  agoraRtmClient.onRemoteInvitationFailure =
+      (AgoraRtmRemoteInvitation invitation, int errorCode) {
+    agoraRtmClientEventHandler.onRemoteInvitationFailure
+        ?.call(invitation, errorCode);
   };
 }
