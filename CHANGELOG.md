@@ -1,6 +1,7 @@
 ## 1.3.4
 
 - Fixes error [#137](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/issues/137)
+- Setting RTC to v6.1.0 and RTM to v1.5.0
 
 ## 1.3.3
 
