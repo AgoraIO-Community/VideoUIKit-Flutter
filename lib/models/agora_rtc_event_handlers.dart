@@ -146,7 +146,7 @@ class AgoraRtcEventHandlers {
   /// * [height] The height (px) of the first local video frame.
   /// * [elapsed] Time elapsed (ms) from the local user calling joinChannel [2/2] until the SDK triggers this callback. If you call startPreview before calling joinChannel [2/2], then this parameter is the time elapsed from calling the startPreview method until the SDK triggers this callback.
   final void Function(
-          VideoSourceType videoSourceType, int width, int height, int elapsed)?
+          RtcConnection connection, int width, int height, int elapsed)?
       onFirstLocalVideoFrame;
 
   /// Occurs when the first video frame is published.
@@ -331,12 +331,8 @@ class AgoraRtcEventHandlers {
   /// * [vecRectangle] The information of the detected human face. See Rectangle .
   /// * [vecDistance] The distance between the human face and the device screen (cm).
   /// * [numFaces] The number of faces detected. If the value is 0, it means that no human face is detected.
-  final void Function(
-      int imageWidth,
-      int imageHeight,
-      List<Rectangle> vecRectangle,
-      List<int> vecDistance,
-      int numFaces)? onFacePositionChanged;
+  final void Function(int imageWidth, int imageHeight, Rectangle vecRectangle,
+      int vecDistance, int numFaces)? onFacePositionChanged;
 
   /// Occurs when the video stops playing.
   /// Deprecated:Use localVideoStreamStateStopped(0) in the onLocalVideoStateChanged callback instead.The application can use this callback to change the configuration of the view (for example, displaying other pictures in the view) after the video stops playing.

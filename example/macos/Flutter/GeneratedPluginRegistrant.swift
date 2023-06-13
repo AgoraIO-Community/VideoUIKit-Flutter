@@ -6,9 +6,9 @@ import FlutterMacOS
 import Foundation
 
 import agora_rtc_engine
-import iris_method_channel
+import iris_event
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   AgoraRtcNgPlugin.register(with: registry.registrar(forPlugin: "AgoraRtcNgPlugin"))
-  IrisMethodChannelPlugin.register(with: registry.registrar(forPlugin: "IrisMethodChannelPlugin"))
+  IrisEventPlugin.register(with: registry.registrar(forPlugin: "IrisEventPlugin"))
 }
