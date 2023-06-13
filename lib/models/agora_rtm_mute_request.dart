@@ -116,8 +116,8 @@ class AgoraUIKit {
 /// Class to store and share the Agora version for RTC and RTM
 class AgoraVersions {
   AgoraVersions();
-  static String staticRTM = '1.1.1';
-  static String staticRTC = '5.2.0';
+  static String staticRTM = '1.5.0';
+  static String staticRTC = '6.1.0';
   String rtm = AgoraVersions.staticRTM;
   String rtc = AgoraVersions.staticRTC;
 
