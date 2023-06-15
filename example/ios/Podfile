@@ -45,5 +45,5 @@ target 'Example_ScreenSharing_Extension' do
   use_modular_headers!
   
   # pod 'AgoraRtcEngine_iOS', '4.1.0' 
-  pod 'AgoraBroadcastExtensionHelper_iOS', '4.0.7'
+  pod 'AgoraBroadcastExtensionHelper_iOS', '4.1.1'
 end
