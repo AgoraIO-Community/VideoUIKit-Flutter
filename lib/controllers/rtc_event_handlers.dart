@@ -58,9 +58,9 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
   }, onFirstLocalAudioFramePublished: (connection, elapsed) {
     agoraEventHandlers.onFirstLocalAudioFramePublished
         ?.call(connection, elapsed);
-  }, onFirstLocalVideoFrame: (connection, width, height, elapsed) {
+  }, onFirstLocalVideoFrame: (source, width, height, elapsed) {
     agoraEventHandlers.onFirstLocalVideoFrame
-        ?.call(connection, width, height, elapsed);
+        ?.call(source, width, height, elapsed);
   }, onFirstLocalVideoFramePublished: (connection, elapsed) {
     agoraEventHandlers.onFirstLocalVideoFramePublished
         ?.call(connection, elapsed);
@@ -109,8 +109,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     agoraEventHandlers.onCameraExposureAreaChanged?.call(x, y, width, height);
   }, onFacePositionChanged:
       (imageWidth, imageHeight, vecRectangle, vecDistance, numFaces) {
-    agoraEventHandlers.onFacePositionChanged
-        ?.call(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
+    agoraEventHandlers.onFacePositionChanged?.call(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
   }, onRtcStats: (connection, stats) {
     agoraEventHandlers.onRtcStats?.call(connection, stats);
   }, onLastmileQuality: (quality) {

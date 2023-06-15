@@ -5,18 +5,17 @@ class AgoraRtmChannelEventHandler {
   final Function(dynamic error)? onError;
 
   /// Occurs when receiving a channel message.
-  final Function(AgoraRtmMessage message, AgoraRtmMember fromMember)?
+  final Function(RtmMessage message, RtmChannelMember fromMember)?
       onMessageReceived;
 
   /// Occurs when a user joins the channel.
-  final Function(AgoraRtmMember member)? onMemberJoined;
+  final Function(RtmChannelMember member)? onMemberJoined;
 
   /// Occurs when a channel member leaves the channel.
-  final Function(AgoraRtmMember member)? onMemberLeft;
+  final Function(RtmChannelMember member)? onMemberLeft;
 
   /// Occurs when channel attribute updated.
-  final Function(List<AgoraRtmChannelAttribute> attributes)?
-      onAttributesUpdated;
+  final Function(List<RtmChannelAttribute> attributes)? onAttributesUpdated;
 
   /// Occurs when channel member count updated.
   final Function(int count)? onMemberCountUpdated;
