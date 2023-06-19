@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:agora_uikit/models/agora_channel_data.dart';
 import 'package:agora_uikit/models/agora_connection_data.dart';
@@ -72,6 +73,14 @@ class AgoraClient {
 
   RtcEngine get engine {
     return _sessionController.value.engine!;
+  }
+
+  AgoraRtmChannel get agoraRtmChannel {
+    return _sessionController.value.agoraRtmChannel!;
+  }
+
+  AgoraRtmClient get agoraRtmClient {
+    return _sessionController.value.agoraRtmClient!;
   }
 
   Future<void> initialize() async {
