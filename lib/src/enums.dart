@@ -6,6 +6,7 @@ enum BuiltInButtons {
   toggleCamera,
   toggleMic,
   screenSharing,
+  cloudRecording
 }
 
 enum MicState { muted, unmuted }
@@ -30,3 +31,5 @@ extension LevelExtension on Level {
 }
 
 enum Device { camera, mic }
+
+enum RecordingState { off, loading, recording }

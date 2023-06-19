@@ -36,6 +36,9 @@ class AgoraSettings {
   final bool turnOnScreenSharing;
   final bool addPreCallScreen;
   final QualityType qualityType;
+  final RecordingState isCloudRecording;
+  final String? sid;
+  final String? resourceId;
 
   AgoraSettings({
     this.engine,
@@ -68,6 +71,9 @@ class AgoraSettings {
     this.turnOnScreenSharing = false,
     this.addPreCallScreen = false,
     this.qualityType = QualityType.qualityUnknown,
+    this.isCloudRecording = RecordingState.off,
+    this.sid,
+    this.resourceId,
   });
 
   AgoraSettings copyWith({
@@ -101,6 +107,9 @@ class AgoraSettings {
     bool? turnOnScreenSharing,
     bool? addPreCallScreen,
     QualityType? qualityType,
+    RecordingState? isCloudRecording,
+    String? sid,
+    String? resourceId,
   }) {
     return AgoraSettings(
       engine: engine ?? this.engine,
@@ -134,6 +143,9 @@ class AgoraSettings {
       turnOnScreenSharing: turnOnScreenSharing ?? this.turnOnScreenSharing,
       addPreCallScreen: addPreCallScreen ?? this.addPreCallScreen,
       qualityType: qualityType ?? this.qualityType,
+      isCloudRecording: isCloudRecording ?? this.isCloudRecording,
+      sid: sid ?? this.sid,
+      resourceId: resourceId ?? this.resourceId,
     );
   }
 }

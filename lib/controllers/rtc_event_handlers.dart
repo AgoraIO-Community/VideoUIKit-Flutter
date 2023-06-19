@@ -15,9 +15,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
   SessionController sessionController,
 ) async {
   const String tag = "AgoraVideoUIKit";
-  return RtcEngineEventHandler(onApiCallExecuted: (err, api, result) {
-    agoraEventHandlers.onApiCallExecuted?.call(err, api, result);
-  }, onRejoinChannelSuccess: (connection, elapsed) {
+  return RtcEngineEventHandler(onRejoinChannelSuccess: (connection, elapsed) {
     agoraEventHandlers.onRejoinChannelSuccess?.call(connection, elapsed);
   }, onLocalUserRegistered: (uid, userAccount) {
     agoraEventHandlers.onLocalUserRegistered?.call(uid, userAccount);
@@ -60,9 +58,9 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
   }, onFirstLocalAudioFramePublished: (connection, elapsed) {
     agoraEventHandlers.onFirstLocalAudioFramePublished
         ?.call(connection, elapsed);
-  }, onFirstLocalVideoFrame: (connection, width, height, elapsed) {
+  }, onFirstLocalVideoFrame: (source, width, height, elapsed) {
     agoraEventHandlers.onFirstLocalVideoFrame
-        ?.call(connection, width, height, elapsed);
+        ?.call(source, width, height, elapsed);
   }, onFirstLocalVideoFramePublished: (connection, elapsed) {
     agoraEventHandlers.onFirstLocalVideoFramePublished
         ?.call(connection, elapsed);
@@ -111,8 +109,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     agoraEventHandlers.onCameraExposureAreaChanged?.call(x, y, width, height);
   }, onFacePositionChanged:
       (imageWidth, imageHeight, vecRectangle, vecDistance, numFaces) {
-    agoraEventHandlers.onFacePositionChanged
-        ?.call(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
+    agoraEventHandlers.onFacePositionChanged?.call(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
   }, onRtcStats: (connection, stats) {
     agoraEventHandlers.onRtcStats?.call(connection, stats);
   }, onLastmileQuality: (quality) {
@@ -236,7 +233,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
       if (state == RemoteVideoState.remoteVideoStateStopped) {
         sessionController.updateUserVideo(uid: remoteUid, videoDisabled: true);
       } else if (state == RemoteVideoState.remoteVideoStateDecoding &&
-          (reason == RemoteVideoState.remoteVideoStateStarting ||
+          (state == RemoteVideoState.remoteVideoStateStarting ||
               reason ==
                   RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted)) {
         sessionController.updateUserVideo(uid: remoteUid, videoDisabled: false);

@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_rtm/agora_rtm.dart';
@@ -17,6 +19,7 @@ import 'package:agora_uikit/models/agora_settings.dart';
 import 'package:agora_uikit/models/agora_user.dart';
 import 'package:agora_uikit/src/enums.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 
 class SessionController extends ValueNotifier<AgoraSettings> {
@@ -301,5 +304,45 @@ class SessionController extends ValueNotifier<AgoraSettings> {
 
   void updateNetworkQualityStatus(QualityType qualityType) {
     value = value.copyWith(qualityType: qualityType);
+  }
+
+  Future<void> startCloudRecording(
+      {required AgoraConnectionData connectionData}) async {
+    final response = await http.post(
+      Uri.parse(
+          '${connectionData.cloudRecordingUrl}/start-recording/${connectionData.channelName}'),
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      value = value.copyWith(
+        sid: jsonDecode(response.body)['sid'],
+        resourceId: jsonDecode(response.body)['resource_id'],
+      );
+      log('Recording Started with SID ${value.sid} and RESOURCE ID: ${value.resourceId}',
+          level: Level.warning.value);
+    } else {
+      log('Couldn\'t start the recording : ${response.statusCode}',
+          level: Level.error.value);
+    }
+  }
+
+  Future<void> stopCloudRecording(
+      {required AgoraConnectionData connectionData}) async {
+    final response = await http.post(
+      Uri.parse(
+          '${connectionData.cloudRecordingUrl}/stop-recording/${connectionData.channelName}/${value.sid}/${value.resourceId}'),
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      log('Recording Ended', level: Level.warning.value);
+      if (connectionData.cloudRecordingCallback != null) {
+        connectionData.cloudRecordingCallback!(
+            jsonDecode(response.body)['mp4_link'],
+            jsonDecode(response.body)['m3u8_link']);
+      }
+    } else {
+      log('Couldn\'t end the recording : ${response.statusCode}',
+          level: Level.error.value);
+    }
   }
 }

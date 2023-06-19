@@ -1,3 +1,26 @@
+## 1.3.4
+
+- Fixes error [#137](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/issues/137)
+- Setting RTC to v6.1.0 and RTM to v1.5.0
+
+## 1.3.3
+
+- BREAKING CHANGE: VideoSourceType for `onFirstLocalVideoFrame` callback
+
+## 1.3.2
+
+- Added callback for cloud recording destination URL
+- Added loading state for cloud recording button
+- Update to use new cloud recording schema
+
+## 1.3.1
+
+- BUG FIX: No longer shows cloud recording by default. Need to enable it with `cloudRecordingEnabled: true`
+
+## 1.3.0
+
+- Added Cloud Recording. Follow the [Guide](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/wiki/Examples#cloud-recording)
+
 ## 1.2.1
 
 - Fixes requestPort bug when joining from separate screen

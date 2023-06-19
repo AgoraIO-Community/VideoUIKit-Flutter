@@ -51,13 +51,27 @@ export 'package:agora_rtc_engine/agora_rtc_engine.dart'
         ContentInspectTypeExt;
 export 'package:agora_rtm/agora_rtm.dart'
     show
-        AgoraRtmMessage,
-        AgoraRtmMember,
-        AgoraRtmChannelAttribute,
         AgoraRtmChannelException,
         AgoraRtmClientException,
-        AgoraRtmLocalInvitation,
-        AgoraRtmRemoteInvitation;
+        RtmMessage,
+        RtmAttribute,
+        RtmChannelAttribute,
+        RtmChannelMember,
+        RtmChannelMemberCount,
+        RtmAreaCode,
+        RtmCloudProxyType,
+        RtmConnectionChangeReason,
+        RtmConnectionState,
+        RtmLocalInvitationState,
+        RtmServiceContext,
+        RtmLogFilter,
+        RtmMessageType,
+        RtmPeerOnlineState,
+        RtmPeerSubscriptionOption,
+        RtmRemoteInvitationState,
+        AgoraRtmChannel,
+        AgoraRtmClient;
+
 export 'package:permission_handler/permission_handler.dart';
 
 export 'models/agora_channel_data.dart' show AgoraChannelData;

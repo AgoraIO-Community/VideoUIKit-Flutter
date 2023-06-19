@@ -439,7 +439,9 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                 ),
               ),
               widget.client.sessionController.value.mainAgoraUser.uid !=
-                      widget.client.sessionController.value.localUid
+                          widget.client.sessionController.value.localUid &&
+                      widget.client.sessionController.value.mainAgoraUser.uid !=
+                          0
                   ? Expanded(
                       child: Stack(
                         children: [

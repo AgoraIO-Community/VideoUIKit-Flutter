@@ -21,6 +21,9 @@ class AgoraConnectionData {
   /// (Optional) Link to the deployed token server. The UIKit automatically generates the token after a fixed interval. Have a look at this guide to learn how to set up your [token server](https://github.com/AgoraIO-Community/agora-token-service)
   final String? tokenUrl;
 
+  /// (Optional) Link to the deployed cloud recording server. Have a look at this guide to learn how to set up your [cloud recording server](https://github.com/AgoraIO-Community/Cloud-Recording-Golang)
+  final String? cloudRecordingUrl;
+
   /// (Optional) RTC Token value generated from the Agora dashboard.
   final String? tempToken;
 
@@ -37,6 +40,8 @@ class AgoraConnectionData {
 
   final bool screenSharingEnabled;
 
+  final Function? cloudRecordingCallback;
+
   AgoraConnectionData({
     required this.appId,
     required this.channelName,
@@ -45,12 +50,14 @@ class AgoraConnectionData {
     this.rtmUid,
     this.username,
     this.tokenUrl,
+    this.cloudRecordingUrl,
     this.tempToken,
     this.tempRtmToken,
     this.areaCode = const [AreaCode.areaCodeGlob],
     this.rtmEnabled = true,
     this.screenSharingUid = 1000,
     this.screenSharingEnabled = true,
+    this.cloudRecordingCallback,
   });
 
   AgoraConnectionData copyWith({
@@ -63,10 +70,12 @@ class AgoraConnectionData {
     String? tempToken,
     String? tempRtmToken,
     String? tokenUrl,
+    String? cloudRecordingUrl,
     List<AreaCode>? areaCode,
     bool? rtmEnabled,
     int? screenSharingUid,
     bool? screenSharingEnabled,
+    Function? cloudRecordingCallback,
   }) {
     return AgoraConnectionData(
       appId: appId ?? this.appId,
@@ -78,10 +87,13 @@ class AgoraConnectionData {
       tempToken: tempToken ?? this.tempToken,
       tempRtmToken: tempRtmToken ?? this.tempRtmToken,
       tokenUrl: tokenUrl ?? this.tokenUrl,
+      cloudRecordingUrl: cloudRecordingUrl ?? this.cloudRecordingUrl,
       areaCode: areaCode ?? this.areaCode,
       rtmEnabled: rtmEnabled ?? this.rtmEnabled,
       screenSharingUid: screenSharingUid ?? this.screenSharingUid,
       screenSharingEnabled: screenSharingEnabled ?? this.screenSharingEnabled,
+      cloudRecordingCallback:
+          cloudRecordingCallback ?? this.cloudRecordingCallback,
     );
   }
 }
