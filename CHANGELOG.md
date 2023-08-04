@@ -1,4 +1,10 @@
+## 1.3.6
+
+- Fixes error [[#151](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/issues/151)
+- Updating RTC to v6.2.2
+
 ## 1.3.5
+
 - Allow for wider range of `http` packages
 
 ## 1.3.4

@@ -149,11 +149,11 @@ class AgoraRtcEventHandlers {
       onFirstLocalVideoFrame;
 
   /// Occurs when the first video frame is published.
-  /// The SDK triggers this callback under one of the following circumstances:The local client enables the video module and calls joinChannel [2/2] successfully.The local client calls muteLocalVideoStream (true) and muteLocalVideoStream(false) in sequence.The local client calls disableVideo and enableVideo in sequence.
+  /// The SDK triggers this callback under one of the following circumstances: The local client enables the video module and calls joinChannel successfully. The local client calls muteLocalVideoStream (true) and muteLocalVideoStream (false) in sequence. The local client calls disableVideo and enableVideo in sequence.
   ///
   /// * [connection] The connection information. See RtcConnection .
   /// * [elapsed] Time elapsed (ms) from the local user calling joinChannel [2/2] until the SDK triggers this callback.
-  final void Function(RtcConnection connection, int elapsed)?
+  final void Function(VideoSourceType source, int elapsed)?
       onFirstLocalVideoFramePublished;
 
   /// Occurs when the first remote video frame is received and decoded.
@@ -293,7 +293,7 @@ class AgoraRtcEventHandlers {
   ///
   /// * [connection] The connection information. See RtcConnection .
   /// * [stats] The statistics of the local video stream. See LocalVideoStats .
-  final void Function(RtcConnection connection, LocalVideoStats stats)?
+  final void Function(VideoSourceType source, LocalVideoStats stats)?
       onLocalVideoStats;
 
   /// Reports the statistics of the video stream sent by each remote users.
