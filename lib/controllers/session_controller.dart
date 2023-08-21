@@ -178,17 +178,10 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     await value.engine?.enableAudioVolumeIndication(
         interval: 200, smooth: 3, reportVad: true);
     if (value.connectionData?.tokenUrl != null) {
-      await getToken(
-        tokenUrl: value.connectionData!.tokenUrl,
-        channelName: value.connectionData!.channelName,
-        uid: value.connectionData!.uid,
-        sessionController: this,
-      );
+      await generateRtcToken(this);
+
       if (value.connectionData!.rtmEnabled) {
-        await getRtmToken(
-          tokenUrl: value.connectionData!.tokenUrl,
-          sessionController: this,
-        );
+        await generateRtmToken(this);
       }
     }
 

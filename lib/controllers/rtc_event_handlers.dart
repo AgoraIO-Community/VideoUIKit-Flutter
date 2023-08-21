@@ -215,13 +215,12 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
 
     agoraEventHandlers.onUserOffline?.call(connection, remoteUid, reason);
   }, onTokenPrivilegeWillExpire: (connection, token) async {
-    await getToken(
-      tokenUrl: sessionController.value.connectionData!.tokenUrl,
-      channelName: sessionController.value.connectionData!.channelName,
-      uid: sessionController.value.connectionData!.uid,
-      sessionController: sessionController,
-    );
-    await sessionController.value.engine?.renewToken(token);
+    final newToken = await generateRtcToken(sessionController);
+    if (newToken == null) {
+      log("Failed to renew token", name: tag, level: Level.error.value);
+    } else {
+      await sessionController.value.engine?.renewToken(newToken);
+    }
 
     agoraEventHandlers.onTokenPrivilegeWillExpire?.call(connection, token);
   }, onRemoteVideoStateChanged: (connection, remoteUid, state, reason, elapsed) {

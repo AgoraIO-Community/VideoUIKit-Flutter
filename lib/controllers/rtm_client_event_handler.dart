@@ -57,10 +57,13 @@ Future<void> rtmClientEventHandler({
   agoraRtmClient.onTokenExpired = () {
     agoraRtmClientEventHandler.onTokenExpired?.call();
 
-    getRtmToken(
-      tokenUrl: sessionController.value.connectionData!.tokenUrl,
-      sessionController: sessionController,
-    );
+    generateRtmToken(sessionController).then((token) {
+      if (token != null) {
+        agoraRtmClient.renewToken(token);
+      } else {
+        log('Failed to renew the rtm token', level: Level.error.value, name: tag);
+      }
+    });
   };
 
   agoraRtmClient.onPeersOnlineStatusChanged = (peersStatus) {
