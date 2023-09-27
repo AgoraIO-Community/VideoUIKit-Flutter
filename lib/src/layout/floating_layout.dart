@@ -174,6 +174,10 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                         onTap: () {
                                                           widget.client
                                                               .sessionController
+                                                              .setActiveSpeakerDisabled(
+                                                                  false);
+                                                          widget.client
+                                                              .sessionController
                                                               .swapUser(
                                                                   index: index);
                                                         },
@@ -240,6 +244,10 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                               onTap: () {
                                                                 widget.client
                                                                     .sessionController
+                                                                    .setActiveSpeakerDisabled(
+                                                                        true);
+                                                                widget.client
+                                                                    .sessionController
                                                                     .swapUser(
                                                                         index:
                                                                             index);
@@ -254,7 +262,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                                 ),
                                                                 padding:
                                                                     const EdgeInsets
-                                                                            .all(
+                                                                        .all(
                                                                         3.0),
                                                                 child: Icon(
                                                                   Icons
@@ -355,6 +363,10 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                               onTap: () {
                                                                 widget.client
                                                                     .sessionController
+                                                                    .setActiveSpeakerDisabled(
+                                                                        true);
+                                                                widget.client
+                                                                    .sessionController
                                                                     .swapUser(
                                                                         index:
                                                                             index);
@@ -369,7 +381,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                                 ),
                                                                 padding:
                                                                     const EdgeInsets
-                                                                            .all(
+                                                                        .all(
                                                                         3.0),
                                                                 child: Icon(
                                                                   Icons
