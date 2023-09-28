@@ -1,5 +1,6 @@
 ## 1.3.7
 - Fixes active speaker bug when user overrides with manual pin
+- Updates permission_handler to v11.0.0
 
 ## 1.3.6
 
