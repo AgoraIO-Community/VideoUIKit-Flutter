@@ -1,3 +1,7 @@
+## 1.3.7
+- Fixes active speaker bug when user overrides with manual pin
+- Updates permission_handler to v11.0.0
+
 ## 1.3.6
 
 - Fixes error [[#151](https://github.com/AgoraIO-Community/VideoUIKit-Flutter/issues/151)

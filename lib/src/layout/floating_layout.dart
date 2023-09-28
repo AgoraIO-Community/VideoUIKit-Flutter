@@ -174,6 +174,10 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                         onTap: () {
                                                           widget.client
                                                               .sessionController
+                                                              .setActiveSpeakerDisabled(
+                                                                  false);
+                                                          widget.client
+                                                              .sessionController
                                                               .swapUser(
                                                                   index: index);
                                                         },
@@ -238,6 +242,10 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                             child:
                                                                 GestureDetector(
                                                               onTap: () {
+                                                                widget.client
+                                                                    .sessionController
+                                                                    .setActiveSpeakerDisabled(
+                                                                        true);
                                                                 widget.client
                                                                     .sessionController
                                                                     .swapUser(
@@ -353,6 +361,10 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                             child:
                                                                 GestureDetector(
                                                               onTap: () {
+                                                                widget.client
+                                                                    .sessionController
+                                                                    .setActiveSpeakerDisabled(
+                                                                        true);
                                                                 widget.client
                                                                     .sessionController
                                                                     .swapUser(
