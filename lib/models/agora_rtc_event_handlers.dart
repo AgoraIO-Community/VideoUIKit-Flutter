@@ -186,7 +186,7 @@ class AgoraRtcEventHandlers {
   /// * [state] The state of the local video, see LocalVideoStreamState .
   /// * [error] The detailed error information, see LocalVideoStreamError .
   final void Function(VideoSourceType source, LocalVideoStreamState state,
-      LocalVideoStreamError error)? onLocalVideoStateChanged;
+      LocalVideoStreamReason error)? onLocalVideoStateChanged;
 
   /// Occurs when the remote video stream state changes.
   /// This callback does not work properly when the number of users (in the communication profile) or hosts (in the live streaming channel) in a channel exceeds 17.
@@ -351,7 +351,7 @@ class AgoraRtcEventHandlers {
 
   /// @nodoc
   final void Function(
-          RhythmPlayerStateType state, RhythmPlayerErrorType errorCode)?
+          RhythmPlayerStateType state, RhythmPlayerReason errorCode)?
       onRhythmPlayerStateChanged;
 
   /// Occurs when the SDK cannot reconnect to Agora's edge server 10 seconds after its connection to the server is interrupted.
@@ -443,7 +443,7 @@ class AgoraRtcEventHandlers {
   /// * [state] The state of the local audio. See localaudiostreamstate .
   /// * [error] Local audio state error codes. See LocalAudioStreamError .
   final void Function(RtcConnection connection, LocalAudioStreamState state,
-      LocalAudioStreamError error)? onLocalAudioStateChanged;
+      LocalAudioStreamReason error)? onLocalAudioStateChanged;
 
   /// Occurs when the remote audio state changes.
   /// When the audio state of a remote user (in a voice/video call channel) or host (in a live streaming channel) changes, the SDK triggers this callback to report the current state of the remote audio stream.This callback does not work properly when the number of users (in the communication profile) or hosts (in the live streaming channel) in a channel exceeds 17.
@@ -518,7 +518,7 @@ class AgoraRtcEventHandlers {
   /// * [state] The current state of the media push. See RtmpStreamPublishState .
   /// * [errCode] The detailed error information for the media push. See RtmpStreamPublishErrorType .
   final void Function(String url, RtmpStreamPublishState state,
-      RtmpStreamPublishErrorType errCode)? onRtmpStreamingStateChanged;
+      RtmpStreamPublishReason errCode)? onRtmpStreamingStateChanged;
 
   /// Reports events during the media push.
   ///
@@ -551,7 +551,7 @@ class AgoraRtcEventHandlers {
   ///
   ///
   /// * [code] The event code of channel media relay. See ChannelMediaRelayEvent .
-  final void Function(ChannelMediaRelayEvent code)? onChannelMediaRelayEvent;
+  final void Function(dynamic code)? onChannelMediaRelayEvent;
 
   /// @nodoc
   final void Function(bool isFallbackOrRecover)?
