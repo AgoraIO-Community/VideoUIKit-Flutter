@@ -144,7 +144,7 @@ Future<RtcEngineEventHandler> rtcEngineEventHandler(
     agoraEventHandlers.onStreamMessageError
         ?.call(connection, remoteUid, streamId, code, missed, cached);
   }, onChannelMediaRelayEvent: (code) {
-    agoraEventHandlers.onChannelMediaRelayEvent1?.call(code);
+    agoraEventHandlers.onChannelMediaRelayEvent?.call(code);
   }, onChannelMediaRelayStateChanged: (state, code) {
     agoraEventHandlers.onChannelMediaRelayStateChanged?.call(state, code);
   }, onAudioPublishStateChanged:
