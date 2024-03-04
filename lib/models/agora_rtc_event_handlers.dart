@@ -547,12 +547,6 @@ class AgoraRtcEventHandlers {
           ChannelMediaRelayState state, ChannelMediaRelayError code)?
       onChannelMediaRelayStateChanged;
 
-  /// Reports events during the media stream relay.
-  ///
-  ///
-  /// * [code] The event code of channel media relay. See ChannelMediaRelayEvent .
-  // final void Function(dynamic code)? onChannelMediaRelayEvent;
-
   /// @nodoc
   final void Function(bool isFallbackOrRecover)?
       onLocalPublishFallbackToAudioOnly;
@@ -805,7 +799,6 @@ class AgoraRtcEventHandlers {
     this.onTranscodingUpdated,
     this.onAudioRoutingChanged,
     this.onChannelMediaRelayStateChanged,
-    // this.onChannelMediaRelayEvent,
     this.onLocalPublishFallbackToAudioOnly,
     this.onRemoteSubscribeFallbackToAudioOnly,
     this.onRemoteAudioTransportStats,
