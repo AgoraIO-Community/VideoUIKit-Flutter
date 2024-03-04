@@ -1,3 +1,6 @@
+## 1.3.8
+- Update types from agora_rtc_engine 6.3.0
+
 ## 1.3.7
 - Fixes active speaker bug when user overrides with manual pin
 - Updates permission_handler to v11.0.0
