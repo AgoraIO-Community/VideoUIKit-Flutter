@@ -9,12 +9,12 @@ class HostControls extends StatefulWidget {
   final int index;
 
   const HostControls({
-    Key? key,
+    super.key,
     required this.videoDisabled,
     required this.muted,
     required this.client,
     required this.index,
-  }) : super(key: key);
+  });
 
   @override
   State<HostControls> createState() => _HostControlsState();

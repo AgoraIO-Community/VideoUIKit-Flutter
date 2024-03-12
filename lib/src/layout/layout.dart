@@ -42,7 +42,7 @@ class AgoraVideoViewer extends StatefulWidget {
   final RenderModeType renderModeType;
 
   const AgoraVideoViewer({
-    Key? key,
+    super.key,
     required this.client,
     this.layoutType = Layout.grid,
     this.floatingLayoutContainerHeight,
@@ -54,7 +54,7 @@ class AgoraVideoViewer extends StatefulWidget {
     this.enableHostControls = false,
     this.showNumberOfUsers = false,
     this.renderModeType = RenderModeType.renderModeHidden,
-  }) : super(key: key);
+  });
 
   @override
   State<AgoraVideoViewer> createState() => _AgoraVideoViewerState();

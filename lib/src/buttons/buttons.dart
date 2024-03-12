@@ -52,7 +52,7 @@ class AgoraVideoButtons extends StatefulWidget {
   final bool? cloudRecordingEnabled;
 
   const AgoraVideoButtons({
-    Key? key,
+    super.key,
     required this.client,
     this.enabledButtons,
     this.extraButtons,
@@ -69,7 +69,7 @@ class AgoraVideoButtons extends StatefulWidget {
     this.onDisconnect,
     this.addScreenSharing = false,
     this.cloudRecordingEnabled = false,
-  }) : super(key: key);
+  });
 
   @override
   State<AgoraVideoButtons> createState() => _AgoraVideoButtonsState();

@@ -19,13 +19,13 @@ class OneToOneLayout extends StatefulWidget {
   final RenderModeType? renderModeType;
 
   const OneToOneLayout({
-    Key? key,
+    super.key,
     required this.client,
     this.disabledVideoWidget = const DisabledVideoWidget(),
     this.showAVState,
     this.enableHostControl,
     this.renderModeType = RenderModeType.renderModeHidden,
-  }) : super(key: key);
+  });
 
   @override
   State<OneToOneLayout> createState() => _OneToOneLayoutState();
