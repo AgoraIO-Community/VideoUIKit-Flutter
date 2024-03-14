@@ -235,8 +235,8 @@ class SessionController extends ValueNotifier<AgoraSettings> {
           clientRoleType: ClientRoleType.clientRoleBroadcaster,
         ),
       );
+      removeUser(uid: value.localUid);
     }
-    removeUser(uid: value.localUid);
   }
 
   void updateUserVideo({required int uid, required bool videoDisabled}) {
@@ -263,7 +263,11 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       value = value.copyWith(isLocalUserMuted: muted);
       // if remote user updates audio
     } else if (uid == value.mainAgoraUser.uid) {
-      value = value.copyWith(mainAgoraUser: AgoraUser(uid: uid, muted: muted));
+      value = value.copyWith(
+          mainAgoraUser: AgoraUser(
+              uid: uid,
+              muted: muted,
+              videoDisabled: value.mainAgoraUser.videoDisabled));
     } else {
       List<AgoraUser> tempList = value.users;
       int indexOfUser = tempList.indexWhere((element) => element.uid == uid);
