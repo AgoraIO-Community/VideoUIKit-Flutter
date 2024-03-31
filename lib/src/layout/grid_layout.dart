@@ -18,12 +18,12 @@ class GridLayout extends StatefulWidget {
   final RenderModeType renderModeType;
 
   const GridLayout({
-    Key? key,
+    super.key,
     required this.client,
     this.showNumberOfUsers,
     this.disabledVideoWidget = const DisabledVideoWidget(),
     this.renderModeType = RenderModeType.renderModeHidden,
-  }) : super(key: key);
+  });
 
   @override
   State<GridLayout> createState() => _GridLayoutState();
@@ -183,8 +183,7 @@ class _GridLayoutState extends State<GridLayout> {
 
 class DisabledVideoStfWidget extends StatefulWidget {
   final Widget? disabledVideoWidget;
-  const DisabledVideoStfWidget({Key? key, this.disabledVideoWidget})
-      : super(key: key);
+  const DisabledVideoStfWidget({super.key, this.disabledVideoWidget});
 
   @override
   State<DisabledVideoStfWidget> createState() => _DisabledVideoStfWidgetState();

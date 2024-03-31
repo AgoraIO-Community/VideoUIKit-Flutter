@@ -6,10 +6,10 @@ class CloudRecordingButton extends StatelessWidget {
   final Widget? child;
   final AgoraClient client;
   const CloudRecordingButton({
-    Key? key,
+    super.key,
     required this.client,
     this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,7 @@ class CloudRecordingButton extends StatelessWidget {
 
 class RecordingStateButton extends StatelessWidget {
   final AgoraClient client;
-  const RecordingStateButton({Key? key, required this.client})
-      : super(key: key);
+  const RecordingStateButton({super.key, required this.client});
 
   @override
   Widget build(BuildContext context) {
