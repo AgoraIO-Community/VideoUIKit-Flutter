@@ -1,3 +1,6 @@
+## 1.3.9
+- Update to support newer lints
+
 ## 1.3.8
 - Update types from agora_rtc_engine 6.3.0
 
