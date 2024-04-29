@@ -99,7 +99,7 @@ class AgoraUIKit {
   String platform = platformStr();
 
   String framework = "flutter";
-  String version = "1.3.8";
+  String version = "1.3.9";
 
   AgoraUIKit.fromJson(Map<String, dynamic> json)
       : platform = json['platform'],
