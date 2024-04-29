@@ -42,7 +42,7 @@ class FloatingLayout extends StatefulWidget {
   final bool? useAndroidSurfaceView;
 
   const FloatingLayout({
-    Key? key,
+    super.key,
     required this.client,
     this.floatingLayoutContainerHeight,
     this.floatingLayoutContainerWidth,
@@ -55,7 +55,7 @@ class FloatingLayout extends StatefulWidget {
     this.renderModeType = RenderModeType.renderModeHidden,
     this.useAndroidSurfaceView = false,
     this.useFlutterTexture = false,
-  }) : super(key: key);
+  });
 
   @override
   State<FloatingLayout> createState() => _FloatingLayoutState();

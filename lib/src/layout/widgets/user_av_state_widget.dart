@@ -7,10 +7,10 @@ class UserAVStateWidget extends StatefulWidget {
   final bool muted;
 
   const UserAVStateWidget({
-    Key? key,
+    super.key,
     required this.videoDisabled,
     required this.muted,
-  }) : super(key: key);
+  });
 
   @override
   State<UserAVStateWidget> createState() => _UserAVStateWidgetState();

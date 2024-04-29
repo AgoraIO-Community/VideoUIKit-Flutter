@@ -5,9 +5,9 @@ class NumberOfUsers extends StatefulWidget {
   final int userCount;
 
   const NumberOfUsers({
-    Key? key,
+    super.key,
     this.userCount = 0,
-  }) : super(key: key);
+  });
 
   @override
   State<NumberOfUsers> createState() => _NumberOfUsersState();
