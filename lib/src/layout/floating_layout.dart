@@ -262,7 +262,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                                 ),
                                                                 padding:
                                                                     const EdgeInsets
-                                                                            .all(
+                                                                        .all(
                                                                         3.0),
                                                                 child: Icon(
                                                                   Icons
@@ -381,7 +381,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                                 ),
                                                                 padding:
                                                                     const EdgeInsets
-                                                                            .all(
+                                                                        .all(
                                                                         3.0),
                                                                 child: Icon(
                                                                   Icons

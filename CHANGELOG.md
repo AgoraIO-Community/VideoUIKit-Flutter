@@ -1,3 +1,6 @@
+## 1.3.10
+- Upper bounds for lints
+
 ## 1.3.9
 - Update to support newer lints
 
