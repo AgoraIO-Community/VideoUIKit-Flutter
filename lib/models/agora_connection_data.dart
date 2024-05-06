@@ -42,6 +42,8 @@ class AgoraConnectionData {
 
   final Function? cloudRecordingCallback;
 
+  final int? customVideoTrackId;
+
   AgoraConnectionData({
     required this.appId,
     required this.channelName,
@@ -58,6 +60,7 @@ class AgoraConnectionData {
     this.screenSharingUid = 1000,
     this.screenSharingEnabled = true,
     this.cloudRecordingCallback,
+    this.customVideoTrackId,
   });
 
   AgoraConnectionData copyWith({
@@ -76,6 +79,7 @@ class AgoraConnectionData {
     int? screenSharingUid,
     bool? screenSharingEnabled,
     Function? cloudRecordingCallback,
+    int? customVideoTrackId,
   }) {
     return AgoraConnectionData(
       appId: appId ?? this.appId,
@@ -94,6 +98,7 @@ class AgoraConnectionData {
       screenSharingEnabled: screenSharingEnabled ?? this.screenSharingEnabled,
       cloudRecordingCallback:
           cloudRecordingCallback ?? this.cloudRecordingCallback,
+      customVideoTrackId: customVideoTrackId ?? this.customVideoTrackId,
     );
   }
 }

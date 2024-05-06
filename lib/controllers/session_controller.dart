@@ -203,6 +203,9 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       options: ChannelMediaOptions(
         channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
         clientRoleType: ClientRoleType.clientRoleBroadcaster,
+        customVideoTrackId: value.connectionData!.customVideoTrackId,
+        publishCustomVideoTrack:
+            value.connectionData!.customVideoTrackId != null,
       ),
     );
   }
