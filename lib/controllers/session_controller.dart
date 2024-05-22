@@ -23,10 +23,12 @@ import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 
 class SessionController extends ValueNotifier<AgoraSettings> {
-  SessionController()
+  SessionController({Object? sharedNativeHandle})
       : super(
           AgoraSettings(
-            engine: createAgoraRtcEngine(),
+            engine: createAgoraRtcEngine(
+              sharedNativeHandle: sharedNativeHandle,
+            ),
             agoraRtmChannel: null,
             agoraRtmClient: null,
             users: [],
@@ -201,6 +203,9 @@ class SessionController extends ValueNotifier<AgoraSettings> {
       options: ChannelMediaOptions(
         channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
         clientRoleType: ClientRoleType.clientRoleBroadcaster,
+        customVideoTrackId: value.connectionData!.customVideoTrackId,
+        publishCustomVideoTrack:
+            value.connectionData!.customVideoTrackId != null,
       ),
     );
   }

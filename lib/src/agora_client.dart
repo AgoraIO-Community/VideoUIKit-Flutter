@@ -34,6 +34,10 @@ class AgoraClient {
   /// [AgoraRtmChannelEventHandlers] is a class that contains all the Agora RTM channel event handlers. Use it to add your own functions or methods.
   final AgoraRtmChannelEventHandler? agoraRtmChannelEventHandler;
 
+  /// [sharedNativeHandle] is a shared native handle that can be used to share data between the UIKit and the native code.
+  /// Refer to https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/blob/main/example/lib/examples/advanced/process_video_raw_data/process_video_raw_data.dart
+  final Object? sharedNativeHandle;
+
   bool _initialized = false;
 
   AgoraClient({
@@ -43,7 +47,11 @@ class AgoraClient {
     this.agoraEventHandlers,
     this.agoraRtmClientEventHandler,
     this.agoraRtmChannelEventHandler,
-  }) : _initialized = false;
+    this.sharedNativeHandle,
+  })  : _initialized = false,
+        _sessionController = SessionController(
+          sharedNativeHandle: sharedNativeHandle,
+        );
 
   /// Useful to check if [AgoraClient] is ready for further usage
   bool get isInitialized => _initialized;
@@ -62,7 +70,8 @@ class AgoraClient {
   }
 
   // This is our "state" object that the UI Kit works with
-  final SessionController _sessionController = SessionController();
+  final SessionController _sessionController;
+
   SessionController get sessionController {
     return _sessionController;
   }
