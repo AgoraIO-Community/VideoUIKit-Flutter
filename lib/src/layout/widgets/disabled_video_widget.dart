@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// Widget that is displayed when local/remote video is disabled.
 class DisabledVideoWidget extends StatefulWidget {
-  const DisabledVideoWidget({Key? key}) : super(key: key);
+  const DisabledVideoWidget({super.key});
 
   @override
   State<DisabledVideoWidget> createState() => _DisabledVideoWidgetState();

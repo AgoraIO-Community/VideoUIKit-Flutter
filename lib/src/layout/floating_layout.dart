@@ -42,7 +42,7 @@ class FloatingLayout extends StatefulWidget {
   final bool? useAndroidSurfaceView;
 
   const FloatingLayout({
-    Key? key,
+    super.key,
     required this.client,
     this.floatingLayoutContainerHeight,
     this.floatingLayoutContainerWidth,
@@ -55,7 +55,7 @@ class FloatingLayout extends StatefulWidget {
     this.renderModeType = RenderModeType.renderModeHidden,
     this.useAndroidSurfaceView = false,
     this.useFlutterTexture = false,
-  }) : super(key: key);
+  });
 
   @override
   State<FloatingLayout> createState() => _FloatingLayoutState();
@@ -174,6 +174,10 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                         onTap: () {
                                                           widget.client
                                                               .sessionController
+                                                              .setActiveSpeakerDisabled(
+                                                                  false);
+                                                          widget.client
+                                                              .sessionController
                                                               .swapUser(
                                                                   index: index);
                                                         },
@@ -240,6 +244,10 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                               onTap: () {
                                                                 widget.client
                                                                     .sessionController
+                                                                    .setActiveSpeakerDisabled(
+                                                                        true);
+                                                                widget.client
+                                                                    .sessionController
                                                                     .swapUser(
                                                                         index:
                                                                             index);
@@ -254,7 +262,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                                 ),
                                                                 padding:
                                                                     const EdgeInsets
-                                                                            .all(
+                                                                        .all(
                                                                         3.0),
                                                                 child: Icon(
                                                                   Icons
@@ -355,6 +363,10 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                               onTap: () {
                                                                 widget.client
                                                                     .sessionController
+                                                                    .setActiveSpeakerDisabled(
+                                                                        true);
+                                                                widget.client
+                                                                    .sessionController
                                                                     .swapUser(
                                                                         index:
                                                                             index);
@@ -369,7 +381,7 @@ class _FloatingLayoutState extends State<FloatingLayout> {
                                                                 ),
                                                                 padding:
                                                                     const EdgeInsets
-                                                                            .all(
+                                                                        .all(
                                                                         3.0),
                                                                 child: Icon(
                                                                   Icons

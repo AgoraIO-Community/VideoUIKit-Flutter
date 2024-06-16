@@ -266,6 +266,11 @@ class SessionController extends ValueNotifier<AgoraSettings> {
     }
   }
 
+  /// Function to disableActiveSpeaker
+  void setActiveSpeakerDisabled(bool activeSpeakerDisabled) {
+    value = value.copyWith(isActiveSpeakerDisabled: activeSpeakerDisabled);
+  }
+
   /// Function to swap [AgoraUser] in the floating layout.
   void swapUser({required int index}) {
     final AgoraUser newUser = value.users[index];
