@@ -1,5 +1,14 @@
 
-# Agora VideoUIKit for Flutter
+# [ARCHIVED] Agora VideoUIKit for Flutter
+
+**⚠️ This project is no longer maintained and has been archived.**  
+Please note that this repository is now in a read-only state and will not receive any further updates or support.
+We recommend migrating to the following alternatives:
+
+- **Agora SDK**: For developers seeking a customizable solution with full control over the user experience. [Learn more](https://www.agora.io/en/products/video-call/)
+- **Agora App Builder**: For those preferring a no-code approach to integrate real-time engagement features. [Get started](https://appbuilder.agora.io/)
+
+For documentation and support, please visit the [Agora Documentation](https://docs.agora.io/en/).
 
 <p align="center">
     <a href="https://pub.dev/packages/agora_uikit"><img src="https://img.shields.io/pub/likes/agora_uikit?logo=dart"/></a>
